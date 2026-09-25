@@ -1,0 +1,1548 @@
+<title>Giấc ngủ cho con</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Giấc ngủ cho con — nền kem, màu nhấn tím khói.
+   Xanh lá = nên làm · nâu đất = nên tránh. Tím khói đứng riêng
+   làm màu thương hiệu nên không mang nghĩa cảnh báo.
+   ============================================================ */
+:root{
+  --ground:#FBF7F0; --surface:#FFFFFF; --surface-2:#F0E9E1;
+  --ink:#2B2433; --ink-2:#4B4256; --ink-3:#7A7186; --ink-mute:#A9A2B2;
+  --line:#E8DED4; --line-2:#F3ECE3;
+  --brand:#5B4B7A; --brand-ink:#473A61; --brand-2:#9287B0; --brand-wash:#F0EDF6;
+  --green:#2F8F62; --green-ink:#237A51; --green-wash:#E8F5EE;
+  --warn:#A85B18; --warn-ink:#8A4711; --warn-wash:#F6EBDD;
+  --honey-wash:#FBF2DA; --sky-wash:#E9F1F7; --clay-wash:#EFE8F0;
+  --shadow:0 2px 4px rgba(43,36,51,.04), 0 14px 34px -18px rgba(43,36,51,.22);
+  --r-card:28px; --r-chip:14px; --r-s:10px; --r-pill:999px;
+  --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --body:"Be Vietnam Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --side-w:280px; --top-h:52px; --hair:1px solid var(--line);
+  --pad-row:16px; --pad-chev:40px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:auto;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);
+  font-size:14px;line-height:1.62;-webkit-font-smoothing:antialiased}
+
+/* ---------- khung app ---------- */
+.app{min-height:100vh}
+@media(min-width:900px){.app{display:grid;grid-template-columns:var(--side-w) minmax(0,1fr);align-items:start}}
+.doc{min-width:0;padding:18px 16px calc(64px + 30vh)}
+@media(min-width:900px){.doc{padding:26px 34px calc(80px + 30vh)}}
+@media(min-width:1400px){.doc{padding:30px 48px calc(80px + 30vh)}}
+.doc-in{width:100%;max-width:1320px;margin-inline:auto;min-width:0}
+main section{display:none;scroll-margin-top:var(--top-h)}
+main section.live{display:block}
+.anchor{scroll-margin-top:calc(var(--top-h) + 10px)}
+@media(min-width:900px){.anchor{scroll-margin-top:14px}}
+
+/* ---------- thanh trên ---------- */
+.topbar{position:sticky;top:0;z-index:60;height:var(--top-h);display:flex;align-items:center;
+  gap:10px;padding:0 12px;background:var(--ground);border-bottom:var(--hair)}
+@media(min-width:900px){.topbar{display:none}}
+.burger{display:inline-flex;align-items:center;gap:8px;flex:none;font-family:var(--body);
+  font-size:12px;font-weight:600;color:var(--ink);background:var(--surface);border:var(--hair);
+  border-radius:var(--r-pill);padding:8px 13px 8px 11px;cursor:pointer}
+.burger i{display:block;width:13px;height:1.5px;background:var(--ink);position:relative;flex:none}
+.burger i::before,.burger i::after{content:"";position:absolute;left:0;width:13px;height:1.5px;background:var(--ink)}
+.burger i::before{top:-4px}.burger i::after{top:4px}
+.topbar .now{font-family:var(--display);font-weight:700;font-size:13.5px;letter-spacing:-.01em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.topbar .of{margin-left:auto;flex:none;font-size:11px;font-weight:600;color:var(--ink-3);
+  font-variant-numeric:tabular-nums}
+
+/* ---------- cột menu ---------- */
+.side{background:var(--surface);border-right:var(--hair);display:flex;flex-direction:column}
+@media(min-width:900px){.side{position:sticky;top:0;height:100vh;overflow-y:auto;overscroll-behavior:contain}}
+@media(max-width:899px){
+  .side{position:fixed;inset:0 auto 0 0;width:min(300px,86vw);z-index:80;transform:translateX(-103%);
+    transition:transform .18s ease-out;overflow-y:auto;box-shadow:0 0 40px rgba(43,36,51,.18)}
+  .side.open{transform:none}
+  .scrim{position:fixed;inset:0;z-index:70;background:rgba(43,36,51,.3);opacity:0;
+    pointer-events:none;transition:opacity .18s}
+  .scrim.on{opacity:1;pointer-events:auto}
+}
+@media(min-width:900px){.scrim{display:none}}
+.side-head{padding:15px 16px 12px;border-bottom:var(--hair);display:flex;align-items:center;gap:9px}
+.side-head b{font-family:var(--display);font-weight:800;font-size:14.5px;letter-spacing:-.02em}
+.bmoji{font-size:15px;line-height:1;margin-right:7px;
+  font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif}
+.side-x{display:none}
+@media(max-width:899px){.side-x{display:inline-flex;margin-left:auto;border:0;background:transparent;
+  color:var(--ink-3);width:30px;height:30px;align-items:center;justify-content:center;
+  font-size:19px;cursor:pointer;line-height:1}}
+.side-nav{padding:8px 8px 32px}
+.side-nav ol{list-style:none;margin:0;padding:0}
+.ch-btn{display:grid;grid-template-columns:18px 1fr;gap:8px;align-items:baseline;width:100%;
+  text-align:left;font-family:var(--body);font-size:12.8px;font-weight:500;line-height:1.35;
+  color:var(--ink-2);background:transparent;border:0;border-radius:var(--r-s);padding:8px 10px;
+  cursor:pointer;transition:background .12s,color .12s}
+.ch-btn .n{font-size:10px;font-weight:700;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.ch-btn:hover{background:var(--surface-2);color:var(--ink)}
+.ch-btn[aria-current="true"]{background:var(--surface-2);color:var(--ink);font-weight:700;
+  box-shadow:inset 2px 0 0 var(--brand-ink)}
+.ch-btn[aria-current="true"] .n{color:var(--brand-ink)}
+/* mục ghim — Nghẹn */
+li[data-sec="nghen"]{margin-bottom:6px;padding-bottom:6px;border-bottom:var(--hair)}
+li[data-sec="nghen"] .ch-btn{background:var(--warn-wash);color:var(--warn-ink);font-weight:700}
+li[data-sec="nghen"] .ch-btn .n{color:var(--warn-ink)}
+li[data-sec="nghen"] .ch-btn:hover{background:#F0DFCB}
+li[data-sec="nghen"] .ch-btn[aria-current="true"]{box-shadow:inset 2px 0 0 var(--warn-ink)}
+.sub-list{list-style:none;margin:1px 0 6px;padding:0 0 0 26px;display:none}
+li.on .sub-list{display:block}
+.sub-list a{display:block;font-size:12px;line-height:1.35;color:var(--ink-3);text-decoration:none;
+  padding:5px 8px 5px 10px;border-left:2px solid var(--line);transition:color .12s,border-color .12s}
+.sub-list a:hover{color:var(--ink)}
+.sub-list a.on{color:var(--brand-ink);border-left-color:var(--brand-ink);font-weight:600}
+.sub-list li.divider{font-size:9.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);padding:10px 8px 4px 10px;display:flex;align-items:center;gap:7px}
+.sub-list li.divider::after{content:"";flex:1;height:1px;background:var(--line)}
+@media(max-width:899px){
+  .ch-btn{padding:13px 11px;font-size:13.5px}
+  .sub-list a{padding:13px 10px 13px 11px;font-size:12.8px}
+}
+
+/* ---------- chữ ---------- */
+h1{font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.025em;line-height:1.15;margin:0}
+h2{font-family:var(--display);font-weight:800;font-size:23px;letter-spacing:-.02em;line-height:1.2;margin:0}
+h3{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:-.01em;margin:30px 0 8px}
+h4{font-family:var(--display);font-weight:700;font-size:14.5px;letter-spacing:-.01em;margin:22px 0 6px}
+p{margin:10px 0}
+strong{font-weight:700}
+em{color:var(--ink-2)}
+a{color:var(--brand-ink)}
+hr{border:0;border-top:var(--hair);margin:26px 0}
+ul,ol{margin:10px 0;padding-left:20px}
+li{margin:5px 0}
+blockquote{margin:12px 0;padding:12px 16px;background:var(--surface);border:var(--hair);
+  border-left:3px solid var(--brand-2);border-radius:0 var(--r-chip) var(--r-chip) 0;
+  font-size:13.5px;color:var(--ink-2)}
+blockquote p{margin:4px 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+  background:var(--surface-2);padding:1px 5px;border-radius:6px}
+.warn-i{color:var(--warn-ink);font-weight:700;font-style:normal}
+
+/* đầu chương */
+.chero{position:relative;overflow:hidden;border-radius:var(--r-card);padding:22px 24px 24px;
+  margin:0 0 18px;background:var(--wash)}
+.chero>*{position:relative;z-index:1}
+.chero h2{max-width:22ch}
+.cshape{position:absolute;right:-34px;top:50%;transform:translateY(-50%);width:132px;height:132px;
+  background:var(--acc);opacity:.22;pointer-events:none;z-index:0}
+.sh-s{clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
+.sh-c{border-radius:50%}
+.sh-r{background:transparent;border:22px solid var(--acc);border-radius:50%}
+.sh-b{border-radius:62% 38% 46% 54%/48% 56% 44% 52%}
+.sh-a{border-radius:999px 999px 20px 20px}
+.sh-q{border-radius:100% 0 0 0}
+.sh-p{border-radius:999px;height:58px}
+@media(max-width:760px){
+  .chero{padding-bottom:54px}
+  .cshape{top:auto;bottom:-40px;right:-42px;transform:none;width:110px;height:110px}
+  .sh-r{border-width:18px}
+  .sh-p{height:52px;bottom:-20px}
+}
+.chero .pnum{display:block;font-size:10.5px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+.chero .lede{font-size:13.5px;color:var(--ink-2);max-width:56ch;margin:8px 0 0;line-height:1.55}
+.cw{--wash:var(--warn-wash); --acc:var(--warn)}
+.c1{--wash:var(--brand-wash); --acc:var(--brand-2)}
+.c2{--wash:var(--honey-wash); --acc:#E8B93C}
+.c3{--wash:var(--sky-wash);   --acc:#79A8C4}
+.c4{--wash:var(--clay-wash);  --acc:#D49B84}
+.c5{--wash:var(--green-wash); --acc:var(--green)}
+.c6{--wash:var(--brand-wash); --acc:var(--brand-2)}
+.c7{--wash:var(--honey-wash); --acc:#E8B93C}
+.c8{--wash:var(--surface-2);  --acc:var(--ink-mute)}
+.cw .pnum{color:var(--warn-ink)}
+
+/* bảng */
+.tw{overflow-x:auto;border-radius:22px;margin:16px 0;-webkit-overflow-scrolling:touch}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:13px;background:var(--surface);
+  border-radius:22px;overflow:hidden}
+th,td{text-align:left;padding:10px 14px;vertical-align:top;line-height:1.5;
+  border-bottom:1px solid var(--line-2)}
+th{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);
+  background:var(--surface-2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;color:var(--ink)}
+ul.cl{list-style:none;margin:0;padding:0}
+ul.cl li{position:relative;padding-left:12px;margin:3px 0;line-height:1.45}
+ul.cl li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;
+  border-radius:50%;background:var(--ink-mute)}
+
+/* danh sách hai cấp */
+ul.sub{margin:6px 0 12px;padding-left:0;list-style:none}
+ul.sub li{position:relative;padding-left:15px;font-size:13px;line-height:1.55;color:var(--ink-2);margin:4px 0}
+ul.sub li::before{content:"";position:absolute;left:1px;top:9px;width:7px;height:1.5px;
+  background:var(--ink-mute);border-radius:1px}
+ul.sub li.say::before{background:var(--green)}
+ul.sub li.no::before{background:var(--warn)}
+ul.sub li.say strong{color:var(--green-ink)}
+ul.sub li.no strong{color:var(--warn-ink)}
+
+/* dẫn nguồn */
+.src{margin:10px 0 0}
+.src>summary{display:inline-block;font-size:11.5px;font-weight:600;color:var(--ink-3);
+  cursor:pointer;list-style:none;border-bottom:1px dotted var(--ink-mute);padding:2px 0}
+.src>summary::-webkit-details-marker{display:none}
+.src>summary:hover{color:var(--brand-ink);border-bottom-color:var(--brand-ink)}
+.src p{font-size:12.5px;line-height:1.55;color:var(--ink-3);margin:8px 0 0;max-width:62ch}
+
+/* khối nhấn */
+.tip{background:var(--brand-wash);border-radius:var(--r-card);padding:14px 17px;margin:16px 0;
+  font-size:13px;line-height:1.6;color:var(--ink-2)}
+.tip strong:first-child{color:var(--ink)}
+.card{background:var(--surface);border:var(--hair);border-radius:var(--r-card);padding:18px 20px;margin:16px 0}
+.card h4{margin-top:0}
+.sos{background:var(--warn-wash);border:1px solid #E7CFAE;border-radius:var(--r-card);
+  padding:16px 18px;margin:16px 0}
+.sos h4{margin-top:0;color:var(--warn-ink)}
+.sos table{background:#fff}
+
+/* dải phân phần — chương 02 */
+.part{background:var(--surface-2);border-radius:var(--r-card);padding:16px 20px;margin:26px 0 14px}
+.part-k{display:block;font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:3px}
+.part b{font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:-.02em;color:var(--ink)}
+.part-age{display:inline-block;margin-left:9px;font-size:11px;font-weight:700;color:var(--brand-ink);
+  background:var(--brand-wash);border-radius:var(--r-pill);padding:2px 10px;vertical-align:2px}
+.part p{margin:6px 0 0;font-size:12.8px;color:var(--ink-2);max-width:58ch}
+
+/* ============================================================
+   KHỐI NÊN LÀM / NÊN TRÁNH · hàng bung ra · timeline theo tuổi
+   ============================================================ */
+.grp{margin:16px 0 0;border:var(--hair);border-radius:var(--r-card);padding:0;
+  background:var(--surface);overflow:hidden}
+.grp-h{font-family:var(--body);font-size:10.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;margin:0;padding:10px var(--pad-row);border-bottom:1px solid var(--line-2)}
+.grp--y .grp-h{background:var(--green-wash);color:var(--green-ink)}
+.grp--n .grp-h{background:var(--warn-wash);color:var(--warn-ink)}
+.grp--p .grp-h{background:var(--brand-wash);color:var(--brand-ink)}
+.tl-card .grp,.sbody .grp{border-radius:var(--r-chip)}
+
+.rows{list-style:none;margin:0;padding:0}
+.rows>li{border-bottom:1px solid var(--line-2)}
+.rows>li:last-child{border-bottom:0}
+.r>summary,li.r--flat{display:block;padding:11px var(--pad-chev) 11px var(--pad-row);
+  position:relative;cursor:pointer;list-style:none}
+li.r--flat{cursor:default;padding-right:var(--pad-row)}
+.r>summary::-webkit-details-marker{display:none}
+.r>summary::after{content:"";position:absolute;right:18px;top:16px;width:6px;height:6px;
+  border-right:1.5px solid var(--ink-mute);border-bottom:1.5px solid var(--ink-mute);
+  transform:rotate(45deg);transition:transform .15s}
+.r[open]>summary::after{transform:rotate(-135deg);top:18px}
+.r>summary:hover .rt{color:var(--brand-ink)}
+.rt{display:block;font-family:var(--display);font-weight:700;font-size:14px;
+  letter-spacing:-.01em;line-height:1.35;color:var(--ink)}
+.ra{display:block;font-size:12.8px;color:var(--ink-2);line-height:1.5;margin-top:3px}
+.rmore{padding:0 var(--pad-row) 12px}
+.rmore p{font-size:12.8px;line-height:1.55;color:var(--ink-2);margin:9px 0 0;max-width:62ch}
+.rmore b{display:block;font-family:var(--body);font-size:9.5px;font-weight:700;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);margin-bottom:2px}
+.rmore .say b{color:var(--green-ink)}
+.rmore .no b{color:var(--warn-ink)}
+li.r--flat .lab{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);background:var(--surface-2);
+  border-radius:var(--r-pill);padding:3px 9px;margin-bottom:5px}
+li.lab-say .lab{color:var(--green-ink);background:var(--green-wash)}
+li.lab-no .lab{color:var(--warn-ink);background:var(--warn-wash)}
+
+/* timeline theo tuổi */
+.tl{position:relative;margin:18px 0 0}
+@media(min-width:760px){
+  .tl{padding-left:112px}
+  .tl::before{content:"";position:absolute;left:44px;top:14px;bottom:20px;width:2px;background:var(--line)}
+}
+.tl-i{position:relative;padding:0 0 16px}
+.tl-i[hidden]{display:none}
+.tl-age{display:inline-flex;flex-direction:column;padding:6px 11px;border-radius:var(--r-chip);
+  background:var(--surface-2);color:var(--ink-2);margin-bottom:8px}
+.tl-age b{font-family:var(--display);font-weight:800;font-size:13px;line-height:1.2;
+  white-space:nowrap;color:var(--ink)}
+.tl-age span{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+@media(min-width:760px){
+  .tl-age{position:absolute;left:-112px;top:14px;width:88px;align-items:center;text-align:center;
+    margin:0;border:var(--hair);background:var(--surface)}
+  .tl-age b{white-space:normal}
+}
+.tl-i.now .tl-age{background:var(--brand-wash);border-color:var(--brand-2)}
+.tl-i.now .tl-age b{color:var(--brand-ink)}
+.tl-card{background:var(--surface);border:var(--hair);border-radius:var(--r-card);padding:16px 18px 18px}
+.tl-card h4{margin-top:0}
+.tl-card>p:first-child{margin-top:0}
+.tl-i.dim .tl-card{opacity:.62}
+
+/* ---------- hình minh hoạ ---------- */
+.figs{display:grid;gap:12px;margin:16px 0}
+@media(min-width:720px){.figs{grid-template-columns:1fr 1fr}}
+.fig{margin:0;background:var(--surface);border:var(--hair);border-radius:var(--r-card);
+  overflow:hidden;display:flex;flex-direction:column}
+.fig img{display:block;width:100%;height:auto;background:var(--ground)}
+.fig figcaption{padding:11px 15px 13px;font-size:12.6px;line-height:1.5;color:var(--ink-2);
+  border-top:1px solid var(--line-2)}
+.fig figcaption b{color:var(--ink)}
+
+/* ---------- ô tìm kiếm và chip ---------- */
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0}
+.searchbox{background:var(--surface);border:var(--hair);border-radius:var(--r-card);
+  padding:16px 18px;margin:18px 0;box-shadow:var(--shadow)}
+.sb-h{display:block;font-family:var(--display);font-weight:700;font-size:14px;margin-bottom:10px}
+.searchbox .hint{display:block;font-size:12.3px;color:var(--ink-3);line-height:1.5;margin-top:10px}
+.searchbox .hint b{color:var(--ink-2);font-weight:600}
+.search{flex:1 1 240px;position:relative}
+.search input{width:100%;font-family:var(--body);font-size:13.5px;color:var(--ink);
+  background:var(--surface);border:var(--hair);border-radius:var(--r-pill);padding:11px 16px}
+.search input:focus{outline:2px solid var(--brand-2);outline-offset:1px}
+.count{font-size:11.5px;color:var(--ink-3);flex:none;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}
+.ck-l{font-size:9.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);margin-right:4px;flex:none}
+.chip{font-family:var(--body);font-size:12px;font-weight:600;color:var(--ink-2);
+  background:var(--ground);border:var(--hair);border-radius:var(--r-pill);
+  padding:6px 13px;cursor:pointer;transition:background .12s,color .12s,border-color .12s}
+.chip:hover{border-color:var(--ink-mute)}
+.chip.on{background:var(--brand-ink);border-color:var(--brand-ink);color:#fff}
+.sb-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:12px}
+.sb-foot .hint{margin:0}
+
+/* ---------- kịch bản ---------- */
+.scen-list{background:var(--surface);border:var(--hair);border-radius:var(--r-card);
+  overflow:hidden;margin:16px 0}
+.scen-a{margin:0;padding:15px var(--pad-row) 13px;font-family:var(--display);
+  font-weight:800;font-size:15px;letter-spacing:-.02em;color:var(--brand-ink);
+  background:var(--brand-wash);border-bottom:1px solid var(--line-2)}
+.scen-a[hidden]{display:none}
+.sbody p{margin:7px 0;font-size:13px;line-height:1.55}
+.sbody p.do strong{color:var(--green-ink)}
+.sbody p.dont strong{color:var(--warn-ink)}
+.scen-g{margin:0;padding:12px var(--pad-row) 8px;font-size:11px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-3);font-family:var(--body);font-weight:700;
+  background:var(--surface-2);border-bottom:1px solid var(--line-2)}
+.scen-g[hidden]{display:none}
+.scen{border-bottom:1px solid var(--line-2);margin:0}
+.scen:last-child{border-bottom:0}
+.scen[hidden]{display:none}
+.scen>summary{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;
+  padding:13px var(--pad-chev) 13px var(--pad-row);cursor:pointer;list-style:none;position:relative}
+.scen>summary::-webkit-details-marker{display:none}
+.scen>summary::after{content:"";position:absolute;right:18px;top:18px;width:6px;height:6px;
+  border-right:1.5px solid var(--ink-mute);border-bottom:1.5px solid var(--ink-mute);
+  transform:rotate(45deg);transition:transform .15s}
+.scen[open]>summary::after{transform:rotate(-135deg);top:20px}
+.scode{font-family:var(--display);font-weight:800;font-size:11px;color:var(--brand-ink);
+  font-variant-numeric:tabular-nums;min-width:20px}
+.stitle{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:-.01em;
+  line-height:1.3;color:var(--ink)}
+.scen>summary:hover .stitle{color:var(--brand-ink)}
+.sage{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-3);white-space:nowrap;justify-self:end}
+.sbody{padding:2px var(--pad-row) 16px}
+.sbody ul{margin:0;padding-left:18px}
+.sbody li{font-size:13px;line-height:1.55;margin:6px 0}
+.sbody .why{display:block;margin-top:10px;font-size:12.5px;color:var(--ink-3);line-height:1.55;
+  padding-top:10px;border-top:1px dashed var(--line)}
+.sbody .why b{display:block;font-size:9.5px;font-weight:700;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:2px}
+@media(max-width:620px){
+  .scen>summary{grid-template-columns:auto 1fr;row-gap:3px}
+  .sage{grid-column:2;justify-self:start}
+}
+.empty{padding:18px var(--pad-row);font-size:13px;color:var(--ink-3)}
+
+/* ---------- thẻ thực phẩm ---------- */
+.food-g{margin:26px 0 8px}
+.food-g[hidden]{display:none}
+.foods{display:grid;gap:10px;margin:12px 0}
+@media(min-width:760px){.foods{grid-template-columns:1fr 1fr}}
+@media(min-width:1280px){.foods{grid-template-columns:repeat(3,1fr)}}
+.food{background:var(--surface);border:var(--hair);border-radius:var(--r-chip);overflow:hidden}
+.food[hidden]{display:none}
+.food>summary{display:flex;align-items:baseline;gap:8px;padding:12px 14px;cursor:pointer;list-style:none}
+.food>summary::-webkit-details-marker{display:none}
+.fname{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:-.015em;color:var(--ink)}
+.food>summary:hover .fname{color:var(--brand-ink)}
+.ffrom{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--brand-ink);background:var(--brand-wash);border-radius:var(--r-pill);
+  padding:2px 9px;white-space:nowrap}
+.fbody{padding:0 14px 13px}
+.fbody p{font-size:12.6px;line-height:1.55;color:var(--ink-2);margin:8px 0 0}
+.fbody b{display:block;font-size:9.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:1px}
+
+/* ---------- bảng Do & Don't ---------- */
+.dd{overflow-x:auto;margin:16px 0}
+.dd table{font-size:12.6px}
+.dd th:first-child,.dd td:first-child{width:118px;white-space:nowrap}
+.dd thead th:nth-child(2){color:var(--green-ink);background:var(--green-wash)}
+.dd thead th:nth-child(3){color:var(--warn-ink);background:var(--warn-wash)}
+.dd td:nth-child(2){border-left:2px solid var(--green-wash)}
+.dd td:nth-child(3){border-left:2px solid var(--warn-wash);color:var(--ink-2)}
+
+/* ---------- công cụ ---------- */
+.fld{display:grid;gap:12px;margin:14px 0 4px}
+@media(min-width:640px){.fld--2{grid-template-columns:1fr 1fr;gap:12px 16px}}
+.fld label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-2);margin-bottom:5px}
+.fld label span{display:block;font-size:11.5px;font-weight:400;color:var(--ink-3);line-height:1.45;margin-top:1px}
+input[type=text],input[type=number],input[type=date],textarea{width:100%;font-family:var(--body);font-size:13.5px;
+  color:var(--ink);background:var(--ground);border:var(--hair);border-radius:var(--r-chip);padding:11px 14px}
+textarea{min-height:76px;resize:vertical;line-height:1.55}
+input:focus,textarea:focus{outline:2px solid var(--brand-2);outline-offset:1px}
+.btn{font-family:var(--body);font-size:12.5px;font-weight:600;border:0;cursor:pointer;
+  padding:10px 18px;border-radius:var(--r-pill);background:var(--brand-ink);color:#fff}
+.btn:hover{background:#3C3152}
+.btn--q{background:var(--surface);color:var(--ink);border:var(--hair)}
+.btn--q:hover{background:var(--surface-2)}
+.jstat{font-size:11.5px;color:var(--ink-3)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:14px 0 4px}
+.stat{background:var(--ground);border-radius:var(--r-chip);padding:12px 14px}
+.stat b{display:block;font-family:var(--display);font-weight:800;font-size:20px;color:var(--brand-ink);line-height:1.15}
+.stat span{font-size:11.5px;color:var(--ink-3)}
+
+/* form họp nền */
+.qgrp{margin:18px 0 0}
+.qgrp>h5{font-family:var(--body);font-size:10.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 4px}
+.qgrp>p{margin:0 0 10px;font-size:12.5px;color:var(--ink-3)}
+.q{border-top:1px solid var(--line-2);padding:12px 0}
+.q>label{display:block;font-size:13.2px;font-weight:600;color:var(--ink);line-height:1.5;margin-bottom:7px}
+.q .code{display:inline-block;font-family:var(--display);font-weight:800;font-size:10.5px;
+  color:var(--brand-ink);margin-right:7px}
+.q .two{display:grid;gap:10px}
+@media(min-width:760px){.q .two{grid-template-columns:1fr 1fr}}
+.q .who{display:block;font-size:9.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:3px}
+
+/* sổ mốc */
+.bar{height:6px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin:12px 0 6px}
+.bar i{display:block;height:100%;background:var(--brand);border-radius:999px;transition:width .2s}
+.stage{border:var(--hair);border-radius:var(--r-card);background:var(--surface);overflow:hidden;margin:12px 0}
+.stage>summary{display:flex;align-items:center;gap:10px;padding:12px var(--pad-chev) 12px var(--pad-row);
+  cursor:pointer;list-style:none;position:relative;font-family:var(--display);font-weight:700;font-size:14px}
+.stage>summary::-webkit-details-marker{display:none}
+.stage>summary::after{content:"";position:absolute;right:18px;top:17px;width:6px;height:6px;
+  border-right:1.5px solid var(--ink-mute);border-bottom:1.5px solid var(--ink-mute);
+  transform:rotate(45deg);transition:transform .15s}
+.stage[open]>summary::after{transform:rotate(-135deg);top:19px}
+.stage .cnt{margin-left:auto;font-family:var(--body);font-size:11px;font-weight:700;
+  color:var(--ink-3);font-variant-numeric:tabular-nums}
+.ck{list-style:none;margin:0;padding:0 0 6px}
+.ck li{border-top:1px solid var(--line-2)}
+.ck button{display:grid;grid-template-columns:18px 1fr;gap:12px;align-items:start;width:100%;
+  text-align:left;border:0;background:transparent;cursor:pointer;padding:12px var(--pad-row);font-family:var(--body)}
+.ck button:hover{background:var(--brand-wash)}
+.ck .box{width:16px;height:16px;margin-top:2px;border:1.5px solid var(--ink-mute);
+  border-radius:5px;position:relative;flex:none}
+.ck button[aria-pressed="true"] .box{background:var(--brand);border-color:var(--brand)}
+.ck button[aria-pressed="true"] .box::after{content:"";position:absolute;left:4.5px;top:1px;
+  width:4px;height:8px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(42deg)}
+.ck .t{display:block;font-family:var(--display);font-weight:700;font-size:13.5px;
+  letter-spacing:-.01em;color:var(--ink);line-height:1.3}
+.ck button[aria-pressed="true"] .t{color:var(--ink-3);text-decoration:line-through;
+  text-decoration-color:var(--ink-mute)}
+.ck .w{display:block;font-size:12.3px;color:var(--ink-2);line-height:1.5;margin-top:2px}
+
+/* sổ tăng trưởng */
+.gwrap{overflow-x:auto;margin:12px 0}
+.log{margin-top:14px;border-top:1px solid var(--line-2);padding-top:4px}
+.log-i{padding:10px 0;border-bottom:1px solid var(--line-2);font-size:12.8px}
+.log-i:last-child{border-bottom:0}
+.log-i .m{font-size:11px;color:var(--ink-3);letter-spacing:.04em}
+.log-i .d{color:var(--ink-2)}
+.log-i button{float:right;border:0;background:none;color:var(--ink-mute);cursor:pointer;font-size:12px;padding:2px 4px}
+.alert{background:var(--warn-wash);color:var(--warn-ink);border-radius:var(--r-chip);
+  padding:11px 14px;margin:12px 0 0;font-size:12.6px;line-height:1.55}
+
+/* ---------- chuyển chương ---------- */
+.pager{display:grid;gap:8px;margin-top:30px;padding-top:16px;border-top:var(--hair)}
+@media(min-width:620px){.pager{grid-template-columns:1fr 1fr}}
+.pg{display:block;text-align:left;text-decoration:none;background:var(--surface);border:var(--hair);
+  border-radius:var(--r-card);padding:12px 16px;cursor:pointer;font-family:var(--body);transition:border-color .12s}
+.pg:hover{border-color:var(--ink-mute)}
+.pg small{display:block;font-size:9.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:2px}
+.pg b{font-family:var(--display);font-weight:700;font-size:13.5px;letter-spacing:-.01em;color:var(--ink);line-height:1.25}
+.pg--next{text-align:right}
+footer{font-size:11.8px;margin-top:28px;padding-top:16px;border-top:var(--hair);color:var(--ink-3);max-width:62ch}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{
+  .side,.topbar,.pager,.tools,.chips,.btn,.scrim,.searchbox,.sb-foot{display:none!important}
+  main section{display:block!important;page-break-before:always}
+  .doc{padding:0}.doc-in{max-width:none}
+  .scen>summary::after,.stage>summary::after,.r>summary::after,.food>summary::after{display:none}
+  details{open:true}
+  .tl-i[hidden]{display:block!important}
+  body{background:#fff}
+  .print-only{display:block!important}
+}
+.print-only{display:none}
+
+</style>
+<div class="app">
+  <header class="topbar">
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="side"><i aria-hidden="true"></i><span>Mục lục</span></button>
+    <span class="now" id="now">&nbsp;</span>
+    <span class="of" id="of">&nbsp;</span>
+  </header>
+  <aside class="side" id="side" aria-label="Mục lục">
+    <div class="side-head">
+      <b><span class="bmoji" aria-hidden="true">🌙</span>Giấc ngủ cho con</b>
+      <button class="side-x" id="sidex" type="button" aria-label="Đóng mục lục">&times;</button>
+    </div>
+    <nav class="side-nav"><ol id="chnav"></ol></nav>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+  <main class="doc">
+    <div class="doc-in">
+<section id="angoan" data-title="Ngủ an toàn — kiểm ngay">
+<header class="chero cw"><span class="cshape sh-a" aria-hidden="true"></span><span class="pnum">Khẩn</span><h2>Ngủ an toàn — kiểm ngay</h2><p class="lede">Sáu điều kiểm trong một phút, trước giấc đầu tiên của con.</p></header>
+
+<div class="searchbox docsearch">
+ <div class="tools">
+  <div class="search"><input type="text" class="doc-q" placeholder="Gõ để tìm trong chương này…" autocomplete="off"></div>
+  <span class="count doc-count"></span>
+ </div>
+ <span class="hint">Gõ vài chữ là được — <b>điều hoà</b>, <b>muỗi</b>, <b>ca ngủ</b>, <b>ngoại</b>, <b>đèn</b>.
+  Không có dấu vẫn ra. Bấm <b>Xoá</b> hoặc xoá hết chữ để xem lại cả chương.</span>
+</div>
+<p class="tip"><strong>Đang phân vân thì làm thế này:</strong> đặt con <strong>nằm ngửa</strong>, trên <strong>mặt phẳng cứng và phẳng</strong>, trong một chỗ <strong>trống không có gì khác</strong>. Ba việc đó đúng thì chưa bao giờ sai. </p>
+<hr>
+<h3 id="angoan-sau-ieu-kiem-moi-lan-con-ngu">Sáu điều kiểm mỗi lần con ngủ</h3>
+<div class="grp grp--y"><div class="grp-h">1 · Nằm ngửa</div><ul class="rows"><li class="r--flat"><span class="rt">Mọi giấc, mọi lúc, tới 12 tháng</span><span class="ra">không nằm sấp, không nằm nghiêng, kể cả khi con có vẻ ngủ ngon hơn ở tư thế đó</span></li><li class="r--flat"><span class="rt">Con trớ sữa cũng vẫn nằm ngửa</span><span class="ra">nằm ngửa không làm con sặc. Đây là chỗ nhiều người hiểu ngược</span></li><li class="r--flat"><span class="rt">Nói lại với mọi người từng trông con</span><span class="ra">chỉ một lần đặt sấp cũng là một lần rủi ro</span></li></ul></div>
+<div class="grp grp--y"><div class="grp-h">2 · Mặt phẳng cứng và phẳng</div><ul class="rows"><li class="r--flat"><span class="rt">Nệm cũi cứng, phẳng, khít thành</span><span class="ra">nhét không quá hai ngón tay giữa nệm và thành. Ga chun căng, không nhăn</span></li><li class="r--flat"><span class="rt">Không giường người lớn, không nệm nghiêng, không kê cao đầu, không ghế lười</span></li></ul></div>
+<div class="grp grp--n"><div class="grp-h">3 · Chỗ ngủ phải trống</div><ul class="rows"><li class="r--flat"><span class="rt">Không gối, chăn, mền, thú bông, quây chặn, đệm lót thành</span><span class="ra">dưới 12 tháng, không loại nào, kể cả gối lõm chống bẹt đầu và loại quảng cáo là thoáng khí</span></li><li class="r--flat"><span class="rt">Ấm bằng túi ngủ đúng độ dày, không ấm bằng chăn</span></li></ul></div>
+<div class="grp grp--n"><div class="grp-h">4 · Không ngủ quên cùng con trên sofa hoặc ghế bành</div><ul class="rows"><li class="r--flat"><span class="rt">Đây là kiểu ngủ nguy hiểm nhất, hơn cả ngủ chung giường</span></li><li class="r--flat"><span class="rt">Buồn ngủ lúc cho bú thì cho bú trên giường trống, và hẹn chuông trước</span><span class="ra">dẹp hết gối chăn đồ đạc trước khi bắt đầu</span></li></ul></div>
+<div class="grp grp--n"><div class="grp-h">5 · Võng và nôi điện — không dùng cho giấc ngủ</div><ul class="rows"><li><details class="r"><summary><span class="rt">Không võng, nôi điện đang lắc, ghế rung, ghế ngồi xe tháo khỏi xe, xe đẩy ngả</span><span class="ra">cho mọi giấc ngủ</span></summary><div class="rmore"><p class=""><b>Vì sao</b>ở mặt cong hoặc nghiêng, <strong>đầu con gập về trước và đường thở bị chặn</strong>. Con chưa đủ sức tự nhấc đầu lên</p></div></details></li><li class="r--flat"><span class="rt">Con ngủ gật trên ghế xe, xe đẩy hay địu thì chuyển sang mặt phẳng cứng ngay khi về tới nhà</span></li><li class="r--flat"><span class="rt">Võng dùng lúc con thức, có người ngồi canh, thì được</span><span class="ra">cấm cho ngủ, không cấm cái võng</span></li></ul></div>
+<div class="grp grp--n"><div class="grp-h">6 · Đừng để con quá nóng</div><ul class="rows"><li class="r--flat"><span class="rt">Mặc nhiều hơn người lớn đang thấy dễ chịu đúng một lớp</span><span class="ra">không hơn</span></li><li class="r--flat"><span class="rt">Sờ gáy hoặc ngực con để kiểm</span><span class="ra">ấm và khô là đúng · ẩm mồ hôi là đang nóng. <strong>Không sờ bàn tay bàn chân</strong></span></li><li class="r--flat"><span class="rt">Không đội mũ, không trùm đầu khi ngủ trong nhà</span></li></ul></div>
+<div class="sos"><h4>Gọi bác sĩ ngay, không chờ sáng</h4>
+<ul><li><strong>Thở khó, thở rút lõm ngực, thở rít, hoặc ngừng thở dù chỉ vài giây</strong></li><li><strong>Môi hoặc đầu ngón tay tím lại</strong></li><li><strong>Mềm nhũn, gọi không phản ứng, khó đánh thức bất thường</strong></li><li><strong>Sốt ở trẻ dưới 3 tháng</strong> — bất kể bao nhiêu độ</li></ul>
+<p><strong>Ghi số điện thoại bác sĩ và bệnh viện gần nhất lên trang này trước ngày sinh.</strong> Lúc 3 giờ sáng không ai tra cứu được.</p></div>
+<details class="src"><summary>Cơ sở</summary><ul><li><strong>Nằm ngửa · mặt phẳng cứng · chỗ trống · không quá nóng · không ngủ quên trên sofa</strong> — đều là yếu tố nguy cơ đã xác định. Phần chắc nhất cả mục</li><li><strong>Võng và nôi điện</strong> — không có thử nghiệm, mà là ca tử vong đã ghi nhận cộng cơ chế giải thích được</li><li><strong>Danh sách gọi bác sĩ</strong> là dấu hiệu chung, không phải chẩn đoán</li></ul></details>
+</section>
+<section id="nenmong" data-title="Nền móng">
+<header class="chero c1"><span class="cshape sh-c" aria-hidden="true"></span><span class="pnum">Chương 01</span><h2>Nền móng</h2><p class="lede">Bố giữ điều kiện ngủ — con tự vào giấc. Ba trụ và hai bảng ranh giới cứng.</p></header>
+
+<div class="searchbox docsearch">
+ <div class="tools">
+  <div class="search"><input type="text" class="doc-q" placeholder="Gõ để tìm trong chương này…" autocomplete="off"></div>
+  <span class="count doc-count"></span>
+ </div>
+ <span class="hint">Gõ vài chữ là được — <b>điều hoà</b>, <b>muỗi</b>, <b>ca ngủ</b>, <b>ngoại</b>, <b>đèn</b>.
+  Không có dấu vẫn ra. Bấm <b>Xoá</b> hoặc xoá hết chữ để xem lại cả chương.</span>
+</div>
+<h3 id="nenmong-nguyen-tac-bao-trum">Nguyên tắc bao trùm</h3>
+<div class="grp grp--p"><div class="grp-h">Bốn dòng chạy suốt bảy chương sau</div><ul class="rows"><li class="r--flat"><span class="rt">Không ai ép ngủ được</span><span class="ra">chỉ dựng được điều kiện rồi đứng ra</span></li><li class="r--flat"><span class="rt">Bố quyết điều kiện</span><span class="ra">giờ lên giường, chỗ ngủ, ánh sáng, nhiệt độ, thứ tự các việc trước khi ngủ</span></li><li class="r--flat"><span class="rt">Con quyết lúc nó chìm vào giấc</span><span class="ra">và ngủ sâu bao lâu</span></li><li class="r--flat"><span class="rt">Lấn sang phần của con là phá</span><span class="ra">dỗ tới khi con ngủ hẳn rồi mới đặt xuống, đêm nào cũng vậy, là làm hộ con việc con phải tự học</span></li></ul></div>
+<div class="grp grp--p"><div class="grp-h">Việc bố làm, để con học được</div><ul class="rows"><li class="r--flat"><span class="rt">Làm y hệt một thứ tự, mỗi đêm</span><span class="ra">con chưa xem được đồng hồ, con đọc giờ ngủ bằng chuỗi việc lặp lại</span></li><li class="r--flat"><span class="rt">Đặt con xuống lúc con còn thức</span><span class="ra">thứ có mặt lúc con chìm vào giấc là thứ con tìm lại lúc hai giờ sáng</span></li><li><details class="r"><summary><span class="rt">Nói ít, giọng đều, một câu chào đêm giống nhau mỗi đêm</span></summary><div class="rmore"><p class="say"><b>Ví dụ</b>"Ngủ ngon. Bố ở ngoài."</p><p class="no"><b>Đừng nói</b>"Ngủ đi mà, bố xin con" · "Sao mãi không ngủ vậy"</p></div></details></li><li class="r--flat"><span class="rt">Hôm nào hỏng thì hôm sau làm lại đúng như cũ</span><span class="ra">đổi cách sau hai đêm xấu là xoá hết phần đã làm</span></li></ul></div>
+<p class="tip"><strong>Nền dưới ba trụ là người trực đêm.</strong> Ba trụ dưới đây chỉ dựng được nếu người trực đêm còn ngủ được. Chia ca trực, ca ngủ và luật an toàn ở <a href="#bome" data-jump="bome"><strong>chương 06</strong></a> — nhưng chốt trước ngày dự sinh, danh sách ở <a href="#truockhisinh" data-jump="truockhisinh"><strong>chương 02</strong></a>. </p>
+<hr>
+<h3 id="nenmong-ba-tru-oi-nghia-theo-tuoi-oc-bang-nay-tr">Ba trụ đổi nghĩa theo tuổi — đọc bảng này trước</h3>
+<div class="tw"><table><thead><tr><th>Giai đoạn</th><th>Ba trụ nghĩa là gì ở đây</th><th>Thứ không làm ở đây</th></tr></thead><tbody><tr><td><strong>0–3 tháng</strong></td><td><ul class="cl"><li>Chỉ ba việc: <strong>ngủ an toàn</strong>, <strong>cho bú đủ</strong>, <strong>giữ cho bố mẹ không gục</strong></li><li>Con dậy nhiều lần trong đêm là <strong>đúng, không phải hỏng</strong></li></ul></td><td><strong>Không có chuyện tập ngủ ở đây.</strong> Không bảng giờ, không để con khóc</td></tr><tr><td><strong>4–12 tháng</strong></td><td>Nhịp ngày hình thành. Trụ 2 và trụ 3 mới bắt đầu có nghĩa</td><td>Không đòi con ngủ suốt đêm không dậy</td></tr><tr><td><strong>1–3 tuổi</strong></td><td><ul class="cl"><li>Chống đối giờ ngủ, sợ tối, ra khỏi giường, bỏ giấc trưa</li><li>Trụ 1 quay lại thành việc chính</li></ul></td><td>Không thương lượng lại nếp mỗi đêm</td></tr></tbody></table></div>
+<hr>
+<h3 id="nenmong-tru-1-con-thay-an-toan">Trụ 1 · CON THẤY AN TOÀN</h3>
+<p><strong>Giường không phải chỗ tranh chấp.</strong> Một đứa trẻ đang căng thì không chìm vào giấc được, và càng cố dỗ thì càng tỉnh.</p>
+<div class="grp grp--y"><div class="grp-h">Bố làm</div><ul class="rows"><li class="r--flat"><span class="rt">Chỗ ngủ giống nhau mỗi đêm</span><span class="ra">cùng cũi, cùng vị trí trong phòng, cùng độ tối</span></li><li class="r--flat"><span class="rt">Đáp ứng con dưới bốn tháng ngay, không do dự</span><span class="ra">ở tuổi này đáp ứng nhanh không làm con bám hơn</span></li><li><details class="r"><summary><span class="rt">Chào đêm rồi rời đi thật</span><span class="ra">ra vào ba lần dạy con rằng gọi đủ to thì bố sẽ ở lại</span></summary><div class="rmore"><p class="say"><b>Ví dụ</b>"Bố ra ngoài. Bố ở gần đây."</p></div></details></li><li><details class="r"><summary><span class="rt">Sợ tối thì để đèn mờ, không bắt con chịu tối</span></summary><div class="rmore"><p class="no"><b>Đừng nói</b>"Có gì đâu mà sợ" · "Con trai gì sợ tối"</p></div></details></li></ul></div>
+<div class="grp grp--n"><div class="grp-h">Bố không làm</div><ul class="rows"><li><details class="r"><summary><span class="rt">Không dùng giường hay giấc ngủ làm hình phạt</span><span class="ra">một lần thôi là phòng ngủ đổi nghĩa, và nghĩa đó ở lại rất lâu</span></summary><div class="rmore"><p class="no"><b>Đừng nói</b>"Không ngoan thì đi ngủ ngay"</p></div></details></li><li class="r--flat"><span class="rt">Không doạ</span><span class="ra">doạ bỏ đi, doạ ma, doạ khoá cửa. Được một đêm, mất vài tháng sợ tối</span></li><li class="r--flat"><span class="rt">Không giữ con nằm bằng sức, không quát trong đêm</span><span class="ra">thấy mình sắp quát thì đặt con xuống chỗ an toàn, ra ngoài đứng một phút</span></li><li class="r--flat"><span class="rt">Không đổi luật giữa đêm</span><span class="ra">ba giờ sáng thì người mệt nhất trong nhà đang là người quyết</span></li></ul></div>
+<div class="card"><h4>Ông bà trông cháu</h4><ul><li><strong>Ba việc an toàn không thương lượng</strong> — nằm ngửa · mặt phẳng cứng · không võng, không nôi điện lúc ngủ</li><li><strong>Còn lại nhắm vào nếp hằng ngày, bỏ qua các lần lẻ</strong> — một buổi trưa ông ru trên tay không phá được gì</li><li><strong>Không sửa lưng giữa lúc đang dỗ</strong> — chờ con ngủ rồi nói. Cách nói ở <a href="#truockhisinh-e" data-jump="truockhisinh-e"><strong>chương 02</strong></a></li></ul></div>
+<details class="src"><summary>Cơ sở</summary><ul><li><strong>Phần an toàn</strong> — nằm ngửa, mặt phẳng cứng, chung phòng không chung giường: bằng chứng <strong>chắc nhất cả mục</strong></li><li><strong>"Đáp ứng nhanh dưới 4 tháng không làm con bám hơn"</strong> — suy luận từ nghiên cứu gắn bó, <strong>không phải thử nghiệm về giấc ngủ</strong></li><li><strong>"Đừng doạ, đừng dùng giường làm hình phạt"</strong> — <strong>lựa chọn giá trị của nhà mình</strong></li></ul></details>
+<hr>
+<h3 id="nenmong-tru-2-con-buon-ngu-ung-luc">Trụ 2 · CON BUỒN NGỦ ĐÚNG LÚC</h3>
+<p><strong>Con có sẵn tín hiệu buồn ngủ. Việc của bố là đặt giờ lên giường trùng với nó.</strong></p>
+<div class="grp grp--y"><div class="grp-h">Bố làm</div><ul class="rows"><li class="r--flat"><span class="rt">Kéo màn ngay sau khi con thức buổi sáng</span><span class="ra">ánh sáng buổi sáng quyết định giờ con buồn ngủ tối nay</span></li><li class="r--flat"><span class="rt">Giờ thức buổi sáng cố định, kể cả sau đêm xấu</span><span class="ra">bù bằng giấc ngày, không bù bằng giờ dậy</span></li><li class="r--flat"><span class="rt">Đặt xuống theo dấu hiệu buồn ngủ, không theo đồng hồ người lớn</span><span class="ra">ngáp, mắt lờ đờ, người chậm lại</span></li><li class="r--flat"><span class="rt">Con nằm mãi không ngủ thì tắt đèn muộn lại, không sớm hơn</span><span class="ra">cách ít nước mắt nhất, chi tiết ở <a href="#datxuong-e" data-jump="datxuong-e"><strong>chương 04</strong></a></span></li><li class="r--flat"><span class="rt">Giờ cuối trước khi ngủ thì hạ đèn, tắt màn hình, hạ tiếng</span><span class="ra">cả nhà, không chỉ phòng con</span></li></ul></div>
+<div class="grp grp--n"><div class="grp-h">Bố không làm</div><ul class="rows"><li class="r--flat"><span class="rt">Không để con quá mệt rồi mới đặt</span><span class="ra">quá mệt thì khó vào giấc hơn, ngủ ngắn hơn, dậy sớm hơn</span></li><li class="r--flat"><span class="rt">Không cho màn hình trong giờ trước khi ngủ, và không có màn hình trong phòng ngủ</span></li><li class="r--flat"><span class="rt">Không đổi giờ ngủ theo ngày</span><span class="ra">một đêm lệch hai giờ thì mất vài ngày để về lại nếp</span></li><li class="r--flat"><span class="rt">Không đánh giá một đêm rồi đổi cả hệ thống</span><span class="ra">nhìn theo tuần</span></li></ul></div>
+<details class="src"><summary>Cơ sở</summary><ul><li><strong>Hai thứ điều khiển giấc ngủ</strong> — thời gian thức tích lại, và đồng hồ sinh học chỉnh bằng ánh sáng. Bằng chứng sinh lý <strong>chắc</strong></li><li><strong>Tắt đèn muộn lại cho khớp giờ con thật sự ngủ, rồi kéo sớm dần</strong> — có thử nghiệm đối chứng, ít nước mắt nhất</li><li><strong>Nghiên cứu Mindell, 29.287 trẻ, 17 nước, có Việt Nam</strong> — Nhật thấp nhất <strong>11,6 giờ</strong>, New Zealand cao nhất <strong>13,3 giờ</strong>. Nhóm châu Á ngủ muộn và ít hơn</li><li><strong>Nên lấy nghi thức của Nhật, không lấy giờ của Nhật.</strong> Độ chắc: nghiên cứu đó đo bằng <strong>lời kể của bố mẹ</strong></li></ul></details>
+<hr>
+<h3 id="nenmong-tru-3-con-tu-vao-giac">Trụ 3 · CON TỰ VÀO GIẤC</h3>
+<p><strong>Con chìm vào giấc bằng thứ nó có sẵn bên mình, không bằng thứ bố phải mang tới.</strong> Trụ này chỉ bắt đầu từ khoảng bốn tháng.</p>
+<div class="grp grp--y"><div class="grp-h">Bố làm</div><ul class="rows"><li class="r--flat"><span class="rt">Đặt xuống lúc buồn ngủ, chưa ngủ hẳn</span><span class="ra">ngày một cữ cũng được, cữ nào dễ nhất thì làm cữ đó</span></li><li class="r--flat"><span class="rt">Để con tự loay hoay một chút trước khi vào</span><span class="ra">đếm chậm tới sáu mươi. Khóc thật thì vào, ọ ẹ thì chờ</span></li><li class="r--flat"><span class="rt">Kết thúc nghi thức ở đúng chỗ con sẽ ngủ</span><span class="ra">con thức giấc ở đâu thì cần thấy y nguyên chỗ nó đã chìm vào giấc</span></li><li class="r--flat"><span class="rt">Rút dần phần của bố, mỗi vài đêm một bước nhỏ</span><span class="ra">từ bế sang vỗ, từ vỗ sang bàn tay đặt yên, từ đặt yên sang ngồi cạnh</span></li><li class="r--flat"><span class="rt">Chọn một cách rồi giữ ít nhất hai tuần</span><span class="ra">bảng so sánh ở <a href="#datxuong-d" data-jump="datxuong-d"><strong>chương 04</strong></a>, chọn theo thứ nhà mình chịu được</span></li></ul></div>
+<div class="grp grp--n"><div class="grp-h">Bố không làm</div><ul class="rows"><li class="r--flat"><span class="rt">Không lấy việc dỗ tới lúc ngủ hẳn làm cách duy nhất, sau bốn tháng</span><span class="ra">không phải vì nó sai, mà vì đêm nào con cũng sẽ cần đúng thứ đó, ba bốn lần. <strong>Dưới bốn tháng thì làm thoải mái</strong></span></li><li class="r--flat"><span class="rt">Không ra vào thất thường</span><span class="ra">vào ngẫu nhiên là kiểu dạy con kiên trì gọi lâu nhất</span></li><li class="r--flat"><span class="rt">Không tập ngủ trước bốn tháng, và không tập trong tuần con bệnh, mọc răng, hay đổi nhà</span></li><li class="r--flat"><span class="rt">Không tự cho con dùng siro, men, trà thảo mộc hay thuốc để dễ ngủ khi chưa hỏi bác sĩ</span></li></ul></div>
+<details class="src"><summary>Cơ sở</summary><ul><li><strong>Có thử nghiệm đối chứng từ 6 tháng</strong>, theo dõi tới 12 tháng <strong>không tìm thấy tác hại</strong> lên stress hay gắn bó</li><li><strong>Nhưng:</strong> phần lớn nghiên cứu đo bằng <strong>lời kể của bố mẹ</strong>, và khác biệt dài hạn giữa các cách là <strong>nhỏ</strong></li><li><strong>Cơ chế "thứ có mặt lúc con chìm vào giấc là thứ con tìm lại lúc nửa đêm"</strong> — được chấp nhận rộng, <strong>chưa đo trực tiếp</strong></li><li>Nên <a href="#datxuong" data-jump="datxuong"><strong>chương 04</strong></a> <strong>trình bày các cách để nhà mình chọn, không chọn hộ</strong></li></ul></details>
+<hr>
+<h3 id="nenmong-nen-duoi-ba-tru-nguoi-truc-em">Nền dưới ba trụ · Người trực đêm</h3>
+<div class="grp grp--p"><div class="grp-h">Ba dòng của chương 06 kéo lên đây</div><ul class="rows"><li class="r--flat"><span class="rt">Chia ca đêm theo sức, không chia đôi cho công bằng</span><span class="ra">thứ phải bảo vệ là <strong>một ca ngủ liền một mạch, không ai được gọi</strong> cho người khó vào giấc</span></li><li class="r--flat"><span class="rt">Người hay chóng mặt có luật cứng trong đêm</span><span class="ra">đèn mờ bật sẵn · ngồi dậy đếm tới 10 rồi mới đứng · đứng yên đếm tới 5 rồi mới đi · <strong>không bế con khi vừa đứng lên</strong></span></li><li class="r--flat"><span class="rt">Thiếu ngủ kéo dài là chuyện phải báo bác sĩ, không phải chuyện gắng thêm</span><span class="ra">ngưỡng ở <a href="#bome-e" data-jump="bome-e"><strong>chương 06</strong></a>, chốt trước ngày dự sinh</span></li></ul></div>
+<details class="src"><summary>Cơ sở</summary><ul><li><strong>Mục này không đưa lời khuyên y khoa</strong> về tiền đình, lo âu, trầm cảm — phần làm được là <strong>hậu cần trong nhà</strong></li><li><strong>Giấc bị cắt vụn hại hơn giấc ngắn nhưng liền</strong> — chỗ này chắc</li><li><strong>Ai ngủ ca nào</strong> là <strong>lựa chọn của nhà mình</strong></li></ul></details>
+<hr>
+<h3 id="nenmong-bon-loai-phan-ung-khi-con-khong-ngu">Bốn loại phản ứng khi con không ngủ</h3>
+<div class="tw"><table><thead><tr><th>Loại</th><th>Là gì</th><th>Dùng khi nào</th></tr></thead><tbody><tr><td><strong>Đáp ứng ngay</strong></td><td>Bế, cho bú, kiểm tra tã và nhiệt độ</td><td><strong>Mặc định dưới 4 tháng.</strong> Và mọi tuổi khi có dấu hiệu bệnh, đau, sốt</td></tr><tr><td><strong>Chờ một chút</strong></td><td>Đứng ngoài, đếm chậm tới sáu mươi. Ọ ẹ là con chuyển giấc</td><td><strong>Mặc định sau 4 tháng.</strong> Phần lớn các lần là loại này</td></tr><tr><td><strong>Ranh giới</strong></td><td>Một câu bình thản, lặp lại <strong>nguyên văn</strong>, rồi thôi</td><td>Từ khoảng 2 tuổi</td></tr><tr><td><strong>Ép ngủ</strong></td><td>Giữ con nằm bằng sức, quát, doạ</td><td><strong>Loại khỏi hệ thống</strong></td></tr></tbody></table></div>
+<hr>
+<h3 id="nenmong-ranh-gioi-cung">Ranh giới cứng</h3>
+<h4>Con không được</h4>
+<div class="tw"><table><thead><tr><th>Hành vi</th><th>Từ tuổi</th><th>Câu bố nói</th></tr></thead><tbody><tr><td>Cầm màn hình trên giường, hoặc màn hình bật trong phòng ngủ</td><td><strong>1</strong></td><td>"Phòng ngủ nhà mình không có màn hình."</td></tr><tr><td>Trì hoãn giờ ngủ bằng chuỗi yêu cầu — thêm nước, thêm truyện, thêm một lần đi vệ sinh</td><td><strong>2</strong></td><td>"Nước để sẵn đây rồi. Truyện đọc xong rồi. Giờ mình ngủ."</td></tr><tr><td>Ra khỏi giường sau khi đã chào đêm</td><td><strong>2</strong></td><td>"Con về giường." — dắt về, không nói thêm câu nào</td></tr><tr><td>Đòi bố nằm cùng tới lúc ngủ hẳn, mỗi đêm</td><td><strong>2,5</strong></td><td>"Bố ngồi đây năm phút rồi bố ra. Mai bố cũng ngồi năm phút."</td></tr><tr><td>Làm ồn, bật đèn lớn lúc người nhà đang ngủ</td><td><strong>3</strong></td><td>"Có người đang ngủ. Con đi nhẹ, nói nhỏ."</td></tr><tr><td>Vào phòng bố mẹ buổi sáng trước giờ đã hẹn</td><td><strong>3</strong></td><td>"Đèn còn đỏ thì con chơi một mình."</td></tr></tbody></table></div>
+<h4>Bố mẹ không được</h4>
+<div class="tw"><table><thead><tr><th>Hành vi</th><th>Vì sao</th></tr></thead><tbody><tr><td>Cho con ngủ ở chỗ không phải mặt phẳng cứng — <strong>võng, nôi điện</strong>, ghế ngồi xe, xe đẩy ngả, gối chèn</td><td><ul class="cl"><li>Đầu con gập về trước thì đường thở bị chặn</li><li><a href="#angoan" data-jump="angoan">Mục <span class="warn-i">⚠</span> đầu mục lục</a></li></ul></td></tr><tr><td>Ngủ quên cùng con trên sofa hoặc ghế bành</td><td>Kiểu ngủ chung nguy hiểm nhất</td></tr><tr><td>Đắp chăn, kê gối, đặt thú bông, quây chặn cũi trước 12 tháng</td><td>Cũi phải trống. Ấm bằng túi ngủ</td></tr><tr><td>Mặc quá nhiều lớp, trùm kín đầu, hoặc để phòng nóng</td><td>Quá nóng là một yếu tố nguy cơ</td></tr><tr><td><ul class="cl"><li>Cho con nằm sấp khi con chưa tự lật được</li><li>quấn tiếp khi con đã bắt đầu lật</li></ul></td><td><ul class="cl"><li>Nằm ngửa cho mọi giấc</li><li>Quấn mà lật úp thì không tự lật ngửa lại được</li></ul></td></tr><tr><td><ul class="cl"><li>Lấy việc dỗ tới lúc con ngủ hẳn làm cách duy nhất, <strong>sau 4 tháng</strong></li><li>tập ngủ <strong>trước 4 tháng</strong></li></ul></td><td>Một bên thì đêm nào cũng cần đúng thứ đó; một bên thì con chưa có nhịp để tập theo</td></tr><tr><td>Dùng giường hoặc giấc ngủ làm hình phạt · doạ để con ngủ</td><td>Phòng ngủ đổi nghĩa sau một lần, và nghĩa đó ở lại rất lâu</td></tr><tr><td>Đổi luật giữa đêm</td><td>Lúc 3 giờ sáng, người mệt nhất trong nhà đang là người ra quyết định</td></tr><tr><td>Chia ca đêm kiểu chia đôi cho công bằng, khi một người khó vào giấc</td><td><ul class="cl"><li>Cả hai cùng ngủ vụn thì không ai còn trực được</li><li><a href="#bome-b" data-jump="bome-b"><strong>Chương 06</strong></a></li></ul></td></tr><tr><td>Bật dậy nhanh rồi bế con ngay khi vừa đứng lên</td><td><ul class="cl"><li>Chóng mặt lúc đang có con trong tay</li><li>Ngồi đếm tới 10, đứng đếm tới 5</li></ul></td></tr><tr><td>Gắng thêm nhiều đêm liền mà không nói với ai, không đổi ca, không báo bác sĩ</td><td><ul class="cl"><li>Đây là chuyện phải báo, không phải chuyện chịu</li><li><a href="#bome-e" data-jump="bome-e"><strong>Chương 06</strong></a></li></ul></td></tr><tr><td>Tự cho con dùng siro, men, trà thảo mộc, thuốc để dễ ngủ khi chưa hỏi bác sĩ</td><td><ul class="cl"><li>Gốc nằm ở nhịp ngày và điều kiện phòng</li><li><strong>Không dùng melatonin cho trẻ nhỏ khi bác sĩ chưa kê</strong></li></ul></td></tr><tr><td>So giấc ngủ của con với con nhà khác hoặc với video trên mạng</td><td>Khoảng bình thường rất rộng. Con dậy đêm ở tuổi nhỏ là đúng</td></tr></tbody></table></div>
+<p class="tip"><strong>Bảng trên bắt đầu từ 1 tuổi — dưới 1 tuổi con không có ranh giới nào, dưới 4 tháng con không làm gì sai được cả.</strong> Sáu hàng cuối bảng dưới là về bố mẹ, không về con: giấc ngủ của người trực đêm là điều kiện vận hành, không phải phần thưởng nếu còn dư thời gian. </p>
+</section>
+<section id="truockhisinh" data-title="Trước khi con ra đời">
+<header class="chero c2"><span class="cshape sh-b" aria-hidden="true"></span><span class="pnum">Chương 02</span><h2>Trước khi con ra đời</h2><p class="lede">Phòng, cũi, điều hoà, đồ phải mua, chia ca đêm, và một câu nói với ông bà.</p></header>
+
+<div class="searchbox docsearch">
+ <div class="tools">
+  <div class="search"><input type="text" class="doc-q" placeholder="Gõ để tìm trong chương này…" autocomplete="off"></div>
+  <span class="count doc-count"></span>
+ </div>
+ <span class="hint">Gõ vài chữ là được — <b>điều hoà</b>, <b>muỗi</b>, <b>ca ngủ</b>, <b>ngoại</b>, <b>đèn</b>.
+  Không có dấu vẫn ra. Bấm <b>Xoá</b> hoặc xoá hết chữ để xem lại cả chương.</span>
+</div>
+<p><strong>Chương này làm xong khi con chưa ra đời.</strong> Sau ngày sinh thì không ai còn đầu óc để quyết mấy việc dưới đây, và mọi quyết định lúc 3 giờ sáng đều là quyết định tồi. <strong>Đọc <a href="#angoan" data-jump="angoan">mục <span class="warn-i">⚠</span> Ngủ an toàn</a> trước chương này.</strong></p>
+<h3 id="truockhisinh-o-ghim-chot-truoc-ngay-du-sinh">Ô ghim · CHỐT TRƯỚC NGÀY DỰ SINH</h3>
+<p><strong>Năm quyết định. Viết ra giấy, không giữ trong đầu.</strong></p>
+<div class="tw"><table><thead><tr><th>#</th><th>Quyết định</th><th>Chốt ở đâu</th></tr></thead><tbody><tr><td>1</td><td><ul class="cl"><li><strong>Ai ngủ ca nào, đổi ca lúc mấy giờ</strong> — trong ca ngủ thì <strong>tuyệt đối không bị gọi</strong></li><li>Viết ra giấy, dán tủ lạnh</li></ul></td><td><a href="#truockhisinh-d" data-jump="truockhisinh-d">Mục D</a></td></tr><tr><td>2</td><td><strong>Cũi kê phía nào của giường</strong> — phía người đang trực, không phải phía người đang ngủ</td><td><a href="#truockhisinh-a" data-jump="truockhisinh-a">Mục A</a></td></tr><tr><td>3</td><td><strong>Ngưỡng đổi ca, và ngưỡng báo bác sĩ</strong> — con số cụ thể, <strong>xin bác sĩ ghi giúp từ bây giờ</strong></td><td><a href="#truockhisinh-d" data-jump="truockhisinh-d">Mục D</a> · <a href="#bome" data-jump="bome"><strong>chương 06</strong></a></td></tr><tr><td>4</td><td><strong>Nói gì với ông bà, ai nói</strong> — kèm đêm nào ông bà trực tới mấy giờ, và ai lo cơm đi chợ hai tuần đầu</td><td><a href="#truockhisinh-e" data-jump="truockhisinh-e">Mục E</a></td></tr><tr><td>5</td><td><strong>Ngày dọn về nhà mình</strong> — chưa chốt được, nhưng chốt được tới đâu thì ghi tới đó</td><td><a href="#truockhisinh-a" data-jump="truockhisinh-a">Mục A</a></td></tr></tbody></table></div>
+<hr>
+<h3 id="truockhisinh-a">A · Phòng ngủ &amp; khí hậu</h3>
+<div class="card"><h4>Hai nơi — giai đoạn đầu ở nhà ngoại, rồi dọn về nhà mình</h4><ul><li><strong>Giai đoạn đầu con ngủ ở nhà ngoại, dài bao lâu chưa chốt được</strong> — tuỳ sức khoẻ của mẹ sau sinh. Mọi mốc tính theo <strong>ngày dọn về</strong>, không tính theo số tháng</li><li><strong>Làm đủ ở nhà ngoại trước ngày sinh</strong> — cũi, nệm, ga, túi ngủ, đèn ngủ có công tắc trong tầm tay, mùng chụp, nhiệt–ẩm kế, bàn thay tã cạnh cũi, giỏ đêm</li><li><strong>Làm ở nhà mình trước ngày dọn về, rồi đổi phòng nhưng không đổi nếp</strong> — chỗ kê cũi, lưới chống muỗi, màn che sáng, đèn ngủ thứ hai. Ngày dọn về mang nguyên ga, túi ngủ, thứ tự các việc trước khi ngủ, và giờ giấc</li></ul></div>
+<div class="grp grp--y"><div class="grp-h">Kê phòng</div><ul class="rows"><li class="r--flat"><span class="rt">Cũi kê sát cạnh giường, cùng phòng, ba tháng đầu tính từ ngày sinh</span><span class="ra">ở cả hai nhà, và kê về <strong>phía người đang trực</strong></span></li><li class="r--flat"><span class="rt">Bàn hoặc khay thay tã trong tầm ba bước từ cũi</span><span class="ra">cùng phòng, cùng tầng. Mọi việc trong đêm nằm cùng một tầng</span></li><li class="r--flat"><span class="rt">Công tắc đèn mờ với tới khi còn đang ngồi trên giường</span><span class="ra">luật an toàn, không phải tiện nghi</span></li><li class="r--flat"><span class="rt">Đường từ giường tới cũi tới bàn thay tã trống hoàn toàn, và cũi cách cửa sổ, rèm, dây rèm, ổ cắm một sải tay</span><span class="ra">không treo gì phía trên cũi. Đi thử đường đó trong bóng tối, chân trần, trước ngày sinh</span></li></ul></div>
+<div class="sos"><h4><span class="warn-i">⚠</span> Luật cứng trong đêm cho người hay chóng mặt</h4>
+<ul><li><strong>Đèn mờ bật sẵn từ tối, sáng suốt đêm</strong> — không mò công tắc, không dùng đèn điện thoại</li><li><strong>Ngồi dậy ở mép giường, đếm chậm tới 10, rồi mới đứng lên</strong> — còn thấy chao thì <strong>ngồi đếm tiếp tới 20, chưa đứng</strong></li><li><strong>Đứng lên rồi đứng yên tại chỗ, đếm tới 5</strong> — hết năm nhịp mà còn chao thì ngồi lại xuống giường</li><li><strong>Không bế con khi vừa đứng lên</strong> — đi tới chỗ con bằng tay không, đứng vững cạnh cũi, rồi mới cúi xuống bế</li></ul>
+<p><strong>Đang chóng mặt thì không bế con.</strong> Gọi người kia. Con nằm trong cũi khóc thêm hai phút là an toàn — người bế con bị ngã thì không.</p></div>
+<div class="tw"><table><thead><tr><th>Việc</th><th>Đặt thế nào</th></tr></thead><tbody><tr><td><strong>Nóng hay lạnh</strong></td><td><ul class="cl"><li>Phòng 26–28°C, mặc hơn người lớn <strong>đúng một lớp</strong>, không trùm đầu</li><li><strong>Con số không phải thước đo cuối</strong> — sờ <strong>gáy hoặc ngực</strong>: ấm khô là đúng, ẩm mồ hôi là đang nóng</li><li><strong>Không sờ bàn tay bàn chân</strong></li><li>Mất điện thì mở hé cửa, cởi bớt một lớp, quạt tích điện — <strong>hạ nhiệt cho con trước, tính chuyện ngủ sau</strong></li></ul></td></tr><tr><td><strong>Gió và ẩm</strong></td><td><ul class="cl"><li>Điều hoà chếch lên trần, không thổi vào cũi</li><li>quạt đảo khí cũng không thổi vào con</li><li>độ ẩm 40–60%</li><li>nhiệt–ẩm kế đặt <strong>ngang tầm cũi</strong>, đọc được trong đêm</li></ul></td></tr><tr><td><strong>Muỗi</strong></td><td><ul class="cl"><li><strong>Mùng chụp cho cũi từ đêm đầu tiên</strong></li><li>lưới cửa sổ</li><li>dọn nước đọng mỗi tuần. <strong>Không</strong> đốt nhang hay xịt bình xịt trong phòng kín có con</li><li><strong>không</strong> bôi kem, dầu lên da trẻ sơ sinh khi chưa hỏi bác sĩ</li></ul></td></tr><tr><td><strong>Đèn</strong></td><td><ul class="cl"><li>Đêm: một bóng <strong>mờ, vàng ấm</strong>, đặt thấp, bật sẵn từ tối, để suốt đêm</li><li>Thay tã <strong>không bật đèn trần</strong></li><li>Sáng: kéo màn ngay khi con dậy — <a href="#nhipngay-d" data-jump="nhipngay-d"><strong>chương 03</strong></a></li></ul></td></tr><tr><td><strong>Tiếng ồn trắng</strong></td><td><strong>Nhà mình không dùng</strong> — tiếng nền suốt đêm làm người lớn trong phòng khó vào giấc</td></tr></tbody></table></div>
+<details class="src"><summary>Cơ sở</summary><ul><li><strong>Quá nóng là yếu tố nguy cơ đã xác định</strong> — mọi lời khuyên ở trên nghiêng về <strong>mát và ít lớp</strong></li><li><strong>26–28°C là khoảng thực dụng cho nhà miền Nam có điều hoà</strong>, không phải ngưỡng y khoa</li><li><strong>Tiếng ồn trắng: bằng chứng yếu và hai chiều</strong> — không dùng thì <strong>không mất gì cả</strong></li></ul></details>
+<hr>
+<h3 id="truockhisinh-b">B · Cũi</h3>
+<div class="grp grp--y"><div class="grp-h">Kiểm bằng tay, không tin lời người bán</div><ul class="rows"><li class="r--flat"><span class="rt">Nệm cứng và phẳng, khít thành cũi</span><span class="ra">nhét không quá hai ngón tay giữa nệm và thành. Ga chun đúng cỡ, căng, mua 3 cái</span></li><li class="r--flat"><span class="ra"><strong>Hạ đáy cũi khi con tự ngồi lên, hạ nấc thấp nhất khi con tự bám đứng</strong>. Giấc ngày ngủ cùng chỗ với giấc đêm — để phòng sáng vừa, không tối hẳn, cho tới khoảng 3–4 tháng</span></li></ul></div>
+<div class="grp grp--n"><div class="grp-h">Trong cũi không có gì ngoài con, ga, và túi ngủ</div><ul class="rows"><li class="r--flat"><span class="rt">Không gối, chăn, mền, thú bông, quây chặn, đệm lót thành, gối chèn tư thế</span><span class="ra">dưới 12 tháng</span></li><li class="r--flat"><span class="rt">Không võng, nôi điện đang lắc, ghế rung, ghế ngồi xe, xe đẩy ngả</span><span class="ra">cho giấc ngủ, dù là giấc ngày. <a href="#angoan" data-jump="angoan">Mục <span class="warn-i">⚠</span> đầu mục lục</a></span></li></ul></div>
+<hr>
+<h3 id="truockhisinh-c">C · Đồ phải mua</h3>
+<div class="tw"><table><thead><tr><th>Món</th><th>Vì sao</th></tr></thead><tbody><tr><td><strong>Đèn ngủ mờ vàng, công tắc trong tầm tay khi đang ngồi trên giường</strong></td><td><strong>Mua đầu tiên.</strong> Là luật an toàn cho người chóng mặt, không phải đồ trang trí</td></tr><tr><td><strong>Cũi có thanh chắn, hạ được đáy · nệm cứng khít thành</strong></td><td><ul class="cl"><li>Món chính</li><li>Mua cùng lúc để thử độ khít tại chỗ</li><li>Lắp trước, chạy thử trước</li></ul></td></tr><tr><td><strong>Ga chun bọc nệm — 3 cái · tấm lót chống thấm</strong></td><td>Đêm bị trớ hoặc tràn tã thì đổi ga trong hai phút, không phải giặt gấp</td></tr><tr><td><strong>Túi ngủ theo tuổi và độ dày</strong></td><td>Thay chăn. Phòng máy lạnh miền Nam thường chỉ cần loại mỏng</td></tr><tr><td><strong>Bàn hoặc khay thay tã đặt ngay cạnh cũi</strong></td><td>Cắt được mười bước đi trong đêm</td></tr><tr><td><strong>Giỏ đêm và bình nước cho người trực</strong></td><td><ul class="cl"><li>Trong giỏ: tã, khăn ướt, một bộ đồ, túi rác, khăn xô</li><li>Mọi thứ trong tầm một tay, soạn lại mỗi tối</li><li>Người trực không phải xuống bếp</li></ul></td></tr><tr><td><strong>Nhiệt–ẩm kế ngang tầm cũi · quạt nhỏ đảo khí</strong></td><td><ul class="cl"><li>Để không phải đoán và không phải bật đèn lớn để đọc</li><li>đều nhiệt trong phòng, không thổi vào con</li></ul></td></tr><tr><td><strong>Mùng chụp cho cũi · lưới chống muỗi cửa sổ</strong></td><td><ul class="cl"><li>Cách chống muỗi an toàn nhất cho trẻ sơ sinh</li><li>Làm trước ngày sinh</li></ul></td></tr><tr><td><strong>Màn che sáng · đèn pin nhỏ ánh vàng</strong></td><td>Nắng miền Nam lên sớm hơn giờ nhà mình muốn dậy</td></tr><tr><td><strong>Trang A4 in sẵn: luật đêm + bảng chia ca</strong></td><td><ul class="cl"><li>Tự in</li><li>Để ông bà đọc được mà không cần ai giải thích</li><li>Bản in ở <a href="#congcu-e" data-jump="congcu-e"><strong>chương 08</strong></a></li></ul></td></tr><tr><td>Khăn quấn · máy hút ẩm · ghế cho bú</td><td><ul class="cl"><li><strong>Chỉ mua khi cần.</strong> Bỏ quấn ngay khi con bắt đầu lật</li><li>ẩm kế trên 65% kéo dài</li><li>mẹ bú đêm nhiều</li></ul></td></tr></tbody></table></div>
+<hr>
+<h3 id="truockhisinh-d">D · Chia ca đêm</h3>
+<p><strong>Đêm chia làm hai: ca trực và ca ngủ.</strong> Người trong <strong>ca trực</strong> lo hết mọi việc của con. Người trong <strong>ca ngủ</strong> ngủ liền một mạch, <strong>không ai được gọi</strong> — kể cả một câu.</p>
+<div class="tw"><table><thead><tr><th>Khung giờ</th><th>Bố</th><th>Mẹ</th></tr></thead><tbody><tr><td><strong>19h, rồi 20h30</strong></td><td><ul class="cl"><li>Ăn cơm cùng nhà ngoại</li><li>lên phòng, tắt đèn lớn, bỏ điện thoại ra khỏi giường</li></ul></td><td>Ăn cơm cùng nhà ngoại</td></tr><tr><td><strong>21h tới 3h</strong></td><td><strong>Ca ngủ.</strong> Không bị gọi, không nhắn, không nhận việc gì</td><td><strong>Ca trực.</strong> Lo hết mọi việc của con</td></tr><tr><td><strong>3h tới 9h sáng</strong></td><td><strong>Ca trực.</strong> Lo hết mọi việc của con</td><td><strong>Ca ngủ.</strong> Không bị gọi</td></tr></tbody></table></div>
+<div class="grp grp--p"><div class="grp-h">Bốn luật của cách chia ca</div><ul class="rows"><li class="r--flat"><span class="rt">Chia theo sức, không chia cho công bằng</span><span class="ra">hai người ngủ vụn bằng nhau thì hôm sau không còn ai trực được</span></li><li class="r--flat"><span class="rt">Người khó vào giấc cần một ca liền</span><span class="ra">mất 60 phút mới vào giấc thì bị gọi một lần là mất cả ca</span></li><li class="r--flat"><span class="rt">Ca đổi theo tuần, không đổi theo đêm</span><span class="ra">và <strong>không đổi luật giữa đêm</strong></span></li><li class="r--flat"><span class="rt">Mẹ bú trực tiếp thì ca của bố là mọi việc quanh cữ bú</span><span class="ra">bế con dậy, thay tã, ợ hơi, đặt lại. Mẹ chỉ mở mắt đúng đoạn bú</span></li></ul></div>
+<p><strong>Khung giờ trên là bản nháp.</strong> Chốt thật sau bài chạy thử một tuần ở <a href="#truockhisinh-f" data-jump="truockhisinh-f">mục F</a>. Và <strong>ba tháng đầu con bú đêm nhiều lần là đúng, không phải hỏng</strong> — chia ca là để chịu được nó, không phải để chấm dứt nó.</p>
+<div class="sos"><h4>Ngưỡng báo bác sĩ — xin bác sĩ ghi giúp từ bây giờ</h4>
+<p>Mục này <strong>không đưa lời khuyên y khoa</strong> và không tự đặt ngưỡng. Mang ba câu này tới buổi khám gần nhất:</p>
+<ul><li><strong>Mất ngủ mấy đêm liền thì phải báo, thay vì gắng thêm?</strong></li><li><strong>Dấu hiệu nào của lo âu hoặc trầm cảm là dấu hiệu phải gọi ngay, không chờ lịch khám?</strong></li><li><strong>Thuốc đang dùng có cần đổi giờ uống khi ca đêm đổi giờ ngủ không?</strong></li></ul>
+<p>Ghi câu trả lời vào <a href="#congcu-c" data-jump="congcu-c">ô điền ở chương 08</a>. <strong>Người đang kiệt sức là người đánh giá tình trạng của chính mình kém nhất</strong> — nên con số phải nằm trên giấy từ trước.</p></div>
+<details class="src"><summary>Cơ sở</summary><ul><li><strong>Giấc bị cắt vụn hại hơn giấc ngắn nhưng liền</strong> — bằng chứng thực nghiệm khá chắc</li><li><strong>Ai ngủ ca nào, đổi ca mấy giờ</strong> — <strong>lựa chọn của gia đình</strong>, không có nghiên cứu nào nói cách này hơn cách kia</li><li>Nhà mình chọn cách trên vì nó cho người khó vào giấc <strong>đoạn đầu đêm</strong> — đoạn nhà yên nhất</li></ul></details>
+<hr>
+<h3 id="truockhisinh-e">E · Nói với ông bà</h3>
+<p><strong>Giai đoạn đầu nhà mình ở trong nhà ông bà ngoại.</strong> Khác hẳn chuyện "nhờ ông bà qua trông": bố là <strong>khách trong nhà người ta</strong>. Cái ra luật được là <strong>những gì liên quan tới con mình</strong>.</p>
+<div class="grp grp--y"><div class="grp-h">Cách nói</div><ul class="rows"><li class="r--flat"><span class="rt">Vợ nói với bố mẹ vợ, không phải bố nói</span><span class="ra">bố đứng cạnh, gật, không nói thêm</span></li><li class="r--flat"><span class="rt">Ra luật cho con mình, không ra luật cho căn nhà</span><span class="ra">và <strong>xin phép trước khi sửa gì trong phòng</strong></span></li><li class="r--flat"><span class="rt">Chỉ ba thứ không thương lượng, còn lại nhường hết</span><span class="ra">nằm ngửa · mặt phẳng cứng · không võng, không nôi điện lúc ngủ</span></li><li><details class="r"><summary><span class="rt">Nói lý do y tế một lần, ngắn, rồi thôi. Xin khung giờ cụ thể, và nói rõ giờ nào đừng gọi bố</span></summary><div class="rmore"><p class="say"><b>Ví dụ</b><em>"Ba nó bị tiền đình với khó ngủ, bác sĩ dặn phải ngủ đủ một giấc liền. Từ 9 giờ tối tới 3 giờ sáng là ca ngủ của ảnh, ngoại có gì cứ gọi con."</em></p></div></details></li></ul></div>
+<div class="card"><h4>Câu mẫu</h4><ul><li><strong>Phần an toàn:</strong> <em>"Có ba thứ bác sĩ dặn tụi con giữ đúng: cháu nằm ngửa, nằm nệm cứng, và không cho ngủ võng hay nôi điện. Còn lại ngoại cứ tự nhiên."</em></li><li><strong>Bị góp ý giữa lúc đang dỗ:</strong> <em>"Dạ để cháu thử tự ngủ chút xíu đã ngoại."</em> — rồi chuyển chuyện</li><li><strong>Nhà nội ghé chơi:</strong> <em>"Nội ghé tầm 9–11 giờ sáng là cháu tỉnh, chứ chiều là giờ cháu ngủ rồi."</em> · <em>"Cháu đang ngủ, chút cháu dậy con bồng ra cho nội nha."</em></li></ul></div>
+<div class="grp grp--n"><div class="grp-h">Bố không làm</div><ul class="rows"><li class="r--flat"><span class="rt">Không sửa lưng giữa lúc ông bà đang dỗ cháu, và không nhắm vào các lần lẻ</span><span class="ra">một buổi trưa ngoại ru cháu trên tay không phá được gì</span></li><li class="r--flat"><span class="rt">Không tự đi nói với bố mẹ vợ những chuyện vợ nên nói, và không im lặng chịu đựng rồi bùng một lần</span><span class="ra">thấy vướng thì nói với vợ trong ngày hôm đó</span></li><li class="r--flat"><span class="rt">Không giải thích hệ thống cho người chỉ ghé một buổi</span><span class="ra">khách chỉ cần biết giờ nào ghé</span></li></ul></div>
+<div class="grp grp--p"><div class="grp-h">Việc nhà khi ở nhà ngoại</div><ul class="rows"><li class="r--flat"><span class="rt">Bố nhận một phần việc cố định, công khai</span><span class="ra">rửa chén tối, đổ rác, đi chợ cuối tuần. Việc ban ngày, không đụng ca ngủ</span></li><li class="r--flat"><span class="rt">Người đang trong ca ngủ không nhận việc nhà nào</span><span class="ra">kể cả việc mười phút, kể cả khi có khách. Nhà ngoại ăn tối 19h, bố vào ca ngủ 21h: không va nhau, nhưng phải nói trước để <strong>sau 21h không ai gọi bố xuống nhà</strong></span></li></ul></div>
+<hr>
+<h3 id="truockhisinh-f">F · Diễn tập và đếm ngược</h3>
+<div class="tw"><table><thead><tr><th>Bài tập</th><th>Làm gì</th><th>Kiểm cái gì</th></tr></thead><tbody><tr><td><strong>1 · Đi đường đêm</strong></td><td><ul class="cl"><li>Tắt hết đèn, chỉ để đèn mờ</li><li>Đi từ giường tới cũi tới bàn thay tã tới nhà vệ sinh, chân trần</li></ul></td><td>Có vấp gì không · có đủ sáng không</td></tr><tr><td><strong>2 · Luật tiền đình</strong></td><td>Ngồi dậy đếm tới 10, đứng lên, đứng yên đếm tới 5, đi tới cũi, mới cúi xuống bế</td><td><ul class="cl"><li>Đếm tới 10 đã đủ chưa</li><li>công tắc đèn có với tới lúc đang ngồi không</li></ul></td></tr><tr><td><strong>3 · Chạy thử ca đêm một tuần</strong></td><td>Tuần <strong>08/11 tới 15/11</strong>, hai vợ chồng ngủ đúng khung giờ hai ca đã chốt</td><td><ul class="cl"><li><strong>Bài quan trọng nhất.</strong> Người trong ca ngủ có vào giấc được không</li><li>nếu không thì đổi khung <strong>bây giờ</strong>, không đổi sau khi sinh</li></ul></td></tr></tbody></table></div>
+<p><strong>Ngày dự sinh: 15/11.</strong> Bảng này ở <a href="#congcu-d" data-jump="congcu-d"><strong>chương 08</strong></a> có bản đánh dấu được — tick từng việc, tự lưu, in ra được.</p>
+<div class="tw"><table><thead><tr><th>Mốc</th><th>Xong trước ngày</th><th>Việc</th></tr></thead><tbody><tr><td><strong>Ngay bây giờ</strong></td><td>—</td><td><ul class="cl"><li>Chốt khung giờ hai ca</li><li>hỏi bác sĩ ba câu ở <a href="#truockhisinh-d" data-jump="truockhisinh-d">mục D</a></li><li>mua cũi và nệm</li></ul></td></tr><tr><td><strong>Còn 6 tuần</strong></td><td><strong>04/10</strong></td><td><ul class="cl"><li>Lắp cũi ở nhà ngoại</li><li>lưới chống muỗi</li><li>màn che sáng</li><li>đèn ngủ và công tắc đầu giường</li></ul></td></tr><tr><td><strong>Còn 4 tuần</strong></td><td><strong>18/10</strong></td><td><ul class="cl"><li>Mua nốt <a href="#truockhisinh-c" data-jump="truockhisinh-c">danh sách C</a></li><li>nói chuyện với ông bà ngoại</li><li>in trang A4 dán tủ lạnh</li></ul></td></tr><tr><td><strong>Còn 2 tuần</strong></td><td><strong>01/11</strong></td><td>Ba bài diễn tập · soạn giỏ đêm · nấu sẵn cấp đông</td></tr><tr><td><strong>Còn 1 tuần</strong></td><td><strong>08/11</strong></td><td>Chạy thử ca đêm · đọc lại <a href="#angoan" data-jump="angoan">mục <span class="warn-i">⚠</span> <em>Ngủ an toàn</em></a></td></tr><tr><td><strong>Trước ngày dọn về</strong></td><td><em>(chưa chốt)</em></td><td><ul class="cl"><li>Kê xong phòng ở nhà mình</li><li>đi thử đường đêm ở phòng mới</li><li>giữ nguyên ga, túi ngủ và thứ tự nghi thức</li></ul></td></tr></tbody></table></div>
+</section>
+<section id="nhipngay" data-title="Nhịp ngày">
+<header class="chero c3"><span class="cshape sh-r" aria-hidden="true"></span><span class="pnum">Chương 03</span><h2>Nhịp ngày</h2><p class="lede">Thời gian biểu số giờ thức theo tháng tuổi, giấc ngày, giờ lên giường, ánh sáng sáng sớm.</p></header>
+
+<div class="searchbox docsearch">
+ <div class="tools">
+  <div class="search"><input type="text" class="doc-q" placeholder="Gõ để tìm trong chương này…" autocomplete="off"></div>
+  <span class="count doc-count"></span>
+ </div>
+ <span class="hint">Gõ vài chữ là được — <b>điều hoà</b>, <b>muỗi</b>, <b>ca ngủ</b>, <b>ngoại</b>, <b>đèn</b>.
+  Không có dấu vẫn ra. Bấm <b>Xoá</b> hoặc xoá hết chữ để xem lại cả chương.</span>
+</div>
+<p><strong>Con ngủ được vào buổi tối là kết quả của cả ngày trước đó.</strong> Chương này là phần "cả ngày" đó.</p>
+<hr>
+<h3 id="nhipngay-a">A · Ba tháng đầu chưa có nhịp</h3>
+<p><strong>Đồng hồ sinh học của con bắt đầu chạy quanh 8 tới 12 tuần.</strong> Trước đó không có lịch nào áp được.</p>
+<div class="grp grp--y"><div class="grp-h">Ba việc, không có việc thứ tư</div><ul class="rows"><li><details class="r"><summary><span class="rt">Ngày thì sáng và ồn, đêm thì tối và yên</span><span class="ra">ban ngày sinh hoạt bình thường, không rón rén khi con ngủ ngày; ban đêm không bật đèn lớn, không nói chuyện, không chơi</span></summary><div class="rmore"><p class=""><b>Hệ quả</b>khác biệt giữa hai cảnh này là tín hiệu duy nhất con đọc được ở tuổi này</p></div></details></li><li class="r--flat"><span class="rt">Sáng nào cũng cho con ra chỗ sáng trong giờ đầu sau khi dậy</span><span class="ra">kể cả khi đêm qua hỏng</span></li><li class="r--flat"><span class="rt">Không đặt lịch, không đếm cữ, không tập ngủ</span><span class="ra">và <strong>con dậy nhiều lần trong đêm ở tuổi này là đúng, không phải hỏng</strong></span></li></ul></div>
+<hr>
+<h3 id="nhipngay-b">B · Thời gian biểu số giờ thức và tổng thời lượng</h3>
+<div class="tw"><table><thead><tr><th>Tuổi</th><th>Thức được bao lâu giữa hai giấc</th><th>Số giấc ngày</th><th>Tổng giờ ngủ cả ngày đêm</th></tr></thead><tbody><tr><td><strong>0–3 tháng</strong></td><td>45–90 phút</td><td>Nhiều, không cần đếm</td><td>14–17 giờ</td></tr><tr><td><strong>4–8 tháng</strong></td><td>1,5–3 giờ</td><td>3–4</td><td>12–16 giờ</td></tr><tr><td><strong>9–18 tháng</strong></td><td>3–5 giờ</td><td>2 giấc, rồi rút dần còn 1</td><td>11–15 giờ</td></tr><tr><td><strong>18 tháng–3 tuổi</strong></td><td>5–6 giờ</td><td>1</td><td>10–13 giờ</td></tr></tbody></table></div>
+<p class="tip"><strong>Bảng này là căn cứ để so, không phải lịch để chạy theo.</strong> Con nhà mình sẽ có số của riêng nó — ghi nhật ký ngủ ở <a href="#congcu-a" data-jump="congcu-a"><strong>chương 08</strong></a> vài tuần rồi so lại. <strong>Dấu hiệu của con thắng con số trong bảng</strong>, cách đọc dấu hiệu ở <a href="#nhipngay-e" data-jump="nhipngay-e">mục E</a>. Con nằm ngoài khoảng mà vẫn vui vẻ, vẫn lên cân, ban ngày vẫn tỉnh táo thì không có gì phải sửa. </p>
+<details class="src"><summary>Cơ sở</summary><ul><li><strong>Số giờ thức giữa hai giấc là khái niệm của giới tư vấn giấc ngủ, không phải của nghiên cứu đối chứng</strong> — con số lưu hành rộng và khá thống nhất, nhưng gốc là kinh nghiệm hành nghề</li><li><strong>Cột tổng giờ là khuyến nghị đồng thuận của hội đồng chuyên môn</strong>, không phải ngưỡng đo được. Khoảng bình thường thật sự còn rộng hơn</li><li><strong>Phần chắc là cái nằm dưới bảng</strong> — áp lực ngủ tích theo thời gian thức là sinh lý có thật. Chỉ <em>con số cụ thể</em> mới là ước lượng</li></ul></details>
+<hr>
+<h3 id="nhipngay-c">C · Giờ lên giường</h3>
+<div class="tw"><table><thead><tr><th>Tuổi</th><th>Giờ tắt đèn</th></tr></thead><tbody><tr><td><strong>4–12 tháng</strong></td><td><strong>19h–20h</strong></td></tr><tr><td><strong>1–3 tuổi</strong></td><td><strong>19h–20h30</strong></td></tr></tbody></table></div>
+<div class="grp grp--y"><div class="grp-h">Hai luật</div><ul class="rows"><li><details class="r"><summary><span class="rt">Giữ giờ dậy buổi sáng cố định, kể cả sau đêm xấu</span><span class="ra">giữ giờ dậy, đừng giữ số giờ ngủ</span></summary><div class="rmore"><p class=""><b>Hệ quả</b>cho ngủ bù buổi sáng thì tối nay lại lệch tiếp. <strong>Bù bằng giấc ngày, không bù bằng giờ dậy</strong></p></div></details></li><li><details class="r"><summary><span class="rt">Con nằm mãi không ngủ thì tắt đèn muộn lại, không sớm hơn</span><span class="ra">đặt xuống đúng lúc con thật buồn ngủ, rồi mỗi vài đêm kéo sớm dần lên 15 phút</span></summary><div class="rmore"><p class=""><b>Hệ quả</b>đây là cách ít nước mắt nhất và có bằng chứng mạnh. Chi tiết ở <a href="#datxuong-e" data-jump="datxuong-e"><strong>chương 04</strong></a></p></div></details></li></ul></div>
+<hr>
+<h3 id="nhipngay-d">D · Ánh sáng</h3>
+<div class="tw"><table><thead><tr><th>Lúc nào</th><th>Làm gì</th></tr></thead><tbody><tr><td><strong>Giờ đầu sau khi con dậy</strong></td><td><ul class="cl"><li>Kéo màn, mở cửa, cho con ra chỗ sáng nhất trong nhà</li><li><strong>Việc quan trọng nhất cả chương</strong> — ánh sáng buổi sáng là thứ chỉnh đồng hồ sinh học của con, và nó quyết định giờ con buồn ngủ tối nay</li></ul></td></tr><tr><td><strong>Giờ cuối trước khi ngủ</strong></td><td>Hạ đèn cả nhà, không chỉ phòng con. Tắt màn hình</td></tr><tr><td><strong>Ban đêm</strong></td><td><ul class="cl"><li>Phòng tối, một đèn mờ vàng ấm đặt thấp</li><li>Không bật đèn trần lúc thay tã</li></ul></td></tr><tr><td><strong>Nắng miền Nam lên 5h30–6h15</strong></td><td><ul class="cl"><li>Con dậy theo nắng thì đó là <strong>màn che sáng chưa đủ dày</strong>, không phải con dậy sớm</li><li>Chuyện dậy quá sớm ở <a href="#thucdem-e" data-jump="thucdem-e"><strong>chương 05</strong></a></li></ul></td></tr></tbody></table></div>
+<hr>
+<h3 id="nhipngay-e">E · Đọc dấu hiệu con — buồn ngủ và quá mệt trông khác nhau</h3>
+<div class="tw"><table><thead><tr><th></th><th><strong>Buồn ngủ — đặt xuống ngay</strong></th><th><strong>Quá mệt — đã muộn</strong></th></tr></thead><tbody><tr><td><strong>Mắt</strong></td><td>Lờ đờ, chớp chậm, nhìn xa</td><td>Mở to, liếc nhanh, đỏ</td></tr><tr><td><strong>Người và tay</strong></td><td>Chậm lại, mềm ra, dụi mắt, kéo tai</td><td>Cựa liên tục, ưỡn người, gạt tay bố ra</td></tr><tr><td><strong>Tiếng</strong></td><td>Yên hơn, ngáp, ọ ẹ nhẹ</td><td>Khóc gắt, càng dỗ càng to</td></tr><tr><td><strong>Đặt xuống thì</strong></td><td>Vào giấc trong 5–20 phút</td><td>Chống lại 30–60 phút, rồi ngủ ngắn</td></tr></tbody></table></div>
+<p class="tip"><strong>Lỡ để con quá mệt thì đừng ép ngủ tại chỗ</strong> — bế ra chỗ tối và yên, dỗ cho hạ xuống trước. Giấc đó sẽ ngắn và xấu, không sửa được nữa. <strong>Hôm sau đặt xuống sớm hơn 15 phút, không sớm hơn nữa.</strong> </p>
+<hr>
+<h3 id="nhipngay-f">F · Bỏ bớt cữ ngủ ngày</h3>
+<div class="tw"><table><thead><tr><th>Con đang ngủ mấy giấc ban ngày</th><th>Rút xuống còn</th><th>Quanh tuổi</th></tr></thead><tbody><tr><td>Nhiều giấc ngắn rải trong ngày</td><td><strong>2 giấc: một sáng, một trưa</strong></td><td>6–9 tháng</td></tr><tr><td>2 giấc</td><td><strong>1 giấc trưa duy nhất</strong></td><td>13–18 tháng</td></tr><tr><td>1 giấc trưa</td><td><strong>Không còn giấc ngày nào</strong></td><td>3–5 tuổi, <strong>rất nhiều trẻ vẫn cần giấc trưa tới 4 tuổi</strong></td></tr></tbody></table></div>
+<div class="grp grp--n"><div class="grp-h">Bố không làm</div><ul class="rows"><li class="r--flat"><span class="rt">Không cắt giấc ngày để tối con ngủ ngon hơn</span><span class="ra">thường làm ngược lại: quá mệt thì khó vào giấc hơn</span></li><li><details class="r"><summary><span class="rt">Không bỏ giấc trong tuần con đang bệnh, mọc răng, hoặc đổi nhà</span></summary><div class="rmore"><p class=""><b>Hệ quả</b>với nhà mình thì <strong>tuần dọn về nhà mình là tuần không đổi gì cả</strong></p></div></details></li></ul></div>
+<hr>
+<h3 id="nhipngay-g">G · Một ngày mẫu</h3>
+<p><strong>Ba mốc, cột bên phải luôn là bố.</strong> Giờ trong bảng là bản nháp — chỉnh theo con thật sau vài tuần ghi nhật ký.</p>
+<h4>Khoảng 4–8 tuần · đoạn nặng nhất, chưa có nhịp</h4>
+<div class="tw"><table><thead><tr><th>Giờ</th><th>Con</th><th>Bố</th></tr></thead><tbody><tr><td>Không có giờ cố định</td><td>Bú, ngủ, thức — chu kỳ 2–3 giờ, cả ngày lẫn đêm</td><td></td></tr><tr><td>Giờ đầu sau khi con dậy</td><td>Ra chỗ sáng</td><td></td></tr><tr><td>Chiều tối</td><td><ul class="cl"><li>Đoạn quấy nhất trong ngày</li><li><strong>Khóc đạt đỉnh quanh tuần 6 rồi giảm dần</strong></li></ul></td><td></td></tr><tr><td>19h · 20h30</td><td></td><td><ul class="cl"><li>Ăn cơm cùng nhà ngoại</li><li>lên phòng, bỏ điện thoại ra khỏi giường</li></ul></td></tr><tr><td>21h–3h</td><td>Bú vài cữ</td><td><strong>Ca ngủ. Không bị gọi</strong></td></tr><tr><td>3h–9h</td><td>Bú vài cữ</td><td><strong>Ca trực</strong></td></tr></tbody></table></div>
+<p><strong>Ở mốc này không có gì để chỉnh.</strong> Việc duy nhất là giữ cho ca ngủ của bố không bị phá, và cho con ra sáng mỗi buổi sáng.</p>
+<h4>8 tháng · hai giấc ngày, nhịp đã rõ</h4>
+<div class="tw"><table><thead><tr><th>Giờ</th><th>Con</th><th>Bố</th></tr></thead><tbody><tr><td>6h30</td><td>Dậy, kéo màn, ra sáng</td><td>Đang trong ca trực, hết ca lúc 9h</td></tr><tr><td>9h–10h</td><td>Giấc sáng</td><td></td></tr><tr><td>13h–14h30</td><td>Giấc trưa, giấc dài hơn</td><td></td></tr><tr><td>18h15</td><td>Nghi thức: tắm, thay đồ, sữa, truyện</td><td></td></tr><tr><td>19h</td><td><strong>Tắt đèn</strong></td><td>Ăn cơm cùng nhà ngoại ngay sau khi đặt con xong</td></tr><tr><td>20h30 · 21h–3h</td><td></td><td>Lên phòng, hạ nhịp · <strong>Ca ngủ</strong></td></tr></tbody></table></div>
+<h4>2 tuổi · một giấc trưa, bắt đầu chống đối giờ ngủ</h4>
+<div class="tw"><table><thead><tr><th>Giờ</th><th>Con</th><th>Bố</th></tr></thead><tbody><tr><td>6h30–7h</td><td>Dậy, ra sáng</td><td></td></tr><tr><td>12h30–14h30</td><td>Giấc trưa, một giấc duy nhất</td><td></td></tr><tr><td>19h</td><td>Nghi thức</td><td>Ăn cơm cùng nhà</td></tr><tr><td>19h45–20h</td><td><strong>Tắt đèn</strong></td><td></td></tr><tr><td>20h30 · 21h–3h</td><td></td><td>Lên phòng · <strong>Ca ngủ</strong></td></tr></tbody></table></div>
+<hr>
+<h3 id="nhipngay-h">H · Nhịp của con và ca ngủ của bố là một hệ</h3>
+<div class="tw"><table><thead><tr><th>Con tắt đèn lúc</th><th>Bố được gì</th></tr></thead><tbody><tr><td><strong>19h</strong></td><td>Hai tiếng yên trước ca ngủ 21h. Ăn cơm, hạ nhịp, vào giấc đúng giờ</td></tr><tr><td>21h30</td><td><ul class="cl"><li>Bố vào ca ngủ muộn</li><li>Ca trực 3h vẫn tới đúng giờ, nên <strong>mất trắng một tiếng rưỡi</strong></li></ul></td></tr></tbody></table></div>
+<div class="grp grp--p"><div class="grp-h">Hai dòng nối sang chương 06</div><ul class="rows"><li class="r--flat"><span class="rt">Giữ giờ tắt đèn của con sớm là cách rẻ nhất để bảo vệ ca ngủ của bố</span><span class="ra">không tốn gì, không cần ai giúp</span></li><li class="r--flat"><span class="ra"><strong>Người khó vào giấc cần một tiếng rưỡi tới hai tiếng hạ nhịp</strong> giữa việc cuối trong ngày và lúc tắt đèn</span></li></ul></div>
+<details class="src"><summary>Cơ sở</summary><ul><li><strong>Mục này không đưa lời khuyên y khoa</strong> — phần làm được là sắp xếp giờ giấc trong nhà</li><li><strong>Giấc bị cắt vụn hại hơn giấc ngắn nhưng liền</strong> — chỗ này chắc, và là lý do giữ ca ngủ liền một mạch</li><li><strong>Con số 19h và 21h là của nhà mình</strong>, dựng quanh bữa cơm 19h ở nhà ngoại — không phải khuyến nghị chung</li></ul></details>
+</section>
+<section id="datxuong" data-title="Đặt xuống &amp; tập tự ngủ">
+<header class="chero c4"><span class="cshape sh-q" aria-hidden="true"></span><span class="pnum">Chương 04</span><h2>Đặt xuống &amp; tập tự ngủ</h2><p class="lede">Nghi thức đặt ngủ, rồi bảy cách xếp cạnh nhau để nhà mình chọn.</p></header>
+
+<div class="searchbox docsearch">
+ <div class="tools">
+  <div class="search"><input type="text" class="doc-q" placeholder="Gõ để tìm trong chương này…" autocomplete="off"></div>
+  <span class="count doc-count"></span>
+ </div>
+ <span class="hint">Gõ vài chữ là được — <b>điều hoà</b>, <b>muỗi</b>, <b>ca ngủ</b>, <b>ngoại</b>, <b>đèn</b>.
+  Không có dấu vẫn ra. Bấm <b>Xoá</b> hoặc xoá hết chữ để xem lại cả chương.</span>
+</div>
+<p><strong>Mục này trình bày các cách để nhà mình chọn, không chọn hộ.</strong> Khác biệt dài hạn giữa các cách là nhỏ — thứ quyết định là nhà mình chịu được cách nào.</p>
+<h3 id="datxuong-a">A · Điều kiện trước khi bắt đầu</h3>
+<div class="grp grp--y"><div class="grp-h">Thiếu một điều thì hoãn, không tập</div><ul class="rows"><li class="r--flat"><span class="rt">Nghi thức và đặt xuống: từ lúc mới sinh</span><span class="ra">nhưng chỉ có kết quả từ 4 tháng</span></li><li class="r--flat"><span class="rt">Bốn cách ở <a href="#datxuong-d" data-jump="datxuong-d">bảng D</a>: chỉ từ 6 tháng</span><span class="ra">sớm hơn thì con chưa đủ nhịp để tập theo</span></li><li class="r--flat"><span class="rt">Con đang khoẻ</span><span class="ra">bệnh, sốt, mọc răng thì hoãn</span></li><li class="r--flat"><span class="rt">Hai vợ chồng cùng một cách</span><span class="ra">ông bà biết trước. Một người phá là hỏng</span></li><li class="r--flat"><span class="rt">Tuần tập thì mẹ trực</span><span class="ra">bố giữ nguyên ca ngủ, chọn tuần bố đỡ nhất trong tháng</span></li><li class="r--flat"><span class="rt">Bố chỉ đứng dậy khi mẹ gọi đích danh</span><span class="ra">không đứng dậy vì nghe tiếng con</span></li></ul></div>
+<hr>
+<h3 id="datxuong-b">B · Nghi thức đặt ngủ</h3>
+<p><strong>寝かしつけ · nekashitsuke</strong> — chuỗi việc cố định 20–30 phút, kết thúc trong cũi. Nền của mọi cách phía dưới.</p>
+<div class="grp grp--y"><div class="grp-h">Bốn luật</div><ul class="rows"><li class="r--flat"><span class="rt">Cùng việc, cùng thứ tự, mỗi đêm</span><span class="ra">tắm · thay đồ · sữa · truyện · câu chào · tắt đèn</span></li><li class="r--flat"><span class="rt">Việc cuối diễn ra trong cũi</span><span class="ra">không phải trên tay rồi mới đặt vào</span></li><li class="r--flat"><span class="rt">Đèn hạ dần, không màn hình</span><span class="ra">suốt cả 30 phút</span></li><li class="r--flat"><span class="rt">Không dài thêm khi con đòi</span><span class="ra">thêm một truyện hôm nay thì mai đòi hai</span></li></ul></div>
+<hr>
+<h3 id="datxuong-c">C · Kỹ năng nền — đặt xuống lúc buồn ngủ, chưa ngủ hẳn</h3>
+<div class="grp grp--p"><div class="grp-h">Không phải phương pháp, là kỹ năng</div><ul class="rows"><li class="r--flat"><span class="rt">Đặt xuống lúc mắt còn hé, người đã nặng</span><span class="ra">làm được thì mọi cách phía dưới đều dễ hơn</span></li><li class="r--flat"><span class="rt">Chỉ làm ở một giấc trong ngày</span><span class="ra">giấc đầu tiên buổi sáng thường dễ nhất</span></li><li class="r--flat"><span class="rt">Lúc đầu hỏng nhiều hơn ăn</span><span class="ra">hỏng một giấc thì chịu được, hỏng cả ngày thì bỏ cuộc</span></li></ul></div>
+<div class="grp grp--p"><div class="grp-h">Vì sao đặt xuống lúc còn thức lại quan trọng</div><ul class="rows"><li class="r--flat"><span class="rt">Cứ 45–60 phút con nổi lên một lần</span><span class="ra">mỗi lần đó con liếc xem xung quanh có gì đổi không</span></li><li class="r--flat"><span class="rt">Ngủ trên tay rồi được đặt vào cũi</span><span class="ra">tay bố biến mất, con tỉnh hẳn và gọi</span></li><li class="r--flat"><span class="rt">Chìm vào giấc khi đang nằm trong cũi</span><span class="ra">mọi thứ y như cũ, con trở mình rồi ngủ tiếp</span></li><li class="r--flat"><span class="rt">"Ngủ đêm ngoan" không phải là không thức giấc</span><span class="ra">chỉ là tự chìm lại xuống được</span></li></ul></div>
+<hr>
+<h3 id="datxuong-d">D · Bảy cách, xếp cạnh nhau</h3>
+<div class="tw"><table><thead><tr><th>Cách</th><th>Từ tháng</th><th>Con khóc</th><th>Bằng chứng</th></tr></thead><tbody><tr><td><strong>Nghi thức ngủ cố định mỗi đêm</strong></td><td>Mọi tuổi</td><td>Không</td><td><strong>Mạnh</strong> — nền của mọi cách khác</td></tr><tr><td><strong>Đặt xuống lúc buồn ngủ, chưa ngủ hẳn</strong></td><td>Sớm</td><td>Ít</td><td>Vừa — kỹ năng nền</td></tr><tr><td><strong>Tắt đèn muộn lại cho khớp giờ con thật sự ngủ, rồi kéo sớm dần</strong></td><td>6+</td><td><strong>Rất ít</strong></td><td><strong>Mạnh</strong> — có thử nghiệm đối chứng</td></tr><tr><td><strong>Ngồi cạnh cũi, mỗi vài đêm dời ghế ra xa dần</strong></td><td>6+</td><td>Vừa</td><td>Vừa</td></tr><tr><td><strong>Ra khỏi phòng, quay vào kiểm tra theo khoảng giãn dần</strong></td><td>6+</td><td>Có</td><td><strong>Mạnh nhất về hiệu quả</strong></td></tr><tr><td><strong>Ra khỏi phòng và không quay lại</strong></td><td>6+</td><td>Nhiều</td><td>Hiệu quả, rất ít nhà theo nổi</td></tr><tr><td><strong>Ngủ gần an toàn, đáp ứng ngay mỗi lần con gọi</strong></td><td>Mọi tuổi</td><td>Không</td><td>Không phải phương pháp — là lựa chọn sắp xếp</td></tr></tbody></table></div>
+<details class="src"><summary>Cơ sở</summary><ul><li><strong>Theo dõi tới 12 tháng không tìm thấy tác hại</strong> của hai cách gây khóc lên stress hay gắn bó</li><li>Phần lớn nghiên cứu đo bằng <strong>lời kể của bố mẹ</strong>, và khác biệt dài hạn là <strong>nhỏ</strong></li><li>Nên <strong>chọn theo thứ nhà mình chịu được</strong>, không chọn theo thứ hiệu quả nhất trên giấy</li></ul></details>
+<hr>
+<h3 id="datxuong-e">E · Cách chạy được ở nhà mình — tắt đèn muộn lại, rồi kéo sớm dần</h3>
+<p><strong>Ví dụ bằng số.</strong> Muốn con ngủ 19h, nhưng con thật sự chìm vào giấc lúc <strong>20h15</strong>. Tuần đầu tắt đèn <strong>20h15</strong>. Ổn ba đêm thì <strong>20h00</strong>, rồi <strong>19h45</strong>, <strong>19h30</strong>, cho tới khi về 19h. Mất ba tới năm tuần.</p>
+<div class="tw"><table><thead><tr><th>Bước</th><th>Làm gì</th></tr></thead><tbody><tr><td><strong>Tuần đầu — đẩy muộn lại</strong></td><td>Tắt đèn đúng vào giờ con thật sự ngủ, kể cả khi muộn hơn ý muốn cả tiếng</td></tr><tr><td><strong>Ổn ba đêm — kéo sớm lên</strong></td><td>Tắt đèn sớm hơn 15 phút. Giữ ba đêm rồi lại kéo sớm thêm</td></tr><tr><td><strong>Con lại nằm lâu</strong></td><td>Đẩy muộn lại 15 phút, giữ vài đêm rồi mới thử kéo sớm lại</td></tr></tbody></table></div>
+<p><strong>Chỗ phản trực giác:</strong> muốn con ngủ sớm thì việc đầu tiên lại là cho ngủ muộn hơn. Con gần như không khóc, vì chưa đêm nào bị đặt xuống lúc chưa buồn ngủ.</p>
+<p><strong>Muốn chạy ba cách kia thì đọc kỹ thêm trước</strong> — và tính xem lúc đó con ngủ ở phòng nào.</p>
+<hr>
+<h3 id="datxuong-f">F · Chọn cách nào, và ngừng tập khi nào</h3>
+<div class="grp grp--p"><div class="grp-h">Ba câu tự trả lời trước khi chọn</div><ul class="rows"><li class="r--flat"><span class="rt">Nhà mình chịu được bao nhiêu tiếng khóc</span><span class="ra">trả lời thật, không trả lời theo thứ nên nói</span></li><li class="r--flat"><span class="rt">Tiếng khóc lúc 10 giờ đêm ở nhà ngoại</span><span class="ra">có thành chuyện không, nếu có thì loại hai cách gây khóc nhiều</span></li><li class="r--flat"><span class="rt">Chọn xong thì giữ ít nhất hai tuần</span><span class="ra">đổi cách mỗi vài đêm thì không cách nào kịp có tác dụng</span></li></ul></div>
+<div class="grp grp--n"><div class="grp-h">Ngừng tập khi nào</div><ul class="rows"><li class="r--flat"><span class="rt">Ngừng tập là ngừng cách đang chạy</span><span class="ra">nghi thức, giờ giấc, ca trực và ca ngủ giữ nguyên hết</span></li><li class="r--flat"><span class="rt">Con bệnh, sốt, hoặc có dấu hiệu đau</span><span class="ra">quay lại bế và dỗ ngay như trước</span></li><li class="r--flat"><span class="rt">Người trực mất ngủ tới <a href="#bome-d" data-jump="bome-d">ngưỡng ở chương 06</a></span><span class="ra">ngừng cái đang tập, không đụng cách chia ca</span></li><li class="r--flat"><span class="rt">Hai tuần không nhích được chút nào</span><span class="ra">đổi sang cách khác, không làm gắt hơn cách cũ</span></li><li class="r--flat"><span class="rt">Tập lại khi nhà yên một tuần</span><span class="ra">bắt đầu từ bước đầu, không nối tiếp chỗ dở</span></li></ul></div>
+</section>
+<section id="thucdem" data-title="Khi con thức đêm">
+<header class="chero c5"><span class="cshape sh-p" aria-hidden="true"></span><span class="pnum">Chương 05</span><h2>Khi con thức đêm</h2><p class="lede">Khủng hoảng ngủ, ác mộng, sợ tối, và chuyện dậy lúc năm giờ sáng.</p></header>
+
+<div class="searchbox docsearch">
+ <div class="tools">
+  <div class="search"><input type="text" class="doc-q" placeholder="Gõ để tìm trong chương này…" autocomplete="off"></div>
+  <span class="count doc-count"></span>
+ </div>
+ <span class="hint">Gõ vài chữ là được — <b>điều hoà</b>, <b>muỗi</b>, <b>ca ngủ</b>, <b>ngoại</b>, <b>đèn</b>.
+  Không có dấu vẫn ra. Bấm <b>Xoá</b> hoặc xoá hết chữ để xem lại cả chương.</span>
+</div>
+<h3 id="thucdem-a">A · Ba mươi giây đầu</h3>
+<div class="grp grp--y"><div class="grp-h">Kiểm trước, làm sau</div><ul class="rows"><li class="r--flat"><span class="rt">Dưới 4 tháng thì đáp ứng ngay</span><span class="ra">không kiểm gì cả, bế và cho bú</span></li><li class="r--flat"><span class="rt">Ọ ẹ thì chờ, khóc thật thì vào</span><span class="ra">đứng ngoài đếm chậm tới sáu mươi</span></li><li class="r--flat"><span class="rt">Kiểm bốn thứ theo thứ tự</span><span class="ra">đói · tã · nóng lạnh · có chỗ nào đau</span></li><li class="r--flat"><span class="rt">Đúng ca ai thì người đó dậy</span><span class="ra">không gọi người đang trong ca ngủ</span></li><li class="r--flat"><span class="rt">Giữ đèn mờ, không nói chuyện</span><span class="ra">việc xong thì đặt lại và đi ra</span></li></ul></div>
+<hr>
+<h3 id="thucdem-b">B · Khủng hoảng ngủ</h3>
+<div class="grp grp--p"><div class="grp-h">Bốn dòng</div><ul class="rows"><li class="r--flat"><span class="rt">4 tháng là thay đổi thật, không quay lại</span><span class="ra">giấc ngủ của con chuyển sang kiểu giống người lớn</span></li><li class="r--flat"><span class="rt">Các đợt xấu khác thì cứ chờ</span><span class="ra">ốm, mọc răng, hoặc vừa học kỹ năng mới</span></li><li class="r--flat"><span class="rt">Thường 2 tới 6 tuần rồi tự qua</span><span class="ra">đừng kết luận hệ thống hỏng trong tuần đầu</span></li><li class="r--flat"><span class="rt">Giữ nguyên nghi thức và giờ giấc</span><span class="ra">đây đúng là lúc nếp cũ có ích nhất</span></li></ul></div>
+<div class="grp grp--n"><div class="grp-h">Bố không làm</div><ul class="rows"><li class="r--flat"><span class="rt">Không tạo thói quen mới để chữa vài tuần xấu</span><span class="ra">hết đợt xấu thì thói quen vẫn ở lại</span></li><li class="r--flat"><span class="rt">Không đổi cách tập giữa đợt</span><span class="ra">chờ con qua đợt rồi tính</span></li></ul></div>
+<details class="src"><summary>Cơ sở</summary><ul><li><strong>Mốc 4 tháng có cơ sở sinh lý</strong> — giấc ngủ của con chia thành các giai đoạn rõ hơn, và con tỉnh giấc dễ hơn từ đó</li><li><strong>Các mốc 8, 12, 18 tháng thì yếu</strong> — chủ yếu là quan sát của bố mẹ trùng với mốc phát triển, chưa có nghiên cứu chắc</li><li><strong>Nên đừng chờ đợi khủng hoảng</strong> — chờ nó thì cái gì xấu cũng đổ được cho nó</li></ul></details>
+<hr>
+<h3 id="thucdem-c">C · Ác mộng và hoảng sợ ban đêm</h3>
+<p><strong>Hai thứ này trông giống nhau nhưng xử ngược nhau.</strong> Nhìn vào giờ trong đêm là phân biệt được ngay.</p>
+<div class="tw"><table><thead><tr><th></th><th><strong>Ác mộng</strong></th><th><strong>Hoảng sợ ban đêm</strong></th></tr></thead><tbody><tr><td><strong>Lúc nào trong đêm</strong></td><td>Nửa sau của đêm</td><td><strong>1–3 giờ đầu</strong> sau khi ngủ</td></tr><tr><td><strong>Con có tỉnh không</strong></td><td>Tỉnh hẳn, biết bố là ai</td><td><strong>Không tỉnh</strong> — mắt mở, la hét, đạp, nhưng không nhận ra bố</td></tr><tr><td><strong>Sáng hôm sau</strong></td><td>Nhớ, kể lại được</td><td><strong>Không nhớ gì cả</strong></td></tr><tr><td><strong>Bố làm gì lúc đó</strong></td><td>Vào, ôm, ở lại tới khi con dịu</td><td><strong>Không đánh thức</strong> — giữ cho con không va vào đâu, ngồi im, chờ nó qua</td></tr><tr><td><strong>Sáng hôm sau bố làm gì</strong></td><td>Nghe con kể nếu con muốn</td><td><strong>Không nhắc lại</strong> — con không biết gì, nhắc chỉ làm con sợ</td></tr><tr><td><strong>Phòng bằng cách nào</strong></td><td>Bớt chuyện đáng sợ trước giờ ngủ</td><td><strong>Cho con ngủ đủ hơn</strong> — quá mệt là thứ kích hoạt nó nhiều nhất</td></tr><tr><td><strong>Tuổi hay gặp</strong></td><td>Từ 2 tuổi</td><td>3–7 tuổi, có khi sớm từ 18 tháng</td></tr></tbody></table></div>
+<div class="grp grp--y"><div class="grp-h">Đánh thức có hẹn giờ — nếu hoảng sợ lặp lại đúng giờ</div><ul class="rows"><li class="r--flat"><span class="rt">Ghi ba đêm xem con hoảng lúc mấy giờ</span><span class="ra">thường rất đều, ví dụ 22h</span></li><li class="r--flat"><span class="rt">Đánh thức nhẹ trước đó 20 phút</span><span class="ra">chạm vai cho con cựa mình, không cần tỉnh hẳn</span></li><li class="r--flat"><span class="rt">Làm mỗi đêm trong một tới hai tuần</span><span class="ra">rồi bỏ dần</span></li><li class="r--flat"><span class="rt">Cách này mẹ chạy, không phải bố</span><span class="ra">nó rơi đúng vào ca ngủ 21h–3h</span></li></ul></div>
+<details class="src"><summary>Cơ sở</summary><ul><li><strong>Hoảng sợ ban đêm xảy ra ở giai đoạn ngủ sâu nhất</strong>, nên con không tỉnh và không nhớ — đây là chỗ chắc</li><li><strong>Thiếu ngủ và giờ giấc thất thường là yếu tố kích hoạt đã biết</strong> — nên cách phòng tốt nhất là cho con ngủ đủ</li><li><strong>Đánh thức có hẹn giờ có nghiên cứu ủng hộ, nhưng cỡ mẫu nhỏ</strong> — đáng thử, không đáng ép</li></ul></details>
+<hr>
+<h3 id="thucdem-d">D · Sợ tối</h3>
+<div class="grp grp--y"><div class="grp-h">Bố làm</div><ul class="rows"><li class="r--flat"><span class="rt">Coi nó là thật</span><span class="ra">từ 2 tuổi trí tưởng tượng bắt đầu chạy, không phải con làm nũng</span></li><li class="r--flat"><span class="rt">Đèn mờ để suốt đêm</span><span class="ra">không bắt con chịu tối để tập gan dạ</span></li><li class="r--flat"><span class="rt">Nói bố ở đâu, bằng câu giống nhau mỗi đêm</span><span class="ra"><em>"Bố ở phòng bên. Bố nghe được con."</em></span></li><li class="r--flat"><span class="rt">Cho con một thứ của riêng nó</span><span class="ra">khăn hoặc gấu nhỏ, chỉ sau 12 tháng</span></li></ul></div>
+<div class="grp grp--n"><div class="grp-h">Bố không làm</div><ul class="rows"><li class="r--flat"><span class="rt">Không phủ nhận, không chế giễu</span><span class="ra"><em>"Có gì đâu mà sợ"</em> chỉ làm con giấu bố</span></li><li class="r--flat"><span class="rt">Không diễn vở đuổi ma</span><span class="ra">xịt bình "đuổi quái vật" là xác nhận quái vật có thật</span></li><li class="r--flat"><span class="rt">Không dọn sạch mọi thứ con sợ</span><span class="ra">kiểm tủ mỗi đêm thì việc kiểm tủ thành bắt buộc</span></li></ul></div>
+<hr>
+<h3 id="thucdem-e">E · Dậy quá sớm</h3>
+<p><strong>Trước 6 giờ sáng thì tính là dậy sớm.</strong> Kiểm theo đúng thứ tự dưới, đừng nhảy cóc.</p>
+<div class="tw"><table><thead><tr><th>Thứ tự</th><th>Nguyên nhân</th><th>Làm gì</th></tr></thead><tbody><tr><td><strong>1</strong></td><td><strong>Ánh sáng</strong></td><td>Nắng miền Nam lên 5h30–6h15. Màn che sáng chưa đủ dày là nguyên nhân số một</td></tr><tr><td><strong>2</strong></td><td><strong>Tiếng ồn</strong></td><td>Nhà bên, xe, chợ sớm. Cửa sổ và khe cửa</td></tr><tr><td><strong>3</strong></td><td><strong>Tắt đèn quá muộn</strong></td><td>Con quá mệt thì dậy sớm hơn, không muộn hơn</td></tr><tr><td><strong>4</strong></td><td><strong>Tắt đèn quá sớm</strong></td><td>Con đã đủ giấc lúc 5h. Thử đẩy muộn 15 phút một lần</td></tr><tr><td><strong>5</strong></td><td><strong>Giấc ngày lệch</strong></td><td>Giấc cuối quá gần hoặc quá xa giờ ngủ đêm</td></tr><tr><td><strong>6</strong></td><td><strong>Đã thành nếp</strong></td><td>Bế con dậy lúc 5h vài hôm thì 5h thành giờ dậy</td></tr></tbody></table></div>
+<div class="grp grp--y"><div class="grp-h">Ba việc làm khi con dậy sớm</div><ul class="rows"><li class="r--flat"><span class="rt">Giữ đèn mờ, không mở màn, không nói chuyện</span><span class="ra">chưa tới giờ dậy thì chưa phải ban ngày</span></li><li class="r--flat"><span class="rt">Từ 2 tuổi rưỡi thì dùng đèn báo giờ dậy</span><span class="ra">đỏ thì chơi một mình, xanh thì gọi bố</span></li><li class="r--flat"><span class="rt">Đổi một thứ mỗi lần, giữ một tuần</span><span class="ra">đổi ba thứ cùng lúc thì không biết cái nào ăn</span></li></ul></div>
+<hr>
+<h3 id="thucdem-f">F · Khi nào đi khám</h3>
+<div class="grp grp--n"><div class="grp-h">Không còn là chuyện giấc ngủ nữa</div><ul class="rows"><li class="r--flat"><span class="rt">Ngáy to, gần như đêm nào cũng ngáy</span></li><li class="r--flat"><span class="rt">Ngừng thở, thở hổn hển, thở bằng miệng khi ngủ</span></li><li class="r--flat"><span class="rt">Dậy đêm xuất hiện đột ngột</span><span class="ra">kèm sốt hoặc kèm đau</span></li><li class="r--flat"><span class="rt">Ngủ đủ giờ mà ban ngày vẫn lờ đờ</span><span class="ra">hoặc quá hiếu động</span></li></ul></div>
+</section>
+<section id="bome" data-title="Giấc ngủ của bố mẹ">
+<header class="chero c6"><span class="cshape sh-s" aria-hidden="true"></span><span class="pnum">Chương 06</span><h2>Giấc ngủ của bố mẹ</h2><p class="lede">Chia ca theo sức, khối ngủ lõi, luật an toàn trong đêm, và ngưỡng phải báo bác sĩ.</p></header>
+
+<div class="searchbox docsearch">
+ <div class="tools">
+  <div class="search"><input type="text" class="doc-q" placeholder="Gõ để tìm trong chương này…" autocomplete="off"></div>
+  <span class="count doc-count"></span>
+ </div>
+ <span class="hint">Gõ vài chữ là được — <b>điều hoà</b>, <b>muỗi</b>, <b>ca ngủ</b>, <b>ngoại</b>, <b>đèn</b>.
+  Không có dấu vẫn ra. Bấm <b>Xoá</b> hoặc xoá hết chữ để xem lại cả chương.</span>
+</div>
+<p><strong>Mục này không đưa lời khuyên y khoa.</strong> Tiền đình, lo âu, trầm cảm là việc của bác sĩ đang theo. Chương này chỉ lo <strong>hậu cần trong nhà</strong>: ai trực giờ nào, phòng bố trí ra sao, làm gì lúc 3 giờ sáng. <strong>Bác sĩ dặn khác thì nghe bác sĩ.</strong></p>
+<h3 id="bome-a">A · Bốn nguyên tắc</h3>
+<div class="grp grp--p"><div class="grp-h">Đọc trước, rồi mới tới các mục sau</div><ul class="rows"><li class="r--flat"><span class="rt">Giấc ngủ của người trực đêm là điều kiện vận hành</span><span class="ra">không phải phần thưởng nếu còn dư giờ</span></li><li class="r--flat"><span class="rt">Chia theo sức, không chia cho công bằng</span><span class="ra">hai người ngủ vụn bằng nhau thì không còn ai trực được</span></li><li class="r--flat"><span class="rt">Một ca liền quan trọng hơn tổng số giờ</span><span class="ra">người khó vào giấc bị gọi một lần là mất cả ca</span></li><li class="r--flat"><span class="rt">Mọi con số chốt lúc tỉnh, ban ngày</span><span class="ra">3 giờ sáng chỉ được thi hành luật, không được sửa luật</span></li></ul></div>
+<hr>
+<h3 id="bome-b">B · Ca trực và ca ngủ</h3>
+<div class="tw"><table><thead><tr><th>Khung giờ</th><th>Bố</th><th>Mẹ</th></tr></thead><tbody><tr><td><strong>19h, rồi 20h30</strong></td><td>Ăn cơm cùng nhà · lên phòng, bỏ điện thoại ra khỏi giường</td><td>Ăn cơm cùng nhà</td></tr><tr><td><strong>21h tới 3h</strong></td><td><strong>Ca ngủ.</strong> Không bị gọi, không nhắn, không nhận việc gì</td><td><strong>Ca trực.</strong> Lo hết mọi việc của con</td></tr><tr><td><strong>3h tới 9h sáng</strong></td><td><strong>Ca trực.</strong> Lo hết mọi việc của con</td><td><strong>Ca ngủ.</strong> Không bị gọi</td></tr></tbody></table></div>
+<div class="grp grp--y"><div class="grp-h">Luật của ca</div><ul class="rows"><li class="r--flat"><span class="rt">Trong ca ngủ thì không gọi, không nhắn</span><span class="ra">kể cả một câu, kể cả việc mười phút</span></li><li class="r--flat"><span class="rt">Bịt tai và bịt mắt đeo sẵn từ đầu ca</span><span class="ra">rẻ nhất, hiệu quả nhất</span></li><li class="r--flat"><span class="rt">Mẹ bú trực tiếp thì ca của bố là mọi việc quanh cữ bú</span><span class="ra">bế dậy, thay tã, ợ hơi, đặt lại</span></li><li class="r--flat"><span class="rt">Ca đổi theo tuần, không đổi theo đêm</span><span class="ra">đổi mỗi đêm thì không ai vào được nhịp nào</span></li><li class="r--flat"><span class="rt">Đúng ca ai thì người đó dậy</span><span class="ra">không ai dậy hộ để "cho người kia ngủ thêm chút"</span></li></ul></div>
+<hr>
+<h3 id="bome-c">C · <span class="warn-i">⚠</span> Luật cứng trong đêm cho người hay chóng mặt</h3>
+<div class="sos"><ul><li><strong>Đèn mờ bật sẵn từ tối, sáng suốt đêm</strong> — không mò công tắc, không dùng đèn điện thoại</li><li><strong>Ngồi dậy ở mép giường, đếm chậm tới 10</strong> — còn thấy chao thì đếm tiếp tới 20, chưa đứng</li><li><strong>Đứng lên rồi đứng yên tại chỗ, đếm tới 5</strong> — còn chao thì ngồi lại xuống giường</li><li><strong>Không bế con khi vừa đứng lên</strong> — đi tới cũi tay không, đứng vững rồi mới cúi xuống bế</li></ul>
+<p><strong>Đang chóng mặt thì không bế con.</strong> Gọi người kia. Con nằm trong cũi khóc thêm hai phút là an toàn — người bế con bị ngã thì không.</p></div>
+<div class="grp grp--n"><div class="grp-h">Ba việc phải dừng ngay, không bàn</div><ul class="rows"><li class="r--flat"><span class="rt">Thấy mình sắp ngủ gật khi đang bế con</span><span class="ra">đặt con vào cũi trước, rồi mới tính gì khác</span></li><li class="r--flat"><span class="rt">Không nhớ nổi vừa làm gì cho con</span><span class="ra">đổi ca ngay đêm đó</span></li><li class="r--flat"><span class="rt">Buồn ngủ khi đang lái xe</span><span class="ra">tấp vào, không cố về tới nhà</span></li></ul></div>
+<hr>
+<h3 id="bome-d">D · Ngưỡng đổi ca</h3>
+<p><strong>Ba con số dưới đây là bản nháp của nhà mình, không phải y khoa.</strong> Chỉnh lại sau vài tuần chạy thật. Tới ngưỡng là <strong>đổi ngay đêm sau, không bàn lại</strong>.</p>
+<div class="tw"><table><thead><tr><th>Dấu hiệu</th><th>Ngưỡng nháp</th><th>Làm gì</th></tr></thead><tbody><tr><td><strong>Mất bao lâu mới vào giấc</strong></td><td>Hơn 60 phút, <strong>3 đêm liền</strong></td><td>Đổi ca tuần sau, và kiểm lại giờ tắt đèn của con</td></tr><tr><td><strong>Ngủ được mấy giờ</strong></td><td>Dưới 4 giờ, <strong>2 đêm liền</strong></td><td>Đổi ca ngay đêm sau. Ông bà nhận một ca sáng trong tuần đó</td></tr><tr><td><strong>Chóng mặt lúc đứng dậy trong đêm</strong></td><td><strong>2 đêm liền</strong></td><td>Người đó <strong>không trực đêm</strong> trong tuần đó</td></tr></tbody></table></div>
+<div class="grp grp--y"><div class="grp-h">Cách dùng ba ngưỡng này</div><ul class="rows"><li class="r--flat"><span class="rt">Ghi vào nhật ký ngủ mỗi sáng, một phút</span><span class="ra">sổ ở <a href="#congcu-a" data-jump="congcu-a"><strong>chương 08</strong></a> tự bật cảnh báo khi chạm ba ngưỡng này</span></li><li class="r--flat"><span class="rt">Đọc lại vào một ngày cố định trong tuần</span><span class="ra">không đánh giá từng đêm một</span></li><li class="r--flat"><span class="rt">Tới ngưỡng thì thi hành, không thương lượng</span><span class="ra">người đang kiệt luôn thấy mình còn gắng được</span></li></ul></div>
+<hr>
+<h3 id="bome-e">E · Ngưỡng báo bác sĩ</h3>
+<p><strong>Mục này không tự đặt ngưỡng nào ở đây.</strong> Mang ba câu dưới tới buổi khám gần nhất, xin bác sĩ ghi giúp con số.</p>
+<div class="grp grp--p"><div class="grp-h">Ba câu mang đi hỏi</div><ul class="rows"><li class="r--flat"><span class="rt">Mất ngủ mấy đêm liền thì phải báo, thay vì gắng thêm?</span></li><li class="r--flat"><span class="rt">Dấu hiệu nào là dấu hiệu phải gọi ngay, không chờ lịch khám?</span></li><li class="r--flat"><span class="rt">Thuốc đang dùng có cần đổi giờ uống khi ca đêm đổi giờ ngủ không?</span></li></ul></div>
+<p class="tip"><strong>Chỗ điền câu trả lời nằm ở <a href="#congcu-c" data-jump="congcu-c">mục C chương 08</a>.</strong> Gõ thẳng vào đó, sổ tự lưu, và in ra được cùng số điện thoại bác sĩ với bệnh viện gần nhất. </p>
+<div class="grp grp--n"><div class="grp-h">Ba điều nói thẳng</div><ul class="rows"><li class="r--flat"><span class="rt">Thiếu ngủ kéo dài là chuyện phải báo, không phải chuyện gắng</span><span class="ra">gắng thêm không phải một phương án</span></li><li class="r--flat"><span class="rt">Người đang kiệt sức đánh giá tình trạng của chính mình kém nhất</span><span class="ra">nên con số phải nằm trên giấy từ trước</span></li><li class="r--flat"><span class="rt">Không tự đổi thuốc, không tự thêm thuốc ngủ</span><span class="ra">kể cả loại không cần kê đơn</span></li></ul></div>
+<hr>
+<h3 id="bome-f">F · Hậu cần cho người khó vào giấc</h3>
+<p><strong>Đây là những thứ sắp xếp được trong nhà, không phải điều trị.</strong> Bác sĩ dặn khác thì nghe bác sĩ.</p>
+<div class="grp grp--y"><div class="grp-h">Bố làm</div><ul class="rows"><li class="r--flat"><span class="rt">Một tiếng rưỡi tới hai tiếng hạ nhịp</span><span class="ra">giữa việc cuối trong ngày và lúc tắt đèn</span></li><li class="r--flat"><span class="rt">Điện thoại ra khỏi giường từ 20h30</span><span class="ra">dùng đồng hồ báo thức rời</span></li><li class="r--flat"><span class="rt">Giờ đi ngủ và giờ dậy giống nhau mọi ngày</span><span class="ra">kể cả cuối tuần, kể cả sau đêm xấu</span></li><li class="r--flat"><span class="rt">Ra chỗ sáng ngay buổi sáng</span><span class="ra">cùng lúc với con, một công đôi việc</span></li><li class="r--flat"><span class="rt">Đổi giờ ngủ thì đổi từng bước 15 phút</span><span class="ra">người lớn cũng có đồng hồ sinh học, cũng cứng đầu</span></li></ul></div>
+<div class="grp grp--n"><div class="grp-h">Bố không làm</div><ul class="rows"><li class="r--flat"><span class="rt">Nằm trên giường cố ngủ quá 20 phút</span><span class="ra">dậy, ra chỗ khác, đèn mờ, quay lại khi buồn ngủ</span></li><li class="r--flat"><span class="rt">Nhìn đồng hồ trong đêm</span><span class="ra">biết mấy giờ chỉ làm khó ngủ thêm</span></li><li class="r--flat"><span class="rt">Cà phê sau trưa, rượu bia buổi tối</span><span class="ra">rượu dễ vào giấc nhưng vỡ giấc nửa sau đêm</span></li><li class="r--flat"><span class="rt">Ngủ bù buổi sáng sau đêm xấu</span><span class="ra">bù bằng giấc trưa ngắn, không bù bằng giờ dậy</span></li></ul></div>
+<details class="src"><summary>Cơ sở</summary><ul><li><strong>Giấc bị cắt vụn hại hơn giấc ngắn nhưng liền</strong> — bằng chứng thực nghiệm khá chắc</li><li><strong>Thiếu ngủ và lo âu, trầm cảm đi hai chiều</strong> — thiếu ngủ làm nặng thêm, và ngược lại</li><li><strong><a href="#bome-f" data-jump="bome-f">Mục F</a> là vệ sinh giấc ngủ thông thường</strong> — giúp được, nhưng <strong>không thay điều trị</strong></li><li><strong>Ai ngủ ca nào là lựa chọn của gia đình</strong> — không có nghiên cứu nào nói cách chia này hơn cách kia</li></ul></details>
+<hr>
+<h3 id="bome-g">G · Khi cả hai cùng kiệt</h3>
+<div class="grp grp--y"><div class="grp-h">Bốn phương án, dùng theo thứ tự</div><ul class="rows"><li class="r--flat"><span class="rt">Ông bà nhận một ca sáng</span><span class="ra">5h tới 9h, hai ba buổi một tuần, hẹn trước chứ không nhờ đột xuất</span></li><li class="r--flat"><span class="rt">Một đêm nghỉ hẳn cho một người</span><span class="ra">người kia trực trọn đêm, đổi lại đêm khác</span></li><li class="r--flat"><span class="rt">Cắt hết việc không bắt buộc trong tuần đó</span><span class="ra">khách, việc nhà lớn, đi chơi xa</span></li><li class="r--flat"><span class="rt">Tới ngưỡng ở <a href="#bome-d" data-jump="bome-d">mục D</a> và <a href="#bome-e" data-jump="bome-e">E</a> thì thi hành</span><span class="ra">không chờ xem tuần sau có đỡ không</span></li></ul></div>
+<div class="grp grp--p"><div class="grp-h">Hai dòng cho người đang trực</div><ul class="rows"><li class="r--flat"><span class="rt">Ba tháng đầu con dậy nhiều lần là đúng</span><span class="ra">chia ca là để chịu được nó, không phải để chấm dứt nó</span></li><li class="r--flat"><span class="rt">Không so với nhà khác, không so với mạng</span><span class="ra">khoảng bình thường rất rộng</span></li></ul></div>
+</section>
+<section id="kichban" data-title="31 kịch bản">
+<header class="chero c7"><span class="cshape sh-c" aria-hidden="true"></span><span class="pnum">Chương 07</span><h2>31 kịch bản</h2><p class="lede">Mở lúc đang bí. Lọc theo tuổi và theo nhóm, hoặc gõ vào ô tìm kiếm.</p></header>
+
+<div class="searchbox" id="scenbox">
+ <div class="tools">
+  <div class="search"><input type="text" id="scen-q" placeholder="Gõ tình huống…" autocomplete="off"></div>
+  <span class="count" id="scen-count"></span>
+ </div>
+ <div class="chips"><span class="ck-l">Tuổi</span>
+  <button type="button" class="chip on" data-a="">Tất cả</button>
+  <button type="button" class="chip" data-a="a">0–3 tháng</button>
+  <button type="button" class="chip" data-a="b">4–12 tháng</button>
+  <button type="button" class="chip" data-a="c">1–3 tuổi</button>
+  <button type="button" class="chip" data-a="d">Mọi tuổi</button>
+ </div>
+ <div class="chips"><span class="ck-l">Nhóm</span>
+  <button type="button" class="chip on" data-g="">Tất cả</button>
+  <button type="button" class="chip" data-g="truoc">Trước giờ ngủ</button>
+  <button type="button" class="chip" data-g="dem">Trong đêm</button>
+  <button type="button" class="chip" data-g="ngay">Giấc ngày</button>
+  <button type="button" class="chip" data-g="som">Dậy sớm</button>
+  <button type="button" class="chip" data-g="ongba">Ông bà</button>
+  <button type="button" class="chip" data-g="bome">Bố mẹ</button>
+  <button type="button" class="chip" data-g="doicho">Đổi chỗ</button>
+  <button type="button" class="chip" data-g="om">Ốm</button>
+ </div>
+ <span class="hint">Hai hàng nút lọc chồng nhau được. Gõ vài chữ cũng ra —
+  <b>võng</b>, <b>chóng mặt</b>, <b>5 giờ</b>, <b>ác mộng</b>. Không dấu vẫn tìm được.</span>
+</div>
+<div class="scen-list" id="scenlist">
+<h3 class="scen-a" data-age="a">0–3 tháng</h3>
+<h4 class="scen-g" data-age="a" data-group="dem">Trong đêm</h4>
+<details class="scen" data-age="a" data-group="dem" data-text="a1 con ngủ được 45 phút rồi dậy, lặp lại cả đêm 0–3 tháng trong đêm một chu kỳ ngủ của trẻ sơ sinh dài khoảng 45–60 phút. dậy giữa các chu kỳ là đúng, không phải hỏng.   làm ngay:   cho bú, thay tã nếu cần, đặt lại. giữ đèn mờ, không nói chuyện.   đừng làm:   đừng tìm cách sửa. ở tuổi này không có gì để sửa."><summary><span class="scode">A1</span><span class="stitle">Con ngủ được 45 phút rồi dậy, lặp lại cả đêm</span><span class="sage">0–3 tháng</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Cho bú, thay tã nếu cần, đặt lại. Giữ đèn mờ, không nói chuyện.</p><p class="dont"><strong>Đừng làm:</strong> Đừng tìm cách sửa. Ở tuổi này không có gì để sửa.</p><span class="why"><b>Vì sao</b>Một chu kỳ ngủ của trẻ sơ sinh dài khoảng 45–60 phút. Dậy giữa các chu kỳ là đúng, không phải hỏng.</span></div></details>
+<details class="scen" data-age="a" data-group="dem" data-text="a2 con chỉ ngủ lại khi được bế đi rong 0–3 tháng trong đêm trụ 3 ở  chương 01 ( nenmong) chỉ bắt đầu từ khoảng 4 tháng. trước đó đáp ứng nhanh không làm con bám hơn.   làm ngay:   cứ bế. dưới 4 tháng thì đây không phải thói xấu.   đừng làm:   đừng bỏ mặc cho con khóc để &quot;khỏi quen hơi&quot;."><summary><span class="scode">A2</span><span class="stitle">Con chỉ ngủ lại khi được bế đi rong</span><span class="sage">0–3 tháng</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Cứ bế. Dưới 4 tháng thì đây không phải thói xấu.</p><p class="dont"><strong>Đừng làm:</strong> Đừng bỏ mặc cho con khóc để "khỏi quen hơi".</p><span class="why"><b>Vì sao</b>Trụ 3 ở <a href="#nenmong" data-jump="nenmong">chương 01</a> chỉ bắt đầu từ khoảng 4 tháng. Trước đó đáp ứng nhanh không làm con bám hơn.</span></div></details>
+<h4 class="scen-g" data-age="a" data-group="ngay">Giấc ngày</h4>
+<details class="scen" data-age="a" data-group="ngay" data-text="a3 con chỉ ngủ ngày khi được bế trên tay 0–3 tháng giấc ngày đặt xuống lúc còn thức là kỹ năng, không phải phương pháp. làm một giấc là đủ để con bắt đầu quen.   làm ngay:   mỗi ngày thử đặt xuống ở   đúng một giấc   — giấc đầu buổi sáng thường dễ nhất. các giấc còn lại cứ bế.   đừng làm:   đừng thử ở cả năm giấc. hỏng hết thì cả nhà bỏ cuộc trong ba ngày."><summary><span class="scode">A3</span><span class="stitle">Con chỉ ngủ ngày khi được bế trên tay</span><span class="sage">0–3 tháng</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Mỗi ngày thử đặt xuống ở <strong>đúng một giấc</strong> — giấc đầu buổi sáng thường dễ nhất. Các giấc còn lại cứ bế.</p><p class="dont"><strong>Đừng làm:</strong> Đừng thử ở cả năm giấc. Hỏng hết thì cả nhà bỏ cuộc trong ba ngày.</p><span class="why"><b>Vì sao</b>Đặt xuống lúc còn thức là kỹ năng, không phải phương pháp. Làm một giấc là đủ để con bắt đầu quen.</span></div></details>
+<h4 class="scen-g" data-age="a" data-group="ongba">Ông bà</h4>
+<details class="scen" data-age="a" data-group="ongba" data-text="a4 ông bà cho con ngủ võng khi bố không có nhà 0–3 tháng ông bà đây là một trong ba việc an toàn không thương lượng. ở võng, đầu con gập về trước và đường thở bị chặn.   làm ngay:   nói lại một lần, ngắn, bằng lý do y tế:  &quot;bác sĩ dặn cháu ngủ phải nằm mặt phẳng cứng.&quot;  in  trang ⚠ ( angoan) dán tường.   đừng làm:   đừng tranh luận, đừng đưa nghiên cứu ra. và đừng nhượng bộ chỗ này."><summary><span class="scode">A4</span><span class="stitle">Ông bà cho con ngủ võng khi bố không có nhà</span><span class="sage">0–3 tháng</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Nói lại một lần, ngắn, bằng lý do y tế: <em>"Bác sĩ dặn cháu ngủ phải nằm mặt phẳng cứng."</em> In <a href="#angoan" data-jump="angoan">trang <span class="warn-i">⚠</span></a> dán tường.</p><p class="dont"><strong>Đừng làm:</strong> Đừng tranh luận, đừng đưa nghiên cứu ra. Và đừng nhượng bộ chỗ này.</p><span class="why"><b>Vì sao</b>Đây là một trong ba việc an toàn không thương lượng. Ở võng, đầu con gập về trước và đường thở bị chặn.</span></div></details>
+<details class="scen" data-age="a" data-group="ongba" data-text="a5 ông bà bảo cứ bế cho ngủ, để nó khóc là ác 0–3 tháng ông bà dưới 4 tháng nhà mình cũng bế và đáp ứng ngay. không có bất đồng nào để giải quyết lúc này.   làm ngay:   đồng ý. ở tuổi này ông bà đúng.   đừng làm:   đừng giải thích kế hoạch tập ngủ của bốn tháng sau."><summary><span class="scode">A5</span><span class="stitle">Ông bà bảo cứ bế cho ngủ, để nó khóc là ác</span><span class="sage">0–3 tháng</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Đồng ý. Ở tuổi này ông bà đúng.</p><p class="dont"><strong>Đừng làm:</strong> Đừng giải thích kế hoạch tập ngủ của bốn tháng sau.</p><span class="why"><b>Vì sao</b>Dưới 4 tháng nhà mình cũng bế và đáp ứng ngay. Không có bất đồng nào để giải quyết lúc này.</span></div></details>
+<h3 class="scen-a" data-age="b">4–12 tháng</h3>
+<h4 class="scen-g" data-age="b" data-group="truoc">Trước giờ ngủ</h4>
+<details class="scen" data-age="b" data-group="truoc" data-text="b1 con khóc ngay khi bố vừa bước ra khỏi phòng 4–12 tháng trước giờ ngủ ra vào ngẫu nhiên là kiểu dạy con kiên trì gọi lâu nhất.   làm ngay:   chọn một cách ở  chương 04 ( datxuong-d) rồi giữ nguyên ít nhất hai tuần.   đừng làm:   đừng đứng ngoài cửa nghe rồi vào lại. vào thì vào hẳn, ra thì ra hẳn."><summary><span class="scode">B1</span><span class="stitle">Con khóc ngay khi bố vừa bước ra khỏi phòng</span><span class="sage">4–12 tháng</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Chọn một cách ở <a href="#datxuong-d" data-jump="datxuong-d">chương 04</a> rồi giữ nguyên ít nhất hai tuần.</p><p class="dont"><strong>Đừng làm:</strong> Đừng đứng ngoài cửa nghe rồi vào lại. Vào thì vào hẳn, ra thì ra hẳn.</p><span class="why"><b>Vì sao</b>Ra vào ngẫu nhiên là kiểu dạy con kiên trì gọi lâu nhất.</span></div></details>
+<h4 class="scen-g" data-age="b" data-group="dem">Trong đêm</h4>
+<details class="scen" data-age="b" data-group="dem" data-text="b2 con dậy lúc 2 giờ sáng, tỉnh hẳn, chơi một mình cả tiếng 4–12 tháng trong đêm chơi lúc 2 giờ sáng một lần là vui; ba đêm liền là thành giờ sinh hoạt mới.   làm ngay:   giữ đèn mờ, không nói chuyện, không bế ra khỏi cũi. nằm im gần đó.   đừng làm:   đừng bật đèn, đừng cho ăn, đừng coi đó là giờ chơi."><summary><span class="scode">B2</span><span class="stitle">Con dậy lúc 2 giờ sáng, tỉnh hẳn, chơi một mình cả tiếng</span><span class="sage">4–12 tháng</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Giữ đèn mờ, không nói chuyện, không bế ra khỏi cũi. Nằm im gần đó.</p><p class="dont"><strong>Đừng làm:</strong> Đừng bật đèn, đừng cho ăn, đừng coi đó là giờ chơi.</p><span class="why"><b>Vì sao</b>Chơi lúc 2 giờ sáng một lần là vui; ba đêm liền là thành giờ sinh hoạt mới.</span></div></details>
+<details class="scen" data-age="b" data-group="dem" data-text="b3 con dậy đúng một giờ cố định mỗi đêm 4–12 tháng trong đêm dậy đúng giờ thường là thói quen hoặc là hoảng sợ ban đêm — hai thứ xử khác nhau hoàn toàn.   làm ngay:   ghi ba đêm xem có đúng giờ thật không. nếu rơi vào   1–3 giờ đầu   sau khi ngủ và con la hét mà không nhận ra bố thì đọc  mục c · hoảng sợ ban đêm, chương 05 ( thucdem-c).   đừng làm:   đừng đánh thức con dậy hẳn."><summary><span class="scode">B3</span><span class="stitle">Con dậy đúng một giờ cố định mỗi đêm</span><span class="sage">4–12 tháng</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Ghi ba đêm xem có đúng giờ thật không. Nếu rơi vào <strong>1–3 giờ đầu</strong> sau khi ngủ và con la hét mà không nhận ra bố thì đọc <a href="#thucdem-c" data-jump="thucdem-c">mục C · hoảng sợ ban đêm, chương 05</a>.</p><p class="dont"><strong>Đừng làm:</strong> Đừng đánh thức con dậy hẳn.</p><span class="why"><b>Vì sao</b>Dậy đúng giờ thường là thói quen hoặc là hoảng sợ ban đêm — hai thứ xử khác nhau hoàn toàn.</span></div></details>
+<details class="scen" data-age="b" data-group="dem" data-text="b4 con đòi bú đêm khi đã qua tuổi cần bú đêm 4–12 tháng trong đêm cữ đêm là chuyện dinh dưỡng trước khi là chuyện giấc ngủ. mục này không thay bác sĩ.   làm ngay:   hỏi bác sĩ trước xem con đã đủ cân để bỏ cữ đêm chưa. được rồi thì giảm dần từng chút mỗi vài đêm.   đừng làm:   đừng cắt đột ngột, và đừng tự quyết mà chưa hỏi."><summary><span class="scode">B4</span><span class="stitle">Con đòi bú đêm khi đã qua tuổi cần bú đêm</span><span class="sage">4–12 tháng</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Hỏi bác sĩ trước xem con đã đủ cân để bỏ cữ đêm chưa. Được rồi thì giảm dần từng chút mỗi vài đêm.</p><p class="dont"><strong>Đừng làm:</strong> Đừng cắt đột ngột, và đừng tự quyết mà chưa hỏi.</p><span class="why"><b>Vì sao</b>Cữ đêm là chuyện dinh dưỡng trước khi là chuyện giấc ngủ. Mục này không thay bác sĩ.</span></div></details>
+<h4 class="scen-g" data-age="b" data-group="ngay">Giấc ngày</h4>
+<details class="scen" data-age="b" data-group="ngay" data-text="b5 con chỉ ngủ 30 phút mỗi giấc ngày 4–12 tháng giấc ngày giấc ngắn thường là con nổi lên giữa hai chu kỳ và chưa tự chìm xuống lại được.   làm ngay:   kiểm số giờ thức trước giấc đó theo  bảng chương 03 ( nhipngay-b). thức quá dài hoặc quá ngắn đều cho giấc ngắn.   đừng làm:   đừng vào ngay khi con ọ ẹ. đếm chậm tới sáu mươi trước."><summary><span class="scode">B5</span><span class="stitle">Con chỉ ngủ 30 phút mỗi giấc ngày</span><span class="sage">4–12 tháng</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Kiểm số giờ thức trước giấc đó theo <a href="#nhipngay-b" data-jump="nhipngay-b">bảng chương 03</a>. Thức quá dài hoặc quá ngắn đều cho giấc ngắn.</p><p class="dont"><strong>Đừng làm:</strong> Đừng vào ngay khi con ọ ẹ. Đếm chậm tới sáu mươi trước.</p><span class="why"><b>Vì sao</b>Giấc ngắn thường là con nổi lên giữa hai chu kỳ và chưa tự chìm xuống lại được.</span></div></details>
+<details class="scen" data-age="b" data-group="ngay" data-text="b6 con bắt đầu bỏ một giấc, chưa biết bỏ giấc nào 4–12 tháng giấc ngày bỏ nhầm giấc thì con quá mệt buổi chiều và giờ đi ngủ tối bị đẩy muộn ra.   làm ngay:   xem con nằm chơi không ngủ ở giấc nào, lặp lại nhiều ngày liền. bỏ đúng giấc đó.   đừng làm:   đừng bỏ dứt khoát trong một ngày. vài tuần đầu cứ để hôm có hôm không."><summary><span class="scode">B6</span><span class="stitle">Con bắt đầu bỏ một giấc, chưa biết bỏ giấc nào</span><span class="sage">4–12 tháng</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Xem con nằm chơi không ngủ ở giấc nào, lặp lại nhiều ngày liền. Bỏ đúng giấc đó.</p><p class="dont"><strong>Đừng làm:</strong> Đừng bỏ dứt khoát trong một ngày. Vài tuần đầu cứ để hôm có hôm không.</p><span class="why"><b>Vì sao</b>Bỏ nhầm giấc thì con quá mệt buổi chiều và giờ đi ngủ tối bị đẩy muộn ra.</span></div></details>
+<h4 class="scen-g" data-age="b" data-group="som">Dậy sớm</h4>
+<details class="scen" data-age="b" data-group="som" data-text="b7 con dậy lúc 5 giờ sáng, không ngủ lại 4–12 tháng dậy sớm bế con dậy lúc 5 giờ vài hôm thì 5 giờ thành giờ dậy.   làm ngay:   kiểm theo đúng thứ tự sáu nguyên nhân ở  mục e chương 05 ( thucdem-e). đổi   một   thứ, giữ một tuần rồi mới đánh giá.   đừng làm:   đừng bế con dậy. giữ đèn mờ, không mở màn, không nói chuyện."><summary><span class="scode">B7</span><span class="stitle">Con dậy lúc 5 giờ sáng, không ngủ lại</span><span class="sage">4–12 tháng</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Kiểm theo đúng thứ tự sáu nguyên nhân ở <a href="#thucdem-e" data-jump="thucdem-e">mục E chương 05</a>. Đổi <strong>một</strong> thứ, giữ một tuần rồi mới đánh giá.</p><p class="dont"><strong>Đừng làm:</strong> Đừng bế con dậy. Giữ đèn mờ, không mở màn, không nói chuyện.</p><span class="why"><b>Vì sao</b>Bế con dậy lúc 5 giờ vài hôm thì 5 giờ thành giờ dậy.</span></div></details>
+<details class="scen" data-age="b" data-group="som" data-text="b8 con dậy theo nắng, ngày nào cũng vậy 4–12 tháng dậy sớm nắng miền nam lên 5h30–6h15. đây là nguyên nhân số một, và là nguyên nhân rẻ nhất để sửa.   làm ngay:   che sáng dày hơn. kiểm khe hở mép rèm và khe dưới cửa.   đừng làm:   đừng đổi giờ đi ngủ trước khi đã chặn hết ánh sáng."><summary><span class="scode">B8</span><span class="stitle">Con dậy theo nắng, ngày nào cũng vậy</span><span class="sage">4–12 tháng</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Che sáng dày hơn. Kiểm khe hở mép rèm và khe dưới cửa.</p><p class="dont"><strong>Đừng làm:</strong> Đừng đổi giờ đi ngủ trước khi đã chặn hết ánh sáng.</p><span class="why"><b>Vì sao</b>Nắng miền Nam lên 5h30–6h15. Đây là nguyên nhân số một, và là nguyên nhân rẻ nhất để sửa.</span></div></details>
+<h3 class="scen-a" data-age="c">1–3 tuổi</h3>
+<h4 class="scen-g" data-age="c" data-group="truoc">Trước giờ ngủ</h4>
+<details class="scen" data-age="c" data-group="truoc" data-text="c1 tới giờ tắt đèn con vẫn đang chơi, không chịu dừng 1–3 tuổi trước giờ ngủ giới hạn nằm ở đồng hồ thì con không phải thắng thua với bố.   làm ngay:   báo trước năm phút, rồi tới giờ thì dọn, giọng đều.  &quot;còn năm phút nữa mình cất đồ chơi.&quot;    đừng làm:   đừng thương lượng thêm giờ, đừng đếm một hai ba."><summary><span class="scode">C1</span><span class="stitle">Tới giờ tắt đèn con vẫn đang chơi, không chịu dừng</span><span class="sage">1–3 tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Báo trước năm phút, rồi tới giờ thì dọn, giọng đều. <em>"Còn năm phút nữa mình cất đồ chơi."</em></p><p class="dont"><strong>Đừng làm:</strong> Đừng thương lượng thêm giờ, đừng đếm một hai ba.</p><span class="why"><b>Vì sao</b>Giới hạn nằm ở đồng hồ thì con không phải thắng thua với bố.</span></div></details>
+<details class="scen" data-age="c" data-group="truoc" data-text="c2 con đòi thêm một truyện, rồi thêm một truyện nữa 1–3 tuổi trước giờ ngủ nghi thức dài thêm một lần thì lần sau con đòi đúng độ dài mới.   làm ngay:   nói số truyện   trước khi bắt đầu  , rồi giữ đúng số đó.  &quot;tối nay hai truyện.&quot;    đừng làm:   đừng thêm truyện vì con đang ngoan, cũng đừng bớt vì con đang hư."><summary><span class="scode">C2</span><span class="stitle">Con đòi thêm một truyện, rồi thêm một truyện nữa</span><span class="sage">1–3 tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Nói số truyện <strong>trước khi bắt đầu</strong>, rồi giữ đúng số đó. <em>"Tối nay hai truyện."</em></p><p class="dont"><strong>Đừng làm:</strong> Đừng thêm truyện vì con đang ngoan, cũng đừng bớt vì con đang hư.</p><span class="why"><b>Vì sao</b>Nghi thức dài thêm một lần thì lần sau con đòi đúng độ dài mới.</span></div></details>
+<details class="scen" data-age="c" data-group="truoc" data-text="c3 con ra khỏi giường, đi ra phòng khách 1–3 tuổi trước giờ ngủ mỗi câu nói thêm là một phần thưởng cho việc ra khỏi giường.   làm ngay:   dắt về giường, không nói thêm câu nào ngoài  &quot;con về giường.&quot;  lặp lại y hệt bao nhiêu lần cũng được.   đừng làm:   đừng giải thích, đừng mắng, đừng ôm dỗ lâu."><summary><span class="scode">C3</span><span class="stitle">Con ra khỏi giường, đi ra phòng khách</span><span class="sage">1–3 tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Dắt về giường, không nói thêm câu nào ngoài <em>"Con về giường."</em> Lặp lại y hệt bao nhiêu lần cũng được.</p><p class="dont"><strong>Đừng làm:</strong> Đừng giải thích, đừng mắng, đừng ôm dỗ lâu.</p><span class="why"><b>Vì sao</b>Mỗi câu nói thêm là một phần thưởng cho việc ra khỏi giường.</span></div></details>
+<details class="scen" data-age="c" data-group="truoc" data-text="c4 con chỉ chịu ngủ khi có bố nằm cạnh 1–3 tuổi trước giờ ngủ rút từng bước thì con không phải học lại từ đầu, và bố không phải chịu ba đêm khóc liền.   làm ngay:   đổi sang ngồi ghế cạnh giường, rồi mỗi ba bốn đêm dời ghế ra xa một bước.   đừng làm:   đừng bỏ đột ngột trong một đêm."><summary><span class="scode">C4</span><span class="stitle">Con chỉ chịu ngủ khi có bố nằm cạnh</span><span class="sage">1–3 tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Đổi sang ngồi ghế cạnh giường, rồi mỗi ba bốn đêm dời ghế ra xa một bước.</p><p class="dont"><strong>Đừng làm:</strong> Đừng bỏ đột ngột trong một đêm.</p><span class="why"><b>Vì sao</b>Rút từng bước thì con không phải học lại từ đầu, và bố không phải chịu ba đêm khóc liền.</span></div></details>
+<h4 class="scen-g" data-age="c" data-group="dem">Trong đêm</h4>
+<details class="scen" data-age="c" data-group="dem" data-text="c5 con khóc thét, mắt mở nhưng không nhận ra bố 1–3 tuổi trong đêm đây là hoảng sợ ban đêm, xảy ra ở giai đoạn ngủ sâu. con không tỉnh và sáng ra không nhớ gì.   làm ngay:   ngồi im, giữ cho con không va vào đâu, chờ nó qua. sáng hôm sau   không nhắc lại  .   đừng làm:     đừng đánh thức con.   đừng bật đèn lớn, đừng lay gọi."><summary><span class="scode">C5</span><span class="stitle">Con khóc thét, mắt mở nhưng không nhận ra bố</span><span class="sage">1–3 tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Ngồi im, giữ cho con không va vào đâu, chờ nó qua. Sáng hôm sau <strong>không nhắc lại</strong>.</p><p class="dont"><strong>Đừng làm:</strong> <strong>Đừng đánh thức con.</strong> Đừng bật đèn lớn, đừng lay gọi.</p><span class="why"><b>Vì sao</b>Đây là hoảng sợ ban đêm, xảy ra ở giai đoạn ngủ sâu. Con không tỉnh và sáng ra không nhớ gì.</span></div></details>
+<details class="scen" data-age="c" data-group="dem" data-text="c6 con gặp ác mộng, tỉnh hẳn và sợ 1–3 tuổi trong đêm ác mộng ở nửa sau của đêm, con tỉnh hẳn và nhớ được. cách xử ngược hẳn với hoảng sợ ban đêm.   làm ngay:   vào, ôm, ở lại tới khi con dịu. bật đèn mờ. sáng hôm sau nghe con kể nếu con muốn.   đừng làm:   đừng bảo  &quot;có gì đâu mà sợ&quot; ."><summary><span class="scode">C6</span><span class="stitle">Con gặp ác mộng, tỉnh hẳn và sợ</span><span class="sage">1–3 tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Vào, ôm, ở lại tới khi con dịu. Bật đèn mờ. Sáng hôm sau nghe con kể nếu con muốn.</p><p class="dont"><strong>Đừng làm:</strong> Đừng bảo <em>"có gì đâu mà sợ"</em>.</p><span class="why"><b>Vì sao</b>Ác mộng ở nửa sau của đêm, con tỉnh hẳn và nhớ được. Cách xử ngược hẳn với hoảng sợ ban đêm.</span></div></details>
+<details class="scen" data-age="c" data-group="dem" data-text="c7 con đòi sang giường bố mẹ giữa đêm 1–3 tuổi trong đêm lúc 3 giờ sáng, người mệt nhất trong nhà đang là người ra quyết định.   làm ngay:   chốt một luật lúc ban ngày rồi giữ nguyên mọi đêm. dắt về giường, không nói thêm.   đừng làm:     đừng đổi luật lúc 3 giờ sáng   — cho sang một đêm vì quá mệt thì mai con đòi tiếp."><summary><span class="scode">C7</span><span class="stitle">Con đòi sang giường bố mẹ giữa đêm</span><span class="sage">1–3 tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Chốt một luật lúc ban ngày rồi giữ nguyên mọi đêm. Dắt về giường, không nói thêm.</p><p class="dont"><strong>Đừng làm:</strong> <strong>Đừng đổi luật lúc 3 giờ sáng</strong> — cho sang một đêm vì quá mệt thì mai con đòi tiếp.</p><span class="why"><b>Vì sao</b>Lúc 3 giờ sáng, người mệt nhất trong nhà đang là người ra quyết định.</span></div></details>
+<details class="scen" data-age="c" data-group="dem" data-text="c8 con sợ tối, không chịu cho tắt đèn 1–3 tuổi trong đêm đuổi quái vật là xác nhận quái vật có thật. còn phủ nhận nỗi sợ thì con chỉ giấu bố.   làm ngay:   để đèn mờ suốt đêm. nói bố ở đâu bằng câu giống nhau mỗi đêm:  &quot;bố ở phòng bên. bố nghe được con.&quot;    đừng làm:   đừng diễn vở đuổi ma hay xịt bình &quot;đuổi quái vật&quot;."><summary><span class="scode">C8</span><span class="stitle">Con sợ tối, không chịu cho tắt đèn</span><span class="sage">1–3 tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Để đèn mờ suốt đêm. Nói bố ở đâu bằng câu giống nhau mỗi đêm: <em>"Bố ở phòng bên. Bố nghe được con."</em></p><p class="dont"><strong>Đừng làm:</strong> Đừng diễn vở đuổi ma hay xịt bình "đuổi quái vật".</p><span class="why"><b>Vì sao</b>Đuổi quái vật là xác nhận quái vật có thật. Còn phủ nhận nỗi sợ thì con chỉ giấu bố.</span></div></details>
+<h4 class="scen-g" data-age="c" data-group="ngay">Giấc ngày</h4>
+<details class="scen" data-age="c" data-group="ngay" data-text="c9 con bỏ giấc trưa rồi tối gắt không chịu nổi 1–3 tuổi giấc ngày rất nhiều trẻ vẫn cần giấc trưa tới 4 tuổi, nhưng giai đoạn chuyển thì hôm có hôm không. bù bằng giờ đi ngủ tối.   làm ngay:   cho đi ngủ tối sớm hơn 30–45 phút trong những ngày không có giấc trưa.   đừng làm:   đừng ép con ngủ trưa lại bằng cách bắt nằm im trên giường."><summary><span class="scode">C9</span><span class="stitle">Con bỏ giấc trưa rồi tối gắt không chịu nổi</span><span class="sage">1–3 tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Cho đi ngủ tối sớm hơn 30–45 phút trong những ngày không có giấc trưa.</p><p class="dont"><strong>Đừng làm:</strong> Đừng ép con ngủ trưa lại bằng cách bắt nằm im trên giường.</p><span class="why"><b>Vì sao</b>Rất nhiều trẻ vẫn cần giấc trưa tới 4 tuổi, nhưng giai đoạn chuyển thì hôm có hôm không. Bù bằng giờ đi ngủ tối.</span></div></details>
+<h3 class="scen-a" data-age="d">Mọi tuổi</h3>
+<h4 class="scen-g" data-age="d" data-group="bome">Bố mẹ</h4>
+<details class="scen" data-age="d" data-group="bome" data-text="d1 bố vừa đứng dậy thì chóng mặt, con đang khóc mọi tuổi bố mẹ con nằm trong cũi khóc thêm hai phút là an toàn. người bế con bị ngã thì không.   làm ngay:   ngồi lại xuống giường. gọi mẹ.   đừng làm:     không bế con lên trong lúc còn chao.  "><summary><span class="scode">D1</span><span class="stitle">Bố vừa đứng dậy thì chóng mặt, con đang khóc</span><span class="sage">Mọi tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Ngồi lại xuống giường. Gọi mẹ.</p><p class="dont"><strong>Đừng làm:</strong> <strong>Không bế con lên trong lúc còn chao.</strong></p><span class="why"><b>Vì sao</b>Con nằm trong cũi khóc thêm hai phút là an toàn. Người bế con bị ngã thì không.</span></div></details>
+<details class="scen" data-age="d" data-group="bome" data-text="d2 bố nằm cả tiếng không vào giấc được trong ca ngủ của mình mọi tuổi bố mẹ nằm cố biến giường thành chỗ lo lắng. ba đêm như vậy liên tiếp là tới  ngưỡng đổi ca ở chương 06 ( bome-d).   làm ngay:   quá 20 phút thì dậy, ra chỗ khác, đèn mờ, không điện thoại. quay lại giường khi thấy buồn ngủ.   đừng làm:   đừng nằm cố. đừng nhìn đồng hồ."><summary><span class="scode">D2</span><span class="stitle">Bố nằm cả tiếng không vào giấc được trong ca ngủ của mình</span><span class="sage">Mọi tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Quá 20 phút thì dậy, ra chỗ khác, đèn mờ, không điện thoại. Quay lại giường khi thấy buồn ngủ.</p><p class="dont"><strong>Đừng làm:</strong> Đừng nằm cố. Đừng nhìn đồng hồ.</p><span class="why"><b>Vì sao</b>Nằm cố biến giường thành chỗ lo lắng. Ba đêm như vậy liên tiếp là tới <a href="#bome-d" data-jump="bome-d">ngưỡng đổi ca ở chương 06</a>.</span></div></details>
+<details class="scen" data-age="d" data-group="bome" data-text="d3 ba đêm liền bố ngủ dưới 4 giờ mọi tuổi bố mẹ tới ngưỡng thì thi hành, không thương lượng. người đang kiệt luôn thấy mình còn gắng được.   làm ngay:   đổi ca ngay đêm sau. nhờ ông bà nhận một ca sáng trong tuần đó.   đừng làm:   đừng chờ xem tuần sau có đỡ không."><summary><span class="scode">D3</span><span class="stitle">Ba đêm liền bố ngủ dưới 4 giờ</span><span class="sage">Mọi tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Đổi ca ngay đêm sau. Nhờ ông bà nhận một ca sáng trong tuần đó.</p><p class="dont"><strong>Đừng làm:</strong> Đừng chờ xem tuần sau có đỡ không.</p><span class="why"><b>Vì sao</b>Tới ngưỡng thì thi hành, không thương lượng. Người đang kiệt luôn thấy mình còn gắng được.</span></div></details>
+<details class="scen" data-age="d" data-group="bome" data-text="d4 bố thấy mình sắp quát con lúc 3 giờ sáng mọi tuổi bố mẹ người đang kiệt sức bên một đứa trẻ đang khóc là tình huống nguy hiểm thật. ra ngoài một phút luôn an toàn hơn ở lại.   làm ngay:   đặt con xuống cũi. ra khỏi phòng, đứng một phút. rồi gọi mẹ.   đừng làm:   đừng ở lại cố dỗ tiếp."><summary><span class="scode">D4</span><span class="stitle">Bố thấy mình sắp quát con lúc 3 giờ sáng</span><span class="sage">Mọi tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Đặt con xuống cũi. Ra khỏi phòng, đứng một phút. Rồi gọi mẹ.</p><p class="dont"><strong>Đừng làm:</strong> Đừng ở lại cố dỗ tiếp.</p><span class="why"><b>Vì sao</b>Người đang kiệt sức bên một đứa trẻ đang khóc là tình huống nguy hiểm thật. Ra ngoài một phút luôn an toàn hơn ở lại.</span></div></details>
+<h4 class="scen-g" data-age="d" data-group="doicho">Đổi chỗ</h4>
+<details class="scen" data-age="d" data-group="doicho" data-text="d5 ngày dọn từ nhà ngoại về nhà mình mọi tuổi đổi chỗ nếp là thứ di chuyển được, phòng thì không. đổi hai thứ cùng lúc thì không biết cái nào gây ra chuyện.   làm ngay:   mang nguyên ga, túi ngủ, thứ tự các việc trước khi ngủ, và giờ giấc. kê phòng mới xong trước ngày dọn.   đừng làm:     đừng đổi thêm bất cứ thứ gì trong tuần đó   — không tập ngủ, không bỏ giấc, không đổi cũi."><summary><span class="scode">D5</span><span class="stitle">Ngày dọn từ nhà ngoại về nhà mình</span><span class="sage">Mọi tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Mang nguyên ga, túi ngủ, thứ tự các việc trước khi ngủ, và giờ giấc. Kê phòng mới xong trước ngày dọn.</p><p class="dont"><strong>Đừng làm:</strong> <strong>Đừng đổi thêm bất cứ thứ gì trong tuần đó</strong> — không tập ngủ, không bỏ giấc, không đổi cũi.</p><span class="why"><b>Vì sao</b>Nếp là thứ di chuyển được, phòng thì không. Đổi hai thứ cùng lúc thì không biết cái nào gây ra chuyện.</span></div></details>
+<details class="scen" data-age="d" data-group="doicho" data-text="d6 mất điện giữa đêm, phòng nóng lên mọi tuổi đổi chỗ quá nóng là một yếu tố nguy cơ đã xác định. hạ nhiệt cho con trước, tính chuyện ngủ sau.   làm ngay:   mở hé cửa cho thông gió, cởi bớt một lớp, bật quạt tích điện. sờ gáy con để kiểm.   đừng làm:   đừng đắp thêm gì, đừng đóng kín phòng."><summary><span class="scode">D6</span><span class="stitle">Mất điện giữa đêm, phòng nóng lên</span><span class="sage">Mọi tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Mở hé cửa cho thông gió, cởi bớt một lớp, bật quạt tích điện. Sờ gáy con để kiểm.</p><p class="dont"><strong>Đừng làm:</strong> Đừng đắp thêm gì, đừng đóng kín phòng.</p><span class="why"><b>Vì sao</b>Quá nóng là một yếu tố nguy cơ đã xác định. Hạ nhiệt cho con trước, tính chuyện ngủ sau.</span></div></details>
+<h4 class="scen-g" data-age="d" data-group="om">Ốm</h4>
+<details class="scen" data-age="d" data-group="om" data-text="d7 con sốt trong đêm mọi tuổi ốm sốt ở trẻ dưới 3 tháng là dấu hiệu phải khám ngay, không chờ sáng.   làm ngay:   đo nhiệt độ.   dưới 3 tháng mà sốt thì gọi bác sĩ ngay, bất kể bao nhiêu độ.     đừng làm:   đừng ủ ấm thêm. đừng tập ngủ trong những đêm này."><summary><span class="scode">D7</span><span class="stitle">Con sốt trong đêm</span><span class="sage">Mọi tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Đo nhiệt độ. <strong>Dưới 3 tháng mà sốt thì gọi bác sĩ ngay, bất kể bao nhiêu độ.</strong></p><p class="dont"><strong>Đừng làm:</strong> Đừng ủ ấm thêm. Đừng tập ngủ trong những đêm này.</p><span class="why"><b>Vì sao</b>Sốt ở trẻ dưới 3 tháng là dấu hiệu phải khám ngay, không chờ sáng.</span></div></details>
+<details class="scen" data-age="d" data-group="om" data-text="d8 con ngáy to mỗi đêm mọi tuổi ốm ngáy đều đặn, thở bằng miệng, hoặc có lúc ngừng thở là dấu hiệu cần bác sĩ xem, không còn là chuyện giấc ngủ.   làm ngay:   ghi lại vài đêm, quay một đoạn ngắn, rồi mang đi khám.   đừng làm:   đừng coi là con ngủ say."><summary><span class="scode">D8</span><span class="stitle">Con ngáy to mỗi đêm</span><span class="sage">Mọi tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Ghi lại vài đêm, quay một đoạn ngắn, rồi mang đi khám.</p><p class="dont"><strong>Đừng làm:</strong> Đừng coi là con ngủ say.</p><span class="why"><b>Vì sao</b>Ngáy đều đặn, thở bằng miệng, hoặc có lúc ngừng thở là dấu hiệu cần bác sĩ xem, không còn là chuyện giấc ngủ.</span></div></details>
+<details class="scen" data-age="d" data-group="om" data-text="d9 con mọc răng, ngạt mũi, hoặc vừa đi tiêm về mọi tuổi ốm vài đêm xấu vì một lý do rõ ràng thì chờ nó qua. đổi hệ thống lúc này là xoá phần đã làm được.   làm ngay:   quay lại bế và dỗ ngay như trước. giữ nguyên nghi thức và giờ giấc.   đừng làm:   đừng tập ngủ, đừng bỏ giấc, đừng kết luận hệ thống hỏng."><summary><span class="scode">D9</span><span class="stitle">Con mọc răng, ngạt mũi, hoặc vừa đi tiêm về</span><span class="sage">Mọi tuổi</span></summary><div class="sbody"><p class="do"><strong>Làm ngay:</strong> Quay lại bế và dỗ ngay như trước. Giữ nguyên nghi thức và giờ giấc.</p><p class="dont"><strong>Đừng làm:</strong> Đừng tập ngủ, đừng bỏ giấc, đừng kết luận hệ thống hỏng.</p><span class="why"><b>Vì sao</b>Vài đêm xấu vì một lý do rõ ràng thì chờ nó qua. Đổi hệ thống lúc này là xoá phần đã làm được.</span></div></details>
+</div>
+</section>
+<section id="congcu" data-title="Công cụ &amp; sổ">
+<header class="chero c8"><span class="cshape sh-b" aria-hidden="true"></span><span class="pnum">Chương 08</span><h2>Công cụ &amp; sổ</h2><p class="lede">Nhật ký ngủ, bảng chia ca, một trang Do &amp; Don't. Chương cuối.</p></header>
+
+<div class="searchbox docsearch">
+ <div class="tools">
+  <div class="search"><input type="text" class="doc-q" placeholder="Gõ để tìm trong chương này…" autocomplete="off"></div>
+  <span class="count doc-count"></span>
+ </div>
+ <span class="hint">Gõ vài chữ là được — <b>điều hoà</b>, <b>muỗi</b>, <b>ca ngủ</b>, <b>ngoại</b>, <b>đèn</b>.
+  Không có dấu vẫn ra. Bấm <b>Xoá</b> hoặc xoá hết chữ để xem lại cả chương.</span>
+</div>
+<p><strong>Chương cuối. Điền, đánh dấu, in ra.</strong> Mọi thứ nhập ở đây nằm trong trình duyệt của máy này, không gửi đi đâu.</p>
+<h3 id="congcu-a">A · Nhật ký ngủ</h3>
+<div class="card" id="nhatky"></div>
+<h3 id="congcu-b">B · Bảng chia ca</h3>
+<div class="card" id="chiaca"></div>
+<h3 id="congcu-c">C · Ba câu hỏi cho bác sĩ</h3>
+<div class="card" id="bacsi"></div>
+<h3 id="congcu-d">D · Danh sách kiểm trước ngày dự sinh</h3>
+<div class="card" id="check"></div>
+<hr>
+<h3 id="congcu-e">E · Trang A4 cho ông bà — in ra, dán tủ lạnh</h3>
+<div class="sos"><h4>Ba việc an toàn, không thương lượng</h4>
+<ul><li><strong>Cháu nằm ngửa</strong> — mọi giấc, kể cả giấc ngày</li><li><strong>Cháu nằm mặt phẳng cứng</strong> — không gối, chăn, thú bông, quây chặn</li><li><strong>Không cho cháu ngủ võng, nôi điện, ghế rung</strong> — võng lúc cháu thức, có người canh thì được</li></ul></div>
+<div class="grp grp--p"><div class="grp-h">Ban đêm nhà này chia ca</div><ul class="rows"><li class="r--flat"><span class="rt">Trong ca của ai thì người kia ngủ, không gọi</span><span class="ra">thấy tụi con không ra thì là đang đúng ca</span></li><li class="r--flat"><span class="rt">Bố cháu bị tiền đình</span><span class="ra">đêm phải ngồi dậy từ từ, đếm tới 10 rồi mới đứng</span></li><li class="r--flat"><span class="rt">Đang chóng mặt thì bố cháu không bế con</span><span class="ra">gọi mẹ cháu, không sao cả</span></li></ul></div>
+<div class="grp grp--y"><div class="grp-h">Giờ giấc</div><ul class="rows"><li class="r--flat"><span class="rt">Cháu tắt đèn lúc 19h</span><span class="ra">sau giờ đó nhà mình nói nhỏ, không bật đèn lớn trong phòng cháu</span></li><li class="r--flat"><span class="rt">Cháu đang ngủ thì không bế dậy</span><span class="ra">cháu dậy rồi con bồng ra</span></li><li class="r--flat"><span class="rt">Ghé chơi thì tầm 9–11 giờ sáng là cháu tỉnh</span><span class="ra">chiều là giờ cháu ngủ</span></li></ul></div>
+<hr>
+<h3 id="congcu-f">F · Một trang Do &amp; Don't</h3>
+<p><strong>Rút gọn cả tám chương xuống một mặt giấy.</strong> Bảy dòng mỗi bên, in một mặt, dán tủ lạnh.</p>
+<div class="grp grp--y"><div class="grp-h">Luôn làm</div><ul class="rows"><li class="r--flat"><span class="rt">Đặt con nằm ngửa</span><span class="ra">mặt phẳng cứng, chỗ ngủ trống, mọi giấc</span></li><li class="r--flat"><span class="rt">Buổi sáng: giờ dậy cố định, ra chỗ sáng ngay</span><span class="ra">kể cả sau đêm xấu</span></li><li class="r--flat"><span class="rt">Chạy cùng một nghi thức mỗi đêm</span><span class="ra">cùng việc, cùng thứ tự</span></li><li class="r--flat"><span class="rt">Đặt con xuống lúc buồn ngủ, chưa ngủ hẳn</span><span class="ra">để con chìm vào giấc trong cũi</span></li><li class="r--flat"><span class="rt">Ngồi dậy đếm tới 10, đứng đếm tới 5</span><span class="ra">rồi mới đi tới cũi</span></li><li class="r--flat"><span class="rt">Giữ ca ngủ liền một mạch</span><span class="ra">cho người khó vào giấc</span></li><li class="r--flat"><span class="rt">Báo bác sĩ khi chạm ngưỡng</span><span class="ra">ngưỡng ghi ở <a href="#congcu-c" data-jump="congcu-c">mục C trang này</a></span></li></ul></div>
+<div class="grp grp--n"><div class="grp-h">Không bao giờ</div><ul class="rows"><li class="r--flat"><span class="rt">Cho con ngủ võng, nôi điện, ghế rung, xe đẩy ngả</span></li><li class="r--flat"><span class="rt">Ngủ quên cùng con trên sofa hoặc ghế bành</span></li><li class="r--flat"><span class="rt">Để đồ trong cũi, hoặc để con quá nóng</span><span class="ra">không chăn, gối, thú bông trước 12 tháng · không trùm đầu · hơn người lớn đúng một lớp</span></li><li class="r--flat"><span class="rt">Dùng giường hoặc giấc ngủ làm hình phạt</span><span class="ra">hoặc doạ để con ngủ</span></li><li class="r--flat"><span class="rt">Đổi luật giữa đêm</span><span class="ra">3 giờ sáng chỉ thi hành, không sửa</span></li><li class="r--flat"><span class="rt">Bế con khi vừa đứng lên trong đêm</span></li><li class="r--flat"><span class="rt">Gắng thêm nhiều đêm liền mà không nói với ai</span></li></ul></div>
+<p class="tip"><strong>Ba câu đọc lại khi mọi thứ đang hỏng.</strong> Con dậy nhiều lần trong đêm ở tuổi nhỏ là <strong>đúng, không phải hỏng</strong>. Khoảng bình thường rất rộng — đừng so với nhà khác. Và hôm nào hỏng thì hôm sau <strong>làm lại đúng như cũ</strong>, đừng đổi cách. </p>
+</section>
+      <nav class="pager" id="pager"></nav>
+      <footer>Mục này không thay bác sĩ. Mọi dấu hiệu bất thường thì đi khám —
+      các mốc “đi khám khi” nằm ở cuối chương 02, 03 và trong nhóm H của chương 06.</footer>
+    </div>
+  </main>
+</div>
+<script>
+/* Giấc ngủ cho con — điều hướng, bộ lọc, bốn công cụ.
+   Không gọi ra mạng. Dữ liệu nằm trong localStorage của trình duyệt này. */
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var qsa = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+  var esc = function (s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  };
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  var store = {
+    get: function (k, d) {
+      try { var v = localStorage.getItem('gn.' + k); return v ? JSON.parse(v) : d; }
+      catch (e) { return d; }
+    },
+    set: function (k, v) {
+      try { localStorage.setItem('gn.' + k, JSON.stringify(v)); } catch (e) {}
+      push(k, v);
+    }
+  };
+  /* Khi trang chạy như một Artifact thì đồng bộ thêm lên server,
+     để mở ở máy khác vẫn thấy. Không có thì chỉ dùng localStorage. */
+  var DB = null, RELOAD = [], timers = {};
+  function push(k, v) {
+    if (!DB) return;
+    clearTimeout(timers[k]);
+    timers[k] = setTimeout(function () {
+      try { DB.doc('data/' + k).set({ v: v, at: Date.now() }); } catch (e) {}
+    }, 800);
+  }
+  /* bỏ dấu để tìm kiếm gõ không dấu vẫn ra */
+  function fold(s) {
+    return String(s).toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/đ/g, 'd');
+  }
+
+  /* ================= điều hướng ================= */
+  var SECS = qsa('main section');
+  var navOl = $('chnav'), side = $('side'), scrim = $('scrim'), burger = $('burger'),
+      nowEl = $('now'), ofEl = $('of'), pager = $('pager');
+  var MAP = {}, cur = null, spy = null;
+
+  /* nhãn phân cách trong mục lục chương 02 */
+  var DIVIDERS = {
+    'Sáu việc của bố mẹ': 'Trước khi ăn dặm · 0–6 tháng',
+    'Bốn giai đoạn': 'Trong khi ăn dặm · 6–18 tháng'
+  };
+
+  SECS.forEach(function (sec, si) {
+    var picks = [];
+    qsa('h3', sec).forEach(function (el, hi) {
+      if (el.classList.contains('scen-g') || el.classList.contains('food-g')) return;
+      var lab = el.textContent.replace(/\s+/g, ' ').trim();
+      if (!lab) return;
+      var id = el.id || (sec.id + '--' + hi);
+      el.id = id; el.classList.add('anchor');
+      picks.push({ id: id, label: lab });
+    });
+    MAP[sec.id] = { sec: sec, idx: si, title: sec.dataset.title || sec.id, picks: picks };
+  });
+
+  navOl.innerHTML = SECS.map(function (sec, i) {
+    var m = MAP[sec.id];
+    var pinned = sec.id === 'nghen';
+    var subs = m.picks.map(function (p) {
+      var d = DIVIDERS[p.label]
+        ? '<li class="divider">' + esc(DIVIDERS[p.label]) + '</li>' : '';
+      return d + '<li><a href="#' + p.id + '" data-jump="' + p.id + '">' + esc(p.label) + '</a></li>';
+    }).join('');
+    return '<li data-sec="' + sec.id + '">' +
+      '<button type="button" class="ch-btn" data-go="' + sec.id + '" aria-current="false">' +
+      '<span class="n">' + (pinned ? '⚠' : pad(i)) + '</span><span>' + esc(m.title) + '</span></button>' +
+      (subs && !pinned ? '<ul class="sub-list">' + subs + '</ul>' : '') + '</li>';
+  }).join('');
+
+  function watch(sec) {
+    if (spy) spy.disconnect();
+    var as = qsa('.anchor', sec);
+    if (!as.length || !window.IntersectionObserver) return;
+    spy = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        qsa('.sub-list a', navOl).forEach(function (l) { l.classList.remove('on'); });
+        var hit = navOl.querySelector('.sub-list a[data-jump="' + e.target.id + '"]');
+        if (hit) hit.classList.add('on');
+      });
+    }, { rootMargin: '-12% 0px -74% 0px', threshold: 0 });
+    as.forEach(function (a) { spy.observe(a); });
+  }
+
+  function buildPager(i) {
+    var p = SECS[i - 1], n = SECS[i + 1];
+    pager.innerHTML =
+      (p ? '<button class="pg" type="button" data-go="' + p.id + '"><small>Trước</small><b>' + esc(MAP[p.id].title) + '</b></button>' : '<span></span>') +
+      (n ? '<button class="pg pg--next" type="button" data-go="' + n.id + '"><small>Tiếp</small><b>' + esc(MAP[n.id].title) + '</b></button>' : '<span></span>');
+  }
+
+  function show(id, anchor, push) {
+    var m = MAP[id]; if (!m) return;
+    if (cur !== id) {
+      SECS.forEach(function (s) { s.classList.toggle('live', s.id === id); });
+      qsa('li', navOl).forEach(function (li) {
+        if (!li.hasAttribute('data-sec')) return;
+        var on = li.getAttribute('data-sec') === id;
+        li.classList.toggle('on', on);
+        li.querySelector('.ch-btn').setAttribute('aria-current', on ? 'true' : 'false');
+      });
+      nowEl.textContent = m.title;
+      ofEl.textContent = (m.idx === 0 ? '⚠' : pad(m.idx)) + ' / ' + pad(SECS.length - 1);
+      buildPager(m.idx); watch(m.sec); cur = id;
+    }
+    if (push !== false) { try { history.replaceState(null, '', '#' + (anchor || id)); } catch (e) {} }
+    var t = anchor ? document.getElementById(anchor) : null;
+    if (t) {
+      var off = (innerWidth < 900 ? 66 : 14);
+      var y = t.getBoundingClientRect().top + scrollY - off;
+      scrollTo(0, y);
+    } else { scrollTo(0, 0); }
+  }
+
+  function closeSide() { side.classList.remove('open'); if (scrim) scrim.classList.remove('on'); burger.setAttribute('aria-expanded', 'false'); }
+
+  document.addEventListener('click', function (e) {
+    var go = e.target.closest('[data-go]');
+    if (go) { show(go.getAttribute('data-go')); closeSide(); return; }
+    var jump = e.target.closest('[data-jump]');
+    if (jump) {
+      e.preventDefault();
+      var id = jump.getAttribute('data-jump');
+      var el = document.getElementById(id);
+      var sec = el && el.closest ? el.closest('section') : null;
+      show(sec ? sec.id : id.split('--')[0], id); closeSide(); return;
+    }
+  });
+  burger.addEventListener('click', function () {
+    var open = side.classList.toggle('open');
+    if (scrim) scrim.classList.toggle('on', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  if ($('sidex')) $('sidex').addEventListener('click', closeSide);
+  if (scrim) scrim.addEventListener('click', closeSide);
+
+  /* ================= bộ lọc giai đoạn — chương 02 ================= */
+  (function () {
+    var box = $('stagebox'); if (!box) return;
+    var nowEl2 = $('stage-now');
+    var NAMES = { 1: '5–6 tháng · TẬP NUỐT', 2: '7–8 tháng · TẬP NHÁ',
+                  3: '9–11 tháng · TẬP NHAI', 4: '12–18 tháng · ĂN CÙNG MÂM' };
+    function apply(st) {
+      qsa('.chip', box).forEach(function (c) {
+        c.classList.toggle('on', !!st && c.getAttribute('data-stage') === String(st));
+      });
+      qsa('[data-stage]', document).forEach(function (el) {
+        if (el.classList.contains('chip')) return;
+        var s = +el.getAttribute('data-stage');
+        el.hidden = !!st && s !== st && s !== st + 1;
+        el.classList.toggle('now', !!st && s === st);
+        el.classList.toggle('dim', !!st && s === st + 1);
+      });
+      nowEl2.innerHTML = st
+        ? 'Đang xem: <b>' + esc(NAMES[st]) + '</b>' + (NAMES[st + 1] ? ' — và mốc kế tiếp ở dưới.' : '')
+        : 'Đang xem tất cả bốn giai đoạn. Chưa chắc con ở đâu thì chọn theo <b>việc con làm được</b> — chính xác hơn theo tuổi.';
+      store.set('stage', st || 0);
+    }
+    qsa('.chip', box).forEach(function (c) {
+      c.addEventListener('click', function () {
+        var s = +c.getAttribute('data-stage');
+        apply(c.classList.contains('on') ? 0 : s);
+      });
+    });
+    $('stage-all').addEventListener('click', function () { apply(0); });
+    apply(store.get('stage', 0));
+  })();
+
+  /* ================= tìm trong chương ================= */
+  (function () {
+    qsa('.docsearch').forEach(function (box) {
+      var sec = box.closest('section'); if (!sec) return;
+      var q = box.querySelector('.doc-q'), count = box.querySelector('.doc-count');
+      var kids = [].slice.call(sec.children);
+      /* đơn vị lọc: hàng trong .grp, hàng bảng, đoạn văn, và các khối
+         không có hàng (.card / .sos) thì lọc nguyên khối theo chữ của nó */
+      var units = qsa('.rows > li, tbody tr', sec)
+        .concat(kids.filter(function (e) {
+          return e.tagName === 'P' || e.classList.contains('card')
+            || e.classList.contains('sos') || e.classList.contains('src');
+        }));
+      /* danh sách gạch đầu dòng nằm trực tiếp trong chương: lọc từng dòng */
+      var lists = kids.filter(function (e) { return e.tagName === 'UL'; });
+      lists.forEach(function (ul) {
+        units = units.concat([].slice.call(ul.children));
+      });
+      var wraps = qsa('.grp, .tw', sec).concat(lists);
+      var rules = kids.filter(function (e) { return e.tagName === 'HR'; });
+      var empty = document.createElement('p');
+      empty.className = 'empty'; empty.hidden = true;
+      empty.textContent = 'Không có dòng nào khớp. Thử một từ ngắn hơn.';
+      box.parentNode.insertBefore(empty, box.nextSibling);
+
+      function heads(on) {
+        for (var i = 0; i < kids.length; i++) {
+          var el = kids[i], tag = el.tagName;
+          if (tag !== 'H3' && tag !== 'H4') continue;
+          if (!on) { el.hidden = false; continue; }
+          var lvl = tag === 'H3' ? 3 : 4, any = false;
+          for (var j = i + 1; j < kids.length; j++) {
+            var t2 = kids[j].tagName;
+            if (t2 === 'H3' || (lvl === 4 && t2 === 'H4')) break;
+            if (t2 === 'H3' || t2 === 'H4') continue;
+            if (!kids[j].hidden) { any = true; break; }
+          }
+          el.hidden = !any;
+        }
+      }
+
+      function run() {
+        var t = fold(q.value.trim()), on = !!t, n = 0;
+        units.forEach(function (el) {
+          if (el === empty) return;
+          var ok = !on || fold(el.textContent).indexOf(t) > -1;
+          el.hidden = !ok; if (ok && on) n++;
+          if (!ok) { var d = el.querySelector && el.querySelector('details'); if (d) d.open = false; }
+        });
+        wraps.forEach(function (w) {
+          var us = w.tagName === 'UL'
+            ? [].slice.call(w.children)
+            : qsa('.rows > li, tbody tr', w);
+          w.hidden = on && us.length > 0 && !us.some(function (u) { return !u.hidden; });
+        });
+        rules.forEach(function (r) { r.hidden = on; });
+        heads(on);
+        empty.hidden = !on || n > 0;
+        count.textContent = on ? n + ' dòng' : '';
+      }
+      q.addEventListener('input', run);
+      q.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { q.value = ''; run(); }
+      });
+      run();
+    });
+  })();
+
+  /* ================= tìm kiếm kịch bản — lọc theo tuổi và nhóm ================= */
+  (function () {
+    var box = $('scenbox'); if (!box) return;
+    var q = $('scen-q'), count = $('scen-count');
+    var items = qsa('.scen'), ghs = qsa('.scen-g'), ahs = qsa('.scen-a');
+    var fa = '', fg = '';
+    var empty = document.createElement('p');
+    empty.className = 'empty'; empty.hidden = true;
+    empty.textContent = 'Không có kịch bản nào khớp. Bỏ bớt một nút lọc, hoặc gõ từ ngắn hơn.';
+    $('scenlist').appendChild(empty);
+
+    function run() {
+      var t = fold(q.value.trim()), n = 0;
+      items.forEach(function (el) {
+        var ok = (!fa || el.getAttribute('data-age') === fa) &&
+                 (!fg || el.getAttribute('data-group') === fg) &&
+                 (!t || fold(el.getAttribute('data-text')).indexOf(t) > -1);
+        el.hidden = !ok; if (ok) n++;
+        if (!ok) el.open = false;
+      });
+      ghs.forEach(function (h) {
+        var a = h.getAttribute('data-age'), g = h.getAttribute('data-group');
+        h.hidden = !items.some(function (el) {
+          return !el.hidden && el.getAttribute('data-age') === a
+                            && el.getAttribute('data-group') === g;
+        });
+      });
+      ahs.forEach(function (h) {
+        var a = h.getAttribute('data-age');
+        h.hidden = !items.some(function (el) {
+          return !el.hidden && el.getAttribute('data-age') === a;
+        });
+      });
+      empty.hidden = n > 0;
+      count.textContent = n + '/' + items.length + ' kịch bản';
+    }
+
+    q.addEventListener('input', run);
+    q.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { q.value = ''; run(); }
+    });
+    qsa('.chip', box).forEach(function (c) {
+      c.addEventListener('click', function () {
+        var isAge = c.hasAttribute('data-a');
+        var row = c.parentNode;
+        if (isAge) fa = c.getAttribute('data-a') || '';
+        else fg = c.getAttribute('data-g') || '';
+        qsa('.chip', row).forEach(function (x) { x.classList.toggle('on', x === c); });
+        run();
+      });
+    });
+    run();
+  })();
+
+  /* ================= tìm kiếm thực phẩm ================= */
+  (function () {
+    var box = $('foodbox'); if (!box) return;
+    var q = $('food-q'), count = $('food-count');
+    var items = qsa('.food'), groups = qsa('.food-g');
+    var g = '', age = '';
+    function run() {
+      var t = fold(q.value.trim()), n = 0;
+      items.forEach(function (el) {
+        var okA = true;
+        if (age) {
+          var m = (el.getAttribute('data-from') || '').match(/(\d+)/);
+          okA = m ? (+m[1] <= +age) : true;
+        }
+        var ok = (!g || el.getAttribute('data-group') === g) && okA &&
+                 (!t || fold(el.getAttribute('data-text')).indexOf(t) > -1);
+        el.hidden = !ok; if (ok) n++;
+        if (!ok) el.open = false;
+      });
+      groups.forEach(function (h) {
+        var key = h.getAttribute('data-group');
+        var wrap = h.nextElementSibling;
+        var any = items.some(function (el) { return !el.hidden && el.getAttribute('data-group') === key; });
+        h.hidden = !any; if (wrap && wrap.classList.contains('foods')) wrap.hidden = !any;
+      });
+      count.textContent = n + '/' + items.length;
+    }
+    q.addEventListener('input', run);
+    qsa('.chip', box).forEach(function (c) {
+      c.addEventListener('click', function () {
+        var row = c.parentNode;
+        if (c.hasAttribute('data-fg')) g = c.getAttribute('data-fg');
+        else age = c.getAttribute('data-fa');
+        qsa('.chip', row).forEach(function (x) { x.classList.toggle('on', x === c); });
+        run();
+      });
+    });
+    run();
+  })();
+
+  /* ================= nhật ký ngủ ================= */
+  (function () {
+    var host = $('nhatky'); if (!host) return;
+    var log = store.get('nhatky', []);
+
+    function hnay() {             /* hôm nay, dạng 2026-12-15 */
+      var t = new Date();
+      return t.getFullYear() + '-' + pad(t.getMonth() + 1) + '-' + pad(t.getDate());
+    }
+    function vn(iso) {            /* 2026-12-15 → 15/12/2026 */
+      var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ''));
+      return m ? m[3] + '/' + m[2] + '/' + m[1] : (iso || '—');
+    }
+    function mins(t) {            /* "20:15" → số phút từ 0h */
+      var m = /^(\d{1,2})[:h.]?(\d{2})$/.exec(String(t).trim());
+      return m ? (+m[1]) * 60 + (+m[2]) : null;
+    }
+    function gap(a, b) {          /* b - a, vòng qua nửa đêm */
+      if (a === null || b === null) return null;
+      var d = b - a; return d < 0 ? d + 1440 : d;
+    }
+    function avg(xs) {
+      var v = xs.filter(function (x) { return x !== null && !isNaN(x); });
+      return v.length ? Math.round(v.reduce(function (a, b) { return a + b; }, 0) / v.length) : null;
+    }
+    function fmt(m) { return m === null ? '—' : m + ' phút'; }
+
+    function canhbao() {
+      var L = log.slice(-7), w = [];
+      var last3 = log.slice(-3);
+      if (last3.length === 3 && last3.every(function (r) { return gap(mins(r.bg), mins(r.bn)) > 60; })) {
+        w.push('Ba đêm liền bố mất hơn 60 phút mới vào giấc.');
+      }
+      var last2 = log.slice(-2);
+      if (last2.length === 2 && last2.every(function (r) { return r.bh !== null && r.bh < 4; })) {
+        w.push('Hai đêm liền bố ngủ dưới 4 giờ.');
+      }
+      if (last2.length === 2 && last2.every(function (r) { return r.cm; })) {
+        w.push('Hai đêm liền có chóng mặt lúc đứng dậy.');
+      }
+      return w;
+    }
+
+    function render() {
+      log.sort(function (a, b) { return a.d < b.d ? -1 : 1; });
+      var h = ['<h4>Nhật ký ngủ</h4>',
+        '<p>Ghi <b>mỗi sáng, một phút</b>. Đừng ghi lúc nửa đêm. Nhìn theo tuần, không nhìn từng đêm.</p>',
+        '<div class="li-row fld fld--2">' +
+        '<div><label for="n-d">Ngày <span>hiện ra dạng ngày/tháng/năm</span></label>' +
+        '<div class="tools" style="gap:8px"><input type="date" id="n-d" style="flex:1 1 150px">' +
+        '<button class="btn btn--q" id="n-hnay" type="button">Ngày hôm nay</button></div></div>' +
+        '<div><label for="n-cd">Giờ tắt đèn của con</label><input type="text" id="n-cd" placeholder="19:00"></div>' +
+        '<div><label for="n-cn">Giờ con <b>thật sự</b> ngủ</label><input type="text" id="n-cn" placeholder="20:15"></div>' +
+        '<div><label for="n-cl">Số lần con dậy trong đêm</label><input type="text" id="n-cl" inputmode="numeric" placeholder="3"></div>' +
+        '<div><label for="n-cs">Giờ con dậy sáng</label><input type="text" id="n-cs" placeholder="06:30"></div>' +
+        '<div><label for="n-bg">Giờ bố lên giường</label><input type="text" id="n-bg" placeholder="21:00"></div>' +
+        '<div><label for="n-bn">Giờ bố vào giấc</label><input type="text" id="n-bn" placeholder="22:10"></div>' +
+        '<div><label for="n-bh">Bố ngủ mấy giờ <span>ghi số, ví dụ 4.5</span></label><input type="text" id="n-bh" inputmode="decimal" placeholder="4.5"></div>' +
+        '<div><label><input type="checkbox" id="n-cm"> Đêm qua có chóng mặt lúc đứng dậy</label></div>' +
+        '<div style="align-self:end"><button class="btn" id="n-add" type="button">Ghi vào sổ</button></div></div>'];
+
+      if (log.length) {
+        var L = log.slice(-7);
+        h.push('<div class="gwrap"><table><thead><tr><th>Ngày</th><th>Con vào giấc mất</th>' +
+               '<th>Con dậy</th><th>Bố vào giấc mất</th><th>Bố ngủ</th><th></th></tr></thead><tbody>');
+        log.slice().reverse().forEach(function (r, i) {
+          var idx = log.length - 1 - i;
+          h.push('<tr><td>' + esc(vn(r.d)) + '</td><td>' + fmt(gap(mins(r.cd), mins(r.cn))) + '</td>' +
+                 '<td>' + (r.cl === null ? '—' : r.cl + ' lần') + '</td>' +
+                 '<td>' + fmt(gap(mins(r.bg), mins(r.bn))) + (r.cm ? ' · chóng mặt' : '') + '</td>' +
+                 '<td>' + (r.bh === null ? '—' : r.bh + ' giờ') + '</td>' +
+                 '<td><button data-del="' + idx + '" style="border:0;background:none;color:var(--ink-mute);cursor:pointer">×</button></td></tr>');
+        });
+        h.push('</tbody></table></div>');
+        h.push('<p class="jstat"><b>Trung bình 7 ngày gần nhất.</b> Con vào giấc mất ' +
+               fmt(avg(L.map(function (r) { return gap(mins(r.cd), mins(r.cn)); }))) +
+               ' · bố vào giấc mất ' +
+               fmt(avg(L.map(function (r) { return gap(mins(r.bg), mins(r.bn)); }))) + '.</p>');
+
+        var w = canhbao();
+        if (w.length) {
+          h.push('<div class="alert"><b>Tới ngưỡng đổi ca.</b> ' + w.join(' ') +
+                 ' Đổi ngay đêm sau, không bàn lại — ngưỡng ở chương 06.</div>');
+        }
+        h.push('<p class="jstat" style="margin-top:10px">Cột <b>con vào giấc mất bao lâu</b> ' +
+               'chính là số dùng cho cách tắt đèn muộn lại ở chương 04.</p>');
+        h.push('<div class="tools" style="margin-top:12px">' +
+               '<button class="btn btn--q" id="n-out" type="button">Xuất ra để chép đi nơi khác</button></div>' +
+               '<textarea id="n-box" hidden rows="6" style="width:100%;margin-top:8px;font-size:12px"></textarea>');
+      } else {
+        h.push('<p class="jstat">Chưa có đêm nào. Ghi sáng mai là bắt đầu.</p>');
+      }
+      h.push('<p class="jstat" style="margin-top:12px">Số nhập ở đây nằm trong trình duyệt của máy này, ' +
+             'không gửi đi đâu. Đổi máy hoặc xoá dữ liệu trình duyệt là mất — nên thỉnh thoảng bấm xuất.</p>');
+      host.innerHTML = h.join('');
+
+      $('n-d').value = hnay();
+      $('n-hnay').addEventListener('click', function () { $('n-d').value = hnay(); });
+      $('n-add').addEventListener('click', function () {
+        var d = $('n-d').value.trim(); if (!d) return;
+        log.push({
+          d: d, cd: $('n-cd').value.trim(), cn: $('n-cn').value.trim(),
+          cl: $('n-cl').value.trim() === '' ? null : +$('n-cl').value.trim(),
+          cs: $('n-cs').value.trim(), bg: $('n-bg').value.trim(), bn: $('n-bn').value.trim(),
+          bh: $('n-bh').value.trim() === '' ? null : parseFloat($('n-bh').value),
+          cm: $('n-cm').checked
+        });
+        store.set('nhatky', log); render();
+      });
+      qsa('[data-del]', host).forEach(function (b) {
+        b.addEventListener('click', function () {
+          log.splice(+b.getAttribute('data-del'), 1); store.set('nhatky', log); render();
+        });
+      });
+      if ($('n-out')) {
+        $('n-out').addEventListener('click', function () {
+          var t = $('n-box');
+          var head = 'ngay\tden_tat\tcon_ngu\tso_lan_day\tcon_day_sang\tbo_len_giuong\tbo_vao_giac\tbo_ngu_gio\tchong_mat';
+          t.value = head + '\n' + log.map(function (r) {
+            return [vn(r.d), r.cd, r.cn, r.cl, r.cs, r.bg, r.bn, r.bh, r.cm ? 'co' : ''].join('\t');
+          }).join('\n');
+          t.hidden = false; t.select();
+        });
+      }
+    }
+    RELOAD.push(function () { log = store.get('nhatky', []); render(); });
+    render();
+  })();
+
+  /* ================= bảng chia ca ================= */
+  (function () {
+    var host = $('chiaca'); if (!host) return;
+    var F = [
+      ['ca1', 'Ca ngủ của bố — từ mấy giờ tới mấy giờ', '21:00 – 03:00'],
+      ['ca2', 'Ca trực của bố — từ mấy giờ tới mấy giờ', '03:00 – 09:00'],
+      ['ai1', 'Ai trực nửa đầu đêm', 'Mẹ'],
+      ['ai2', 'Ai trực nửa sau đêm', 'Bố'],
+      ['ongba', 'Ông bà nhận ca nào, ngày nào', 'Thứ ba và thứ sáu, 5h–9h'],
+      ['doi', 'Ngày đổi ca hằng tuần', 'Chủ nhật']
+    ];
+    var d = store.get('chiaca', {});
+    function render() {
+      var h = ['<h4>Bảng chia ca</h4>',
+        '<p>Điền rồi bấm in, dán tủ lạnh. Để ông bà đọc được mà không cần ai giải thích.</p>',
+        '<div class="fld fld--2">'];
+      F.forEach(function (f) {
+        h.push('<div><label for="c-' + f[0] + '">' + f[1] + '</label>' +
+               '<input type="text" id="c-' + f[0] + '" placeholder="' + f[2] + '" value="' +
+               esc(d[f[0]] || '') + '"></div>');
+      });
+      h.push('</div><div class="tools" style="margin-top:12px">' +
+             '<button class="btn" id="c-print" type="button">In bảng này</button></div>');
+      host.innerHTML = h.join('');
+      qsa('input', host).forEach(function (t) {
+        t.addEventListener('input', function () {
+          d[t.id.slice(2)] = t.value; store.set('chiaca', d);
+        });
+      });
+      $('c-print').addEventListener('click', function () { window.print(); });
+    }
+    RELOAD.push(function () { d = store.get('chiaca', {}); render(); });
+    render();
+  })();
+
+  /* ================= ba câu hỏi cho bác sĩ ================= */
+  (function () {
+    var host = $('bacsi'); if (!host) return;
+    var Q = [
+      ['q1', 'Mất ngủ mấy đêm liền thì phải báo, thay vì gắng thêm?'],
+      ['q2', 'Dấu hiệu nào là dấu hiệu phải gọi ngay, không chờ lịch khám?'],
+      ['q3', 'Thuốc đang dùng có cần đổi giờ uống khi ca đêm đổi giờ ngủ không?'],
+      ['sdt', 'Số điện thoại bác sĩ'],
+      ['bv', 'Bệnh viện gần nhất — tên và đường đi']
+    ];
+    var d = store.get('bacsi', {});
+    function render() {
+      var h = ['<h4>Ba câu hỏi cho bác sĩ</h4>',
+        '<p>Mang ba câu đầu tới buổi khám gần nhất, xin bác sĩ ghi giúp con số, rồi chép vào đây. ' +
+        '<b>Mục này không tự đặt ngưỡng nào.</b></p>', '<div class="fld">'];
+      Q.forEach(function (q) {
+        h.push('<div><label for="b-' + q[0] + '">' + q[1] + '</label>' +
+               '<input type="text" id="b-' + q[0] + '" value="' + esc(d[q[0]] || '') + '"></div>');
+      });
+      h.push('</div><div class="tools" style="margin-top:12px">' +
+             '<button class="btn" id="b-print" type="button">In trang này</button></div>');
+      host.innerHTML = h.join('');
+      qsa('input', host).forEach(function (t) {
+        t.addEventListener('input', function () {
+          d[t.id.slice(2)] = t.value; store.set('bacsi', d);
+        });
+      });
+      $('b-print').addEventListener('click', function () { window.print(); });
+    }
+    RELOAD.push(function () { d = store.get('bacsi', {}); render(); });
+    render();
+  })();
+
+  /* ================= danh sách kiểm trước ngày dự sinh ================= */
+  (function () {
+    var host = $('check'); if (!host) return;
+    var C = [
+      ['Ngay bây giờ', [
+        'Chốt khung giờ hai ca, viết ra giấy',
+        'Hỏi bác sĩ ba câu ở chương 06',
+        'Mua cũi và nệm']],
+      ['Còn 6 tuần · 04/10', [
+        'Lắp cũi ở nhà ngoại, kê đúng chỗ đã chốt',
+        'Lắp lưới chống muỗi',
+        'Lắp màn che sáng',
+        'Lắp đèn ngủ, công tắc trong tầm tay khi đang ngồi trên giường']],
+      ['Còn 4 tuần · 18/10', [
+        'Mua nốt danh sách đồ ở chương 02',
+        'Nói chuyện với ông bà ngoại',
+        'In trang A4 dán tủ lạnh']],
+      ['Còn 2 tuần · 01/11', [
+        'Đi thử đường đêm trong bóng tối, chân trần',
+        'Chạy thử luật tiền đình: ngồi đếm tới 10, đứng đếm tới 5',
+        'Soạn giỏ đêm',
+        'Nấu sẵn và cấp đông bảy tới mười bữa']],
+      ['Còn 1 tuần · 08/11', [
+        'Chạy thử ca đêm một tuần, đúng khung giờ đã chốt',
+        'Đọc lại mục ⚠ Ngủ an toàn một lần nữa']],
+      ['Trước ngày dọn về nhà mình', [
+        'Kê xong phòng ở nhà mình',
+        'Đi thử đường đêm ở phòng mới',
+        'Giữ nguyên ga, túi ngủ và thứ tự nghi thức']]
+    ];
+    var done = store.get('check', {});
+    function render() {
+      var all = 0, ok = 0;
+      var h = ['<h4>Danh sách kiểm trước ngày dự sinh</h4>',
+               '<p>Ngày dự sinh <b>15/11</b>. Bấm để đánh dấu xong.</p>'];
+      C.forEach(function (g, gi) {
+        h.push('<p class="jstat" style="margin:14px 0 4px;font-weight:700;color:var(--ink-2)">' + esc(g[0]) + '</p><ul class="cl">');
+        g[1].forEach(function (t, ti) {
+          var k = gi + '-' + ti; all++; if (done[k]) ok++;
+          h.push('<li><label style="cursor:pointer;display:flex;gap:8px;align-items:flex-start">' +
+                 '<input type="checkbox" data-k="' + k + '"' + (done[k] ? ' checked' : '') + '>' +
+                 '<span' + (done[k] ? ' style="color:var(--ink-3);text-decoration:line-through"' : '') + '>' +
+                 esc(t) + '</span></label></li>');
+        });
+        h.push('</ul>');
+      });
+      h.unshift('');
+      host.innerHTML = h.join('') +
+        '<p class="jstat" style="margin-top:12px"><b>' + ok + '/' + all + '</b> việc đã xong.</p>' +
+        '<div class="tools" style="margin-top:8px"><button class="btn btn--q" id="k-print" type="button">In danh sách</button></div>';
+      qsa('[data-k]', host).forEach(function (b) {
+        b.addEventListener('change', function () {
+          done[b.getAttribute('data-k')] = b.checked; store.set('check', done); render();
+        });
+      });
+      $('k-print').addEventListener('click', function () { window.print(); });
+    }
+    RELOAD.push(function () { done = store.get('check', {}); render(); });
+    render();
+  })();
+
+  /* ================= đồng bộ server, nếu có ================= */
+  (function () {
+    if (!(window.claude && typeof claude.use === 'function')) return;
+    claude.use('db').then(function (db) {
+      if (!db) return;
+      DB = db;
+      var keys = ['nhatky', 'chiaca', 'bacsi', 'check'];
+      Promise.all(keys.map(function (k) {
+        return db.doc('data/' + k).get().then(function (d) {
+          if (d && d.v !== undefined && d.v !== null) {
+            try { localStorage.setItem('gn.' + k, JSON.stringify(d.v)); } catch (e) {}
+            return true;
+          }
+        }, function () {});
+      })).then(function (hits) {
+        if (hits.some(Boolean)) RELOAD.forEach(function (f) { f(); });
+      });
+    }, function () {});
+  })();
+
+  /* ================= khởi động ================= */
+  var h = (location.hash || '').replace('#', '');
+  if (h && MAP[h.split('--')[0]]) show(h.split('--')[0], h.indexOf('--') > -1 ? h : null, false);
+  else show(SECS[1] ? SECS[1].id : SECS[0].id, null, false);
+})();
+
+</script>
