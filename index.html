@@ -947,11 +947,16 @@ footer{font-size:11.8px;margin-top:28px;padding-top:16px;border-top:var(--hair);
   /* Khi trang chạy như một Artifact thì đồng bộ thêm lên server,
      để mở ở máy khác vẫn thấy. Không có thì chỉ dùng localStorage. */
   var DB = null, RELOAD = [], timers = {};
+  function localAt(k) {
+    try { return +localStorage.getItem('gn.at.' + k) || 0; } catch (e) { return 0; }
+  }
   function push(k, v) {
+    var at = Date.now();
+    try { localStorage.setItem('gn.at.' + k, String(at)); } catch (e) {}
     if (!DB) return;
     clearTimeout(timers[k]);
     timers[k] = setTimeout(function () {
-      try { DB.doc('data/' + k).set({ v: v, at: Date.now() }); } catch (e) {}
+      try { DB.doc('data/' + k).set({ v: v, at: at }); } catch (e) {}
     }, 800);
   }
   /* bỏ dấu để tìm kiếm gõ không dấu vẫn ra */
@@ -1519,22 +1524,31 @@ footer{font-size:11.8px;margin-top:28px;padding-top:16px;border-top:var(--hair);
     render();
   })();
 
-  /* ================= đồng bộ server, nếu có ================= */
+  /* ================= đồng bộ giữa các máy ================= */
+  /* Mỗi công cụ là một tài liệu trong kho dùng chung của trang. Máy nào
+     ghi sau thì thắng, so bằng mốc thời gian. Không có kho thì trang vẫn
+     chạy bình thường, chỉ là dữ liệu nằm riêng từng máy. */
   (function () {
     if (!(window.claude && typeof claude.use === 'function')) return;
+    var KEYS = ['nhatky', 'chiaca', 'bacsi', 'check'];
     claude.use('db').then(function (db) {
       if (!db) return;
       DB = db;
-      var keys = ['nhatky', 'chiaca', 'bacsi', 'check'];
-      Promise.all(keys.map(function (k) {
-        return db.doc('data/' + k).get().then(function (d) {
-          if (d && d.v !== undefined && d.v !== null) {
-            try { localStorage.setItem('gn.' + k, JSON.stringify(d.v)); } catch (e) {}
-            return true;
-          }
+      KEYS.forEach(function (k) {
+        var ref;
+        try { ref = db.doc('data/' + k); } catch (e) { return; }
+        ref.onSnapshot(function (snap) {
+          if (!snap || !snap.exists) return;
+          var d = snap.data();
+          if (!d || d.v === undefined || d.v === null) return;
+          var at = +d.at || 0;
+          if (at <= localAt(k)) return;          /* bản ở máy này mới hơn */
+          try {
+            localStorage.setItem('gn.' + k, JSON.stringify(d.v));
+            localStorage.setItem('gn.at.' + k, String(at));
+          } catch (e) { return; }
+          RELOAD.forEach(function (f) { try { f(); } catch (e) {} });
         }, function () {});
-      })).then(function (hits) {
-        if (hits.some(Boolean)) RELOAD.forEach(function (f) { f(); });
       });
     }, function () {});
   })();
