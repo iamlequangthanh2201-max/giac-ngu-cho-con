@@ -575,10 +575,10 @@ def main():
     page = ('<!doctype html>\n<html lang="vi">\n<head>\n'
             '<meta charset="utf-8">\n'
             '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
-            '<meta name="description" content="S\u1ed5 tay dinh d\u01b0\u1ee1ng v\u00e0 n\u1ebfp \u0103n cho con 0\u201312 tu\u1ed5i.">\n'
+            '<meta name="description" content="S\u1ed5 tay gi\u1ea5c ng\u1ee7 cho tr\u1ebb 0\u20133 tu\u1ed5i, v\u00e0 cho c\u1ea3 b\u1ed1 m\u1eb9.">\n'
             '<link rel="icon" href="data:image/svg+xml,'
             '%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E'
-            '%3Ctext y=%2226%22 font-size=%2226%22%3E%F0%9F%8D%9A%3C/text%3E%3C/svg%3E">\n'
+            '%3Ctext y=%2226%22 font-size=%2226%22%3E%F0%9F%8C%99%3C/text%3E%3C/svg%3E">\n'
             '</head>\n<body>\n' + out + '\n</body>\n</html>\n')
     (docs / 'index.html').write_text(page, encoding='utf-8')
     (docs / '.nojekyll').write_text('', encoding='utf-8')
